@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/social",
+  "sourceRoot": "libs/social/src",
+  "prefix": "united",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/social"],
+      "options": {
+        "jestConfig": "libs/social/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/social/src/**/*.ts",
+          "libs/social/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

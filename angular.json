@@ -1,7 +1,16 @@
 {
   "version": 2,
   "projects": {
+    "auth": "libs/auth",
+    "book-list": "libs/book-list",
+    "counter": "libs/counter",
+    "ionic-test": "apps/ionic-test",
+    "ionic-test-e2e": "apps/ionic-test-e2e",
     "my-app": "apps/my-app",
-    "my-app-e2e": "apps/my-app-e2e"
+    "my-app-e2e": "apps/my-app-e2e",
+    "my-lib": "libs/my-lib",
+    "social": "libs/social",
+    "test": "apps/test",
+    "test-e2e": "apps/test-e2e"
   }
 }

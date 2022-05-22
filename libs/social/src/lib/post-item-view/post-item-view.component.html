@@ -1,0 +1,72 @@
+<div *ngIf="post">
+  <ion-grid class="ion-no-margin ion-no-padding">
+    <!-- WHO REGULAR POST-->
+    <ion-row class="ion-no-margin ion-padding-bottom">
+      <ion-col size="2" class="ion-padding-start ion-padding-top">
+        <ion-avatar>
+          <ion-img src="../assets/icon/generic-avatar.png"></ion-img>
+        </ion-avatar>
+      </ion-col>
+      <ion-col class="ion-padding-start ion-padding-top" size="8">
+        <ion-label>
+          <p class="post-title">
+            {{ post.author.username }}
+          </p>
+          <p class="country-date-text">
+            {{ post.createdDate | date }}
+          </p>
+        </ion-label>
+      </ion-col>
+      <ion-col class="ion-padding-top" size="2">
+        <ion-button fill="clear">
+          <ion-icon
+            size="large"
+            color="primary"
+            name="ellipsis-vertical"
+          ></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card-content>
+    <!-- <p>{{ post.id }}</p> -->
+    <p>by {{ post.text }}</p>
+  </ion-card-content>
+
+  <!-- Social Interaction Buttons -->
+  <ion-grid class="ion-no-padding ion-no-margin">
+    <ion-row>
+      <ion-col class="ion-no-padding ion-no-margin">
+        <ion-button
+          mode="ios"
+          expand="full"
+          size="medium"
+          (click)="likeActionMenu()"
+          color="light"
+          ><ion-icon
+            #likeIcon
+            [color]="true ? 'primary' : ''"
+            [name]="true ? 'thumbs-up' : 'thumbs-up-outline'"
+            size="medium"
+          ></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-button
+          mode="ios"
+          color="light"
+          expand="full"
+          size="medium"
+          (click)="showPostComments()"
+          ><ion-icon name="chatbox-ellipses-outline" size="medium"></ion-icon
+        ></ion-button>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-button mode="ios" color="light" expand="full" size="medium"
+          ><ion-icon name="share-outline" size="medium"></ion-icon
+        ></ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

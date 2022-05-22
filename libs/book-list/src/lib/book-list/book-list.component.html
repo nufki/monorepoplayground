@@ -1,0 +1,7 @@
+<div *ngIf="booksError$ | async">
+  {{ (booksError$ | async).message }}
+</div>
+<div class="book-item" *ngFor="let book of books$ | async">
+  <p>{{ book.volumeInfo.title }}</p>
+  <span> by {{ book.volumeInfo.authors }}</span>
+</div>

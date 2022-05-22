@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@united/auth": ["libs/auth/src/index.ts"],
+      "@united/book-list": ["libs/book-list/src/index.ts"],
+      "@united/counter": ["libs/counter/src/index.ts"],
+      "@united/my-lib": ["libs/my-lib/src/index.ts"],
+      "@united/social": ["libs/social/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
