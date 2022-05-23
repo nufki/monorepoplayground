@@ -26,6 +26,7 @@
 
   <united-comments-view
     *ngIf="post$ | async as post"
+    (commentLike)="onCommentLike(post.id, $event)"
     [comments]="post.comments"
   ></united-comments-view>
 </ion-content>

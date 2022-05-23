@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { likeUnlikePost } from '../../+state/post.actions';
+import { likeUnlikeComment, likeUnlikePost } from '../../+state/post.actions';
 import { PostEntity } from '../../+state/post.models';
 import { selectPost } from '../../+state/post.selectors';
 
@@ -29,5 +29,12 @@ export class PostDetailsComponent implements OnInit {
   onPostLike(id: string) {
     console.log('post like clicked: ', id);
     this.store.dispatch(likeUnlikePost({ postId: id }));
+  }
+
+  onCommentLike(postId: string, commentId: string) {
+    console.log('comment like clicked: ', commentId);
+    this.store.dispatch(
+      likeUnlikeComment({ postId: postId, commentId: commentId })
+    );
   }
 }

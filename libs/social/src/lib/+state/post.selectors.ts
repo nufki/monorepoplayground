@@ -49,3 +49,8 @@ export const selectPostById = (id: string) =>
   createSelector(getPostEntities, (entities) =>
     id ? entities[id] : undefined
   );
+
+export const selectCommentById = (postId: string, commentId: string) =>
+  createSelector(getPostEntities, (entities) =>
+    entities[postId]?.comments.find((c) => c.id === commentId)
+  );

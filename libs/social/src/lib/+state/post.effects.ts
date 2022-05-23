@@ -1,4 +1,4 @@
-import { selectPostById } from './post.selectors';
+import { selectCommentById, selectPostById } from './post.selectors';
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { getSelectors, ROUTER_NAVIGATED } from '@ngrx/router-store';
@@ -35,7 +35,7 @@ export class PostEffects {
   );
 
   // UPDATE LIKE/UNLIKE POST EFFECT
-  updateLikeUnlike$ = createEffect(() =>
+  updateLikeUnlikePost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.likeUnlikePost),
       concatLatestFrom(({ postId }) => [
@@ -79,11 +79,12 @@ export class PostEffects {
       ofType(PostActions.showPost),
       switchMap(({ postId }) =>
         this.postService.fetchPostComments(+postId, 0).pipe(
-          map((post) =>
-            PostActions.loadPostDetailsSuccess({
+          map((post) => {
+            this.postService.updateSelfLikeComment(post);
+            return PostActions.loadPostDetailsSuccess({
               post: post,
-            })
-          )
+            });
+          })
         )
       ),
       catchError((error) => of(PostActions.loadPostDetailsFailure({ error })))
@@ -105,6 +106,31 @@ export class PostEffects {
         PostActions.showPost({
           postId: id as string,
         })
+      )
+    )
+  );
+
+  // UPDATE LIKE/UNLIKE COMMENT EFFECT
+  updateLikeUnlikeComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.likeUnlikeComment),
+      concatLatestFrom(({ postId, commentId }) => [
+        this.store.select(selectCommentById(postId, commentId)),
+      ]),
+      switchMap(([{ postId, commentId }, comment]) =>
+        this.postService
+          .updateCommentLikeUnlike(+commentId, !comment?.selfLike)
+          .pipe(
+            map((comment) =>
+              PostActions.updateCommentLikeUnlikeSuccess({
+                postId: postId,
+                commentId: comment.id,
+              })
+            )
+          )
+      ),
+      catchError((error) =>
+        of(PostActions.updateCommentLikeUnlikeFailure({ error }))
       )
     )
   );

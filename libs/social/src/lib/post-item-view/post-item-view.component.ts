@@ -96,7 +96,7 @@ export class PostItemViewComponent implements OnInit {
   }
 
   /***************************************************************************
-   * Post Menu Actions
+   * Post Menu Actions (Delete, Edit, ...)
    ***************************************************************************/
   public async postActionMenu() {
     const actionSheet = await this.actionSheetController.create({

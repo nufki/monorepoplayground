@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, of, tap, Observable } from 'rxjs';
-import { LikeEntity, PostEntity } from './+state/post.models';
+import { CommentEntity, LikeEntity, PostEntity } from './+state/post.models';
 
 @Injectable({
   providedIn: 'root',
@@ -99,6 +99,20 @@ export class PostService {
     return false;
   }
 
+  public updateSelfLikeComment(post: PostEntity) {
+    post.comments.map((comment) => {
+      const c = comment.likes.find((like: LikeEntity) => {
+        if (like.user.username === 'nufki81') return true;
+        else return false;
+      });
+      if (c) {
+        comment.selfLike = true;
+      } else {
+        comment.selfLike = false;
+      }
+    });
+  }
+
   /***************************************************************************
    * Delete a post and apply it in the back-end
    ***************************************************************************/
@@ -112,5 +126,33 @@ export class PostService {
     console.log('deletePost: ' + apiEndpoint);
 
     return this.http.delete<any>(apiEndpoint);
+  }
+
+  /***************************************************************************
+   * Send a like of an existing comment to the back-end
+   ***************************************************************************/
+  public updateCommentLikeUnlike(
+    commentId: number,
+    like: boolean
+  ): Observable<CommentEntity> {
+    let apiEndpoint = '';
+
+    if (like) {
+      apiEndpoint =
+        this.socialNetServiceURL +
+        '/api1/social-networking/likes/comments/' +
+        commentId +
+        '?username=nufki81' +
+        '&mode=LIKE';
+    } else {
+      apiEndpoint =
+        this.socialNetServiceURL +
+        '/api1/social-networking/likes/comments/' +
+        commentId +
+        '?username=nufki81' +
+        '&mode=UNLIKE';
+    }
+
+    return this.http.patch<any>(apiEndpoint, null);
   }
 }

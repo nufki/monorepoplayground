@@ -1,5 +1,5 @@
 import { CommentEntity } from './../+state/post.models';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'united-comments-view',
@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CommentsViewComponent implements OnInit {
   @Input() comments: CommentEntity[] | undefined;
+  @Output() commentLike = new EventEmitter<string>();
 
   constructor() {
     console.log('CommentsViewComponent');
@@ -17,8 +18,9 @@ export class CommentsViewComponent implements OnInit {
     console.log('ngOnInit');
   }
 
-  likeSelected(comment: CommentEntity) {
+  likeActionMenu(comment: CommentEntity) {
     console.log('Like Comment clicked...');
+    this.commentLike.emit(comment.id);
   }
 
   showLikes(comment: CommentEntity) {
