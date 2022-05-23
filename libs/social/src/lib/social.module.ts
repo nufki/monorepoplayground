@@ -11,6 +11,7 @@ import { PostListComponent } from './containers/post-list/post-list.component';
 import { PostService } from './post.service';
 import { PostDetailsRoutingModule } from './post-details-routing.module';
 import { PostItemViewComponent } from './post-item-view/post-item-view.component';
+import { CommentsViewComponent } from './comments-view/comments-view.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { PostItemViewComponent } from './post-item-view/post-item-view.component
     PostItemViewComponent,
     PostDetailsComponent,
     PostListComponent,
+    CommentsViewComponent,
   ],
   exports: [PostListComponent, PostItemViewComponent, PostDetailsComponent],
   providers: [PostService],

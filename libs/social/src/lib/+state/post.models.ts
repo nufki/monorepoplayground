@@ -8,6 +8,17 @@ export interface PostEntity {
   createdDate: Date;
   commentCnt: number;
   likes: LikeEntity[];
+  comments: CommentEntity[];
+  selfLike: boolean;
+}
+
+export interface CommentEntity {
+  id: string;
+  author: UserEntity;
+  text: string;
+  createdDate: Date;
+  likes: LikeEntity[];
+  selfLike: boolean;
 }
 
 export interface LikeEntity {

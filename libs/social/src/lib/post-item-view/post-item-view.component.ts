@@ -50,18 +50,6 @@ export class PostItemViewComponent implements OnInit {
     return '0 comments';
   }
 
-  public selfLike(): boolean {
-    if (this.post) {
-      return (
-        this.post.likes.find((like: LikeEntity) => {
-          if (like.user.username === 'nufki81') return true;
-          else return false;
-        }) !== undefined
-      );
-    }
-    return false;
-  }
-
   /***************************************************************************
    * Evaluate and show like text
    ***************************************************************************/

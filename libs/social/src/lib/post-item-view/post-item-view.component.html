@@ -30,12 +30,12 @@
   </ion-grid>
 
   <ion-card-content>
-    <!-- <p>{{ post.id }}</p> -->
-    <p>by {{ post.text }}</p>
+    <!-- LIKE TEXT -->
+    <p>{{ post.text }}</p>
   </ion-card-content>
 
   <ion-item slot="end" lines="none">
-    <!-- LIKE TEXT -->
+    <!-- LIKE COUNT -->
     <ion-label>
       <p
         class="like-count-text"
@@ -51,7 +51,7 @@
       </ng-template>
     </ion-label>
 
-    <!-- COMMENT TEXT  -->
+    <!-- COMMENT COUNT  -->
     <ion-button fill="clear" mode="ios">
       <ion-label (click)="showPostComments()">
         <p class="comment-cnt-text">
@@ -73,8 +73,8 @@
           color="light"
           ><ion-icon
             #likeIcon
-            [color]="selfLike() ? 'primary' : ''"
-            [name]="selfLike() ? 'thumbs-up' : 'thumbs-up-outline'"
+            [color]="post.selfLike ? 'primary' : ''"
+            [name]="post.selfLike ? 'thumbs-up' : 'thumbs-up-outline'"
             size="medium"
           ></ion-icon>
         </ion-button>
@@ -96,4 +96,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+
 </div>

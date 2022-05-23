@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, of, tap, Observable } from 'rxjs';
-import { PostEntity } from './+state/post.models';
+import { LikeEntity, PostEntity } from './+state/post.models';
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +48,22 @@ export class PostService {
       catchError((error) => of(error)),
       map((post) => post || [])
     );
+  }
+
+  public updateSelfLike(posts: PostEntity[]) {
+    if (posts) {
+      posts.map((post) => {
+        const p = post.likes.find((like: LikeEntity) => {
+          if (like.user.username === 'nufki81') return true;
+          else return false;
+        });
+        if (p) {
+          post.selfLike = true;
+        } else {
+          post.selfLike = false;
+        }
+      });
+    }
+    return false;
   }
 }

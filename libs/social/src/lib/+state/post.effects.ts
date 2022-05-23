@@ -19,6 +19,7 @@ export class PostEffects {
           return this.postService.fetchFriendsPost().pipe(
             map((posts) => {
               console.log('friends post api ', posts);
+              this.postService.updateSelfLike(posts);
               return PostActions.loadPostSuccess({ posts });
             })
           );

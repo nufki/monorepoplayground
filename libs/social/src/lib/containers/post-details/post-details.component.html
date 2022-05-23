@@ -22,4 +22,9 @@
       </div>
     </div>
   </ng-template>
+
+  <united-comments-view
+    *ngIf="post$ | async as post"
+    [comments]="post.comments"
+  ></united-comments-view>
 </ion-content>
