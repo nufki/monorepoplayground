@@ -1,0 +1,70 @@
+<ion-row class="wrapper" *ngFor="let comment of comments">
+  <!-- SHOW AVATAR OF THE USER -->
+  <ion-col size="2">
+    <ion-avatar>
+      <ion-img src="../assets/icon/generic-avatar.png"></ion-img>
+    </ion-avatar>
+  </ion-col>
+
+  <!-- COMMENT BLOCK -->
+  <ion-col size="10" class="ion-no-margin">
+    <div class="message-box">
+      <!-- SHOW COMMENT INFO HEADER -->
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col size="10">
+          <span class="profile-name">{{ comment.author.username }}</span>
+
+          <br />
+          <span class="country-time"> {{ comment.createdDate | date }}</span>
+        </ion-col>
+        <ion-col class="ion-padding-start ion-padding-bottom" size="2">
+          <ion-label>
+            <ion-icon
+              size="small"
+              color="primary"
+              name="ellipsis-horizontal"
+            ></ion-icon>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+      <!-- SHOW COMMENT TEXT -->
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col class="comment-text" size="12">
+          <p>{{ comment.text }}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <!-- #LIKE -->
+    <ion-item lines="none">
+      <ion-button
+        slot="start"
+        size="small"
+        (click)="likeSelected(comment)"
+        color="medium"
+        mode="ios"
+      >
+        <span class="ion-text-left"
+          ><b>{{ !comment.selfLike ? 'Like' : 'Unlike' }}</b></span
+        >
+      </ion-button>
+
+      <ion-button
+        slot="end"
+        (click)="showLikes(comment)"
+        fill="clear"
+        [color]="comment.selfLike ? 'primary' : 'medium'"
+        size="small"
+        mode="ios"
+      >
+        <ion-icon
+          #likeIcon
+          [name]="comment.selfLike ? 'thumbs-up' : 'thumbs-up-outline'"
+          slot="start"
+        ></ion-icon>
+        {{ comment.likes.length }}
+      </ion-button>
+    </ion-item>
+  </ion-col>
+</ion-row>

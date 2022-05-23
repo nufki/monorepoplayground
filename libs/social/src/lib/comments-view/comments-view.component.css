@@ -1,0 +1,31 @@
+.profile-name {
+  color: var(--ion-color-dark);
+  font-weight: bold;
+}
+
+.comment-text {
+  white-space: pre-line;
+  font-size: 13px;
+}
+
+.country-time {
+  text-decoration: none;
+  color: var(--ion-color-medium);
+  font-size: 10px;
+  text-align: left;
+  margin-top: 0px;
+}
+
+
+.message-box {
+  position: relative;
+  margin-left: 0px;
+  margin-right: 2px;
+  margin-bottom: 0px;
+  padding: 5px;
+  background-color: var(--ion-color-light);
+  text-align: left;
+  font: 400 0.9em "Open Sans", sans-serif;
+  border: 1px solid var(--ion-color-light);
+  border-radius: 10px;
+}
