@@ -10,6 +10,7 @@
 <ion-content [fullscreen]="true">
   <united-post-item-view
     (showPostDetail)="onPostDetail($event)"
+    (postLike)="onPostLike($event)"
     *ngIf="post$ | async as post; else loading"
     [post]="post"
   >

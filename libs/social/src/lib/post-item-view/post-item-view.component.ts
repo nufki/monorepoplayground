@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PostEntity } from '../+state/post.models';
 import { LikeEntity } from './../+state/post.models';
 
@@ -12,8 +13,13 @@ export class PostItemViewComponent implements OnInit {
   @Input() post: PostEntity | undefined;
   @Output() showPostDetail = new EventEmitter<string>();
   @Output() postLike = new EventEmitter<string>();
+  @Output() postDeleted = new EventEmitter<string>();
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private actionSheetController: ActionSheetController,
+    private alertController: AlertController
+  ) {
     console.log('PostItemViewComponent');
   }
 
@@ -22,7 +28,6 @@ export class PostItemViewComponent implements OnInit {
   }
 
   likeActionMenu() {
-    console.log('like button pressed');
     if (this.post) {
       this.postLike.emit(this.post.id);
     }
@@ -88,5 +93,72 @@ export class PostItemViewComponent implements OnInit {
    ***************************************************************************/
   public async showLikes() {
     console.log('show all user likes');
+  }
+
+  /***************************************************************************
+   * Post Menu Actions
+   ***************************************************************************/
+  public async postActionMenu() {
+    const actionSheet = await this.actionSheetController.create({
+      buttons: [
+        {
+          text: 'Delete post',
+          icon: 'trash-outline',
+          handler: async () => {
+            const alert = await this.alertController.create({
+              header: 'Delete your post?',
+              message: 'Do you really want to delete your post?',
+              buttons: [
+                {
+                  text: 'Cancel',
+                  role: 'cancel',
+                  handler: (cancel) => {
+                    console.log('Cancel deletion');
+                  },
+                },
+                {
+                  text: 'OK',
+                  handler: () => {
+                    if (this.post) this.postDeleted.emit(this.post.id);
+                  },
+                },
+              ],
+            });
+            await alert.present();
+          },
+        },
+        {
+          text: 'Edit post',
+          icon: 'create-outline',
+          handler: () => {
+            console.log('Edit post');
+          },
+        },
+        {
+          text: 'Share post',
+          icon: 'share-outline',
+          handler: () => {
+            console.log('Share post');
+          },
+        },
+        {
+          text: 'Who can see this post?',
+          icon: 'eye-outline',
+          handler: async () => {
+            console.log('Who can see this post');
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel');
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
   }
 }

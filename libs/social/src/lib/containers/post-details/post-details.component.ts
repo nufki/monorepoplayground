@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { likeUnlikePost } from '../../+state/post.actions';
 import { PostEntity } from '../../+state/post.models';
 import { selectPost } from '../../+state/post.selectors';
 
@@ -23,5 +24,10 @@ export class PostDetailsComponent implements OnInit {
 
   onPostDetail(id: string) {
     //this.router.navigate(['post-details/' + id]);
+  }
+
+  onPostLike(id: string) {
+    console.log('post like clicked: ', id);
+    this.store.dispatch(likeUnlikePost({ postId: id }));
   }
 }

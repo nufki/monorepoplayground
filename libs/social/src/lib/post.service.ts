@@ -75,7 +75,6 @@ export class PostService {
         '?username=nufki81&mode=UNLIKE&isAnonymous=' +
         isAnonymous;
     }
-
     console.log('sendPostLike: ' + apiEndpoint);
     return this.http.patch<any>(apiEndpoint, null);
   }
@@ -98,5 +97,20 @@ export class PostService {
       });
     }
     return false;
+  }
+
+  /***************************************************************************
+   * Delete a post and apply it in the back-end
+   ***************************************************************************/
+  public deletePost(postId: number) {
+    const apiEndpoint =
+      this.socialNetServiceURL +
+      '/api1/social-networking/posts/' +
+      postId +
+      '?username=nufki81';
+
+    console.log('deletePost: ' + apiEndpoint);
+
+    return this.http.delete<any>(apiEndpoint);
   }
 }

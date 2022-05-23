@@ -42,3 +42,18 @@ export const updatePostLikeUnlikeFailure = createAction(
   '[Post/API] Update Post Like/Unlike Failure',
   props<{ error: any }>()
 );
+
+export const deletePost = createAction(
+  '[Router] delete Post',
+  props<{ postId: string }>()
+);
+
+export const deletePostSuccess = createAction(
+  '[Post/API] Delete Post Success',
+  props<{ postId: string }>()
+);
+
+export const deletePostFailure = createAction(
+  '[Post/API] Delete Post Failure',
+  props<{ error: any }>()
+);

@@ -1,12 +1,11 @@
-import { likeUnlikePost } from './../../+state/post.actions';
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { init, showPost } from '../../+state/post.actions';
+import { deletePost, init } from '../../+state/post.actions';
 import { PostEntity } from '../../+state/post.models';
 import { getAllPosts, getPostError } from '../../+state/post.selectors';
+import { likeUnlikePost } from './../../+state/post.actions';
 
 @Component({
   selector: 'united-post-list',
@@ -33,5 +32,10 @@ export class PostListComponent implements OnInit {
   onPostLike(id: string) {
     console.log('post like clicked: ', id);
     this.store.dispatch(likeUnlikePost({ postId: id }));
+  }
+
+  onPostDelete(id: string) {
+    console.log('post delete clicked: ', id);
+    this.store.dispatch(deletePost({ postId: id }));
   }
 }

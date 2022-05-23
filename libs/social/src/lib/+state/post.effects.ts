@@ -11,6 +11,7 @@ import * as PostActions from './post.actions';
 
 @Injectable()
 export class PostEffects {
+  // INIT
   init$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.init),
@@ -33,7 +34,8 @@ export class PostEffects {
     )
   );
 
-  loadLikeUnlike$ = createEffect(() =>
+  // UPDATE LIKE/UNLIKE POST EFFECT
+  updateLikeUnlike$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.likeUnlikePost),
       concatLatestFrom(({ postId }) => [
@@ -54,6 +56,24 @@ export class PostEffects {
     )
   );
 
+  // DELETE POST EFFECT
+  deletePost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.deletePost),
+      switchMap(({ postId }) =>
+        this.postService.deletePost(+postId).pipe(
+          map((post) =>
+            PostActions.deletePostSuccess({
+              postId: post.id,
+            })
+          )
+        )
+      ),
+      catchError((error) => of(PostActions.deletePostFailure({ error })))
+    )
+  );
+
+  // LOAD POST DETAILS EFFECT
   loadPostDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.showPost),
@@ -70,6 +90,7 @@ export class PostEffects {
     )
   );
 
+  // SHOW POST DETAILS (ROUTING)
   postDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),

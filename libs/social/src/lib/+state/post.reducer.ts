@@ -47,7 +47,6 @@ const PostReducer = createReducer(
     error,
   })),
   on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { postId }) =>
-    //postsAdapter.upsertOne({ ...post, selfLike: !post.selfLike }, state)
     postsAdapter.updateOne(
       {
         id: postId,
@@ -55,6 +54,9 @@ const PostReducer = createReducer(
       },
       state
     )
+  ),
+  on(PostActions.deletePost, (state: State, { postId }) =>
+    postsAdapter.removeOne(postId, state)
   )
 );
 
