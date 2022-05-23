@@ -27,3 +27,18 @@ export const showPost = createAction(
   '[Router] Show Post',
   props<{ postId: string }>()
 );
+
+export const likeUnlikePost = createAction(
+  '[Router] LikeUnlike Post',
+  props<{ postId: string }>()
+);
+
+export const updatePostLikeUnlikeSuccess = createAction(
+  '[Post/API] Update Post Like/Unlike Success',
+  props<{ postId: string }>()
+);
+
+export const updatePostLikeUnlikeFailure = createAction(
+  '[Post/API] Update Post Like/Unlike Failure',
+  props<{ error: any }>()
+);

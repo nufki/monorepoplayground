@@ -1,3 +1,4 @@
+import { selectPostById } from './post.selectors';
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { getSelectors, ROUTER_NAVIGATED } from '@ngrx/router-store';
@@ -29,6 +30,27 @@ export class PostEffects {
           return PostActions.loadPostFailure({ error });
         },
       })
+    )
+  );
+
+  loadLikeUnlike$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.likeUnlikePost),
+      concatLatestFrom(({ postId }) => [
+        this.store.select(selectPostById(postId)),
+      ]),
+      switchMap(([{ postId }, post]) =>
+        this.postService.updatePostLikeUnlike(+postId, !post?.selfLike).pipe(
+          map((post) =>
+            PostActions.updatePostLikeUnlikeSuccess({
+              postId: post.id,
+            })
+          )
+        )
+      ),
+      catchError((error) =>
+        of(PostActions.updatePostLikeUnlikeFailure({ error }))
+      )
     )
   );
 

@@ -1,5 +1,6 @@
 import { getSelectors } from '@ngrx/router-store';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { PostEntity } from './post.models';
 import { POST_FEATURE_KEY, State, postsAdapter } from './post.reducer';
 
 // Lookup the 'Post' feature state managed by NgRx
@@ -43,3 +44,8 @@ export const selectPost = createSelector(
   selectRouteParams,
   (posts, { id }) => posts[id]
 );
+
+export const selectPostById = (id: string) =>
+  createSelector(getPostEntities, (entities) =>
+    id ? entities[id] : undefined
+  );

@@ -6,6 +6,7 @@
   <ion-card *ngFor="let p of posts$ | async">
     <united-post-item-view
       (showPostDetail)="onPostDetail($event)"
+      (postLike)="onPostLike($event)"
       *ngIf="posts$ | async as post; else loading"
       [post]="p"
     >

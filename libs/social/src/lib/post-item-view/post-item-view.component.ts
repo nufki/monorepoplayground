@@ -11,6 +11,7 @@ import { LikeEntity } from './../+state/post.models';
 export class PostItemViewComponent implements OnInit {
   @Input() post: PostEntity | undefined;
   @Output() showPostDetail = new EventEmitter<string>();
+  @Output() postLike = new EventEmitter<string>();
 
   constructor(private router: Router) {
     console.log('PostItemViewComponent');
@@ -22,6 +23,9 @@ export class PostItemViewComponent implements OnInit {
 
   likeActionMenu() {
     console.log('like button pressed');
+    if (this.post) {
+      this.postLike.emit(this.post.id);
+    }
   }
 
   /***************************************************************************
@@ -82,7 +86,7 @@ export class PostItemViewComponent implements OnInit {
    * Navigate to single post respectively commment section where all the
    * comments to the posts are shown.
    ***************************************************************************/
-  public async showLikes(post: PostEntity) {
-    console.log('like pressed');
+  public async showLikes() {
+    console.log('show all user likes');
   }
 }

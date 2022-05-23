@@ -50,6 +50,39 @@ export class PostService {
     );
   }
 
+  /***************************************************************************
+   * Send a like of an existing post to the back-end
+   ***************************************************************************/
+  public updatePostLikeUnlike(
+    postId: number,
+    like: boolean,
+    isAnonymous: boolean = false
+  ): Observable<PostEntity> {
+    let apiEndpoint = '';
+
+    if (like) {
+      apiEndpoint =
+        this.socialNetServiceURL +
+        '/api1/social-networking/likes/posts/' +
+        postId +
+        '?username=nufki81&mode=LIKE&isAnonymous=' +
+        isAnonymous;
+    } else {
+      apiEndpoint =
+        this.socialNetServiceURL +
+        '/api1/social-networking/likes/posts/' +
+        postId +
+        '?username=nufki81&mode=UNLIKE&isAnonymous=' +
+        isAnonymous;
+    }
+
+    console.log('sendPostLike: ' + apiEndpoint);
+    return this.http.patch<any>(apiEndpoint, null);
+  }
+
+  /***************************************************************************
+   * Update model if the user has liked any post from a list of posts
+   ***************************************************************************/
   public updateSelfLike(posts: PostEntity[]) {
     if (posts) {
       posts.map((post) => {

@@ -40,7 +40,7 @@
       <p
         class="like-count-text"
         *ngIf="post.likes.length; else noLikes"
-        (click)="showLikes(post)"
+        (click)="showLikes()"
       >
         {{ printLikeText(post.likes) }}
       </p>
@@ -96,6 +96,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
 </div>

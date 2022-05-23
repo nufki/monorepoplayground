@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as PostActions from './post.actions';
@@ -44,7 +45,17 @@ const PostReducer = createReducer(
   on(PostActions.loadPostFailure, (state, { error }) => ({
     ...state,
     error,
-  }))
+  })),
+  on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { postId }) =>
+    //postsAdapter.upsertOne({ ...post, selfLike: !post.selfLike }, state)
+    postsAdapter.updateOne(
+      {
+        id: postId,
+        changes: { selfLike: !state.entities[postId]?.selfLike },
+      },
+      state
+    )
+  )
 );
 
 export function reducer(state: State | undefined, action: Action) {

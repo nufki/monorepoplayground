@@ -1,3 +1,4 @@
+import { likeUnlikePost } from './../../+state/post.actions';
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,5 +28,10 @@ export class PostListComponent implements OnInit {
 
   onPostDetail(id: string) {
     this.router.navigate(['post-details/' + id]);
+  }
+
+  onPostLike(id: string) {
+    console.log('post like clicked: ', id);
+    this.store.dispatch(likeUnlikePost({ postId: id }));
   }
 }
