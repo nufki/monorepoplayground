@@ -3,14 +3,20 @@
  */
 export interface PostEntity {
   id: string;
-  author: {
-    username: string;
-  };
+  author: UserEntity;
   text: string;
   createdDate: Date;
+  commentCnt: number;
+  likes: LikeEntity[];
 }
 
-// export interface PostEntity {
-//   id: string | number; // Primary ID
-//   name: string;
-// }
+export interface LikeEntity {
+  id: string; // Primary ID
+  user: UserEntity;
+  likeDate: Date;
+}
+
+export interface UserEntity {
+  id: string; // Primary ID
+  username: string;
+}

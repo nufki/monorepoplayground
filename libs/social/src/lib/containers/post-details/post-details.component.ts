@@ -20,4 +20,8 @@ export class PostDetailsComponent implements OnInit {
       console.log('post: ', p);
     });
   }
+
+  onPostDetail(id: string) {
+    //this.router.navigate(['post-details/' + id]);
+  }
 }

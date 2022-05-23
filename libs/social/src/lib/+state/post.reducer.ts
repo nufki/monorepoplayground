@@ -37,6 +37,11 @@ const PostReducer = createReducer(
       loaded: true,
     })
   ),
+  on(PostActions.showPost, (state: State, { postId }) => ({
+    ...state,
+    selectedId: postId,
+    loaded: false,
+  })),
   on(PostActions.loadPostFailure, (state, { error }) => ({
     ...state,
     error,

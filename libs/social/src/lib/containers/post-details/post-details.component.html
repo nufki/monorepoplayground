@@ -7,4 +7,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <united-post-item-view
+    (showPostDetail)="onPostDetail($event)"
+    *ngIf="post$ | async as post; else loading"
+    [post]="post"
+  >
+  </united-post-item-view>
+
+  <ng-template #loading>
+    <div class="vertical-center">
+      <div class="center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    </div>
+  </ng-template>
+</ion-content>

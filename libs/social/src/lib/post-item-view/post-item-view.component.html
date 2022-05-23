@@ -34,7 +34,34 @@
     <p>by {{ post.text }}</p>
   </ion-card-content>
 
-  <!-- Social Interaction Buttons -->
+  <ion-item slot="end" lines="none">
+    <!-- LIKE TEXT -->
+    <ion-label>
+      <p
+        class="like-count-text"
+        *ngIf="post.likes.length; else noLikes"
+        (click)="showLikes(post)"
+      >
+        {{ printLikeText(post.likes) }}
+      </p>
+      <ng-template #noLikes>
+        <p class="like-count-text">
+          {{ printLikeText(post.likes) }}
+        </p>
+      </ng-template>
+    </ion-label>
+
+    <!-- COMMENT TEXT  -->
+    <ion-button fill="clear" mode="ios">
+      <ion-label (click)="showPostComments()">
+        <p class="comment-cnt-text">
+          {{ printCommentText() }}
+        </p>
+      </ion-label>
+    </ion-button>
+  </ion-item>
+
+  <!-- SOCIAL ITERACTION BUTTONS -->
   <ion-grid class="ion-no-padding ion-no-margin">
     <ion-row>
       <ion-col class="ion-no-padding ion-no-margin">
@@ -46,8 +73,8 @@
           color="light"
           ><ion-icon
             #likeIcon
-            [color]="true ? 'primary' : ''"
-            [name]="true ? 'thumbs-up' : 'thumbs-up-outline'"
+            [color]="selfLike() ? 'primary' : ''"
+            [name]="selfLike() ? 'thumbs-up' : 'thumbs-up-outline'"
             size="medium"
           ></ion-icon>
         </ion-button>
