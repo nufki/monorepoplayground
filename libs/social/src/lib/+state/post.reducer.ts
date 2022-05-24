@@ -2,6 +2,7 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as PostActions from './post.actions';
 import { PostEntity, CommentEntity } from './post.models';
+import { getSelectedId, selectPost, selectPostById } from './post.selectors';
 
 export const POST_FEATURE_KEY = 'Post';
 
@@ -17,6 +18,11 @@ export interface PostPartialState {
 
 export const postsAdapter: EntityAdapter<PostEntity> =
   createEntityAdapter<PostEntity>();
+
+export const commentsAdapter: EntityAdapter<CommentEntity> =
+  createEntityAdapter<CommentEntity>({
+    selectId: (comment) => comment.id,
+  });
 
 export const initialState: State = postsAdapter.getInitialState({
   // set initial required properties
@@ -65,33 +71,28 @@ const PostReducer = createReducer(
       //   (c) => c.id === commentId
       // );
       // if (cm) cm.selfLike = !cm?.selfLike;
+      const entity = { ...state.entities[postId] };
 
-      const cmts = Object.assign(
-        <CommentEntity>{},
-        state.entities[postId]?.comments
-      );
-      console.log(cmts[0]);
-      console.log(cmts[1]);
-      console.log(cmts.length);
+      if (entity.comments) {
+        const updatedComments = entity.comments.map((c) => {
+          if (c.id === commentId) {
+            c.selfLike = !c.selfLike;
+          }
+          return c;
+        });
 
-      for (let index = 0; index < Object.keys(cmts).length; index++) {
-        const c = Object.keys(index) as CommentEntity;
-        if (c.id === commentId) {
-          c.selfLike = !c.selfLike;
-          break;
-        }
-      }
-
-      const st = postsAdapter.updateOne(
-        {
-          id: postId,
-          changes: {
-            comments: cmts,
+        const st = postsAdapter.updateOne(
+          {
+            id: postId,
+            changes: {
+              comments: updatedComments,
+            },
           },
-        },
-        state
-      );
-      return st;
+          state
+        );
+        return st;
+      }
+      return state;
     }
   )
 );

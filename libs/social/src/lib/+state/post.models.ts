@@ -1,5 +1,7 @@
+import { EntityAdapter } from '@ngrx/entity';
+
 /**
- * Interface for the 'Social' data
+ * Interface for the 'Post' data
  */
 export interface PostEntity {
   id: string;
@@ -8,7 +10,8 @@ export interface PostEntity {
   createdDate: Date;
   commentCnt: number;
   likes: LikeEntity[];
-  comments: CommentEntity[];
+  //comments: CommentEntity[];
+  comments: EntityAdapter<CommentEntity>;
   selfLike: boolean;
 }
 
