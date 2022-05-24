@@ -88,7 +88,7 @@ const PostReducer = createReducer(
                 id: comment.id,
                 changes: { likes: comment.likes },
               },
-              state.entities[postId]?.comments
+              state.entities[postId]?.comments ?? initialCommentState
             ),
           },
         },
