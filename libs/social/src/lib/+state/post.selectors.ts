@@ -4,12 +4,12 @@ import {
   createSelector,
   MemoizedSelector,
 } from '@ngrx/store';
-import { CommentEntity, PostEntity } from './post.models';
+import { CommentEntity, LikeEntity, PostEntity } from './post.models';
 import {
+  commentsAdapter,
+  postsAdapter,
   POST_FEATURE_KEY,
   State,
-  postsAdapter,
-  commentsAdapter,
 } from './post.reducer';
 
 // Lookup the 'Post' feature state managed by NgRx
@@ -77,3 +77,12 @@ export const selectCommentById = (
   createSelector(selectPostById(postId), (post) =>
     post && post.comments ? post.comments.entities[commentId] : undefined
   );
+
+// export const selectPostLikes = (
+//   postId: string
+// ): MemoizedSelector<object, LikeEntity[] | undefined> =>
+//   createSelector(selectPostById(postId), (post) =>
+//     post && post.likes
+//       ? likesAdapter.getSelectors().selectAll(post.likes)
+//       : undefined
+//   );

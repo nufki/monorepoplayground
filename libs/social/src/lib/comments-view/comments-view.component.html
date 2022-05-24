@@ -52,6 +52,7 @@
 
       <ion-button
         slot="end"
+        [routerLink]="['comments/' + comment.id + '/likes']"
         (click)="showLikes(comment)"
         fill="clear"
         [color]="isSelfLike(comment.likes) ? 'primary' : 'medium'"

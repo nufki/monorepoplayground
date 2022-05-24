@@ -98,7 +98,8 @@ export class PostItemViewComponent implements OnInit {
    * comments to the posts are shown.
    ***************************************************************************/
   public async showLikes() {
-    console.log('show all user likes');
+    console.log('show all user likes', this.post?.likes);
+    // this.router.navigate(['likes']);
   }
 
   /***************************************************************************

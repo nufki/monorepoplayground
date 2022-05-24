@@ -36,11 +36,12 @@
 
   <ion-item slot="end" lines="none">
     <!-- LIKE COUNT -->
+    <!-- (click)="showLikes()" -->
     <ion-label>
       <p
         class="like-count-text"
         *ngIf="post.likes.length; else noLikes"
-        (click)="showLikes()"
+        [routerLink]="['/post-details/' + post.id + '/likes']"
       >
         {{ printLikeText(post.likes) }}
       </p>
