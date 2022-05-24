@@ -79,7 +79,7 @@ const PostReducer = createReducer(
   on(
     PostActions.updateCommentLikeUnlikeSuccess,
     (state: State, { postId, comment }) =>
-      postsAdapter.updateOne(
+      commentsAdapter.updateOne(
         {
           id: comment.id,
           changes: { likes: comment.likes },
