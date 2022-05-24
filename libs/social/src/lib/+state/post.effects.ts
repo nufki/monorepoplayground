@@ -21,8 +21,7 @@ export class PostEffects {
           return this.postService.fetchFriendsPost().pipe(
             map((posts) => {
               console.log('friends post api ', posts);
-              this.postService.updateSelfLike(posts);
-              return PostActions.loadPostSuccess({ posts });
+              return PostActions.loadPostsSuccess({ posts });
             })
           );
         },
@@ -80,9 +79,8 @@ export class PostEffects {
       switchMap(({ postId }) =>
         this.postService.fetchPostComments(+postId, 0).pipe(
           map((post) => {
-            this.postService.updateSelfLikeComment(post);
             return PostActions.loadPostDetailsSuccess({
-              post: post,
+              post,
             });
           })
         )

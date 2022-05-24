@@ -1,5 +1,6 @@
-import { CommentEntity } from './../+state/post.models';
+import { CommentEntity, LikeEntity } from './../+state/post.models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'united-comments-view',
@@ -10,7 +11,9 @@ export class CommentsViewComponent implements OnInit {
   @Input() comments: CommentEntity[] | undefined;
   @Output() commentLike = new EventEmitter<string>();
 
-  constructor() {
+  constructor(
+    private postService: PostService // TODO: this should be a utility which is used for checking self-like etc.
+  ) {
     console.log('CommentsViewComponent');
   }
 
@@ -25,5 +28,9 @@ export class CommentsViewComponent implements OnInit {
 
   showLikes(comment: CommentEntity) {
     console.log('show likes clicked...');
+  }
+
+  isSelfLike(likes: LikeEntity[]) {
+    return this.postService.isSelfLike(likes);
   }
 }

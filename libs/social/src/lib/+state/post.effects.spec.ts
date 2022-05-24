@@ -31,7 +31,7 @@ describe('PostEffects', () => {
       actions = hot('-a-|', { a: PostActions.init() });
 
       const expected = hot('-a-|', {
-        a: PostActions.loadPostSuccess({ Post: [] }),
+        a: PostActions.loadPostsSuccess({ Post: [] }),
       });
 
       expect(effects.init$).toBeObservable(expected);

@@ -73,8 +73,8 @@
           color="light"
           ><ion-icon
             #likeIcon
-            [color]="post.selfLike ? 'primary' : ''"
-            [name]="post.selfLike ? 'thumbs-up' : 'thumbs-up-outline'"
+            [color]="isSelfLike(post.likes) ? 'primary' : ''"
+            [name]="isSelfLike(post.likes) ? 'thumbs-up' : 'thumbs-up-outline'"
             size="medium"
           ></ion-icon>
         </ion-button>

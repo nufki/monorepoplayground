@@ -16,7 +16,7 @@ describe('Post Reducer', () => {
         createPostEntity('PRODUCT-AAA'),
         createPostEntity('PRODUCT-zzz'),
       ];
-      const action = PostActions.loadPostSuccess({ Post });
+      const action = PostActions.loadPostsSuccess({ Post });
 
       const result: State = reducer(initialState, action);
 

@@ -1,4 +1,4 @@
-import { EntityAdapter } from '@ngrx/entity';
+import { EntityState } from '@ngrx/entity';
 
 /**
  * Interface for the 'Post' data
@@ -11,7 +11,7 @@ export interface PostEntity {
   commentCnt: number;
   likes: LikeEntity[];
   //comments: CommentEntity[];
-  comments: EntityAdapter<CommentEntity>;
+  comments: EntityState<CommentEntity>;
   selfLike: boolean;
 }
 

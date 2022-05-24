@@ -20,28 +20,42 @@ export const postsAdapter: EntityAdapter<PostEntity> =
   createEntityAdapter<PostEntity>();
 
 export const commentsAdapter: EntityAdapter<CommentEntity> =
-  createEntityAdapter<CommentEntity>({
-    selectId: (comment) => comment.id,
-  });
+  createEntityAdapter<CommentEntity>();
 
 export const initialState: State = postsAdapter.getInitialState({
   // set initial required properties
   loaded: false,
 });
 
+export const initialCommentState = commentsAdapter.getInitialState({});
+
 const PostReducer = createReducer(
   initialState,
   on(PostActions.init, (state) => ({ ...state, loaded: false, error: null })),
-  on(PostActions.loadPostSuccess, (state, { posts }) =>
-    postsAdapter.setAll(posts, { ...state, loaded: true })
-  ),
-  on(PostActions.loadPostDetailsSuccess, (state: State, { post }) =>
-    postsAdapter.upsertOne(post, {
-      ...state,
-      selectedId: post.id,
-      loaded: true,
-    })
-  ),
+  on(PostActions.loadPostsSuccess, (state, { posts }) => {
+    const postEntities: PostEntity[] = posts.map((post) => ({
+      ...post,
+      comments: initialCommentState,
+    }));
+    return postsAdapter.setAll(postEntities, { ...state, loaded: true });
+  }),
+  on(PostActions.loadPostDetailsSuccess, (state: State, { post }) => {
+    const comments = state?.entities[post.id]?.comments ?? initialCommentState;
+    return postsAdapter.upsertOne(
+      {
+        ...post,
+        comments:
+          post.comments.length > 0
+            ? commentsAdapter.upsertMany(post.comments, comments)
+            : comments,
+      },
+      {
+        ...state,
+        selectedId: post.id,
+        loaded: true,
+      }
+    );
+  }),
   on(PostActions.showPost, (state: State, { postId }) => ({
     ...state,
     selectedId: postId,
@@ -71,27 +85,31 @@ const PostReducer = createReducer(
       //   (c) => c.id === commentId
       // );
       // if (cm) cm.selfLike = !cm?.selfLike;
-      const entity = { ...state.entities[postId] };
+      const post = { ...state.entities[postId] };
+      if (!post.comments) return state;
 
-      if (entity.comments) {
-        const updatedComments = entity.comments.map((c) => {
-          if (c.id === commentId) {
-            c.selfLike = !c.selfLike;
-          }
-          return c;
-        });
+      const comment = post.comments.entities[commentId];
+      if (!comment) return state;
 
-        const st = postsAdapter.updateOne(
-          {
-            id: postId,
-            changes: {
-              comments: updatedComments,
-            },
+      const comments = commentsAdapter.updateOne(
+        {
+          id: commentId,
+          changes: {
+            selfLike: comment.selfLike,
           },
-          state
-        );
-        return st;
-      }
+        },
+        post.comments
+      );
+
+      const st = postsAdapter.updateOne(
+        {
+          id: postId,
+          changes: {
+            comments,
+          },
+        },
+        state
+      );
       return state;
     }
   )

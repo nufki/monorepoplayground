@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PostEntity } from '../+state/post.models';
 import { LikeEntity } from './../+state/post.models';
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'united-post-item-view',
@@ -18,13 +19,18 @@ export class PostItemViewComponent implements OnInit {
   constructor(
     private router: Router,
     private actionSheetController: ActionSheetController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private postService: PostService // TODO: this should be a utility which is used for checking self-like etc.
   ) {
     console.log('PostItemViewComponent');
   }
 
   ngOnInit(): void {
     console.log('PostItemViewComponent - ngOnInit', this.post);
+  }
+
+  isSelfLike(likes: LikeEntity[]) {
+    return this.postService.isSelfLike(likes);
   }
 
   likeActionMenu() {

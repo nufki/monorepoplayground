@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { combineLatestWith, filter, Observable, switchMap } from 'rxjs';
 import { likeUnlikeComment, likeUnlikePost } from '../../+state/post.actions';
-import { PostEntity } from '../../+state/post.models';
-import { selectPost } from '../../+state/post.selectors';
+import { CommentEntity, PostEntity } from '../../+state/post.models';
+import { selectComments, selectPost } from '../../+state/post.selectors';
 
 @Component({
   selector: 'united-post-details',
@@ -12,6 +12,10 @@ import { selectPost } from '../../+state/post.selectors';
 })
 export class PostDetailsComponent implements OnInit {
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
+  comments$ = this.post$.pipe(
+    filter((post) => !!post),
+    switchMap((post) => this.store.select(selectComments(post?.id as string)))
+  );
 
   constructor(private readonly store: Store) {}
 

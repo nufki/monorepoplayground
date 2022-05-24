@@ -46,7 +46,7 @@
         mode="ios"
       >
         <span class="ion-text-left"
-          ><b>{{ !comment.selfLike ? 'Like' : 'Unlike' }}</b></span
+          ><b>{{ !isSelfLike(comment.likes) ? 'Like' : 'Unlike' }}</b></span
         >
       </ion-button>
 
@@ -54,13 +54,13 @@
         slot="end"
         (click)="showLikes(comment)"
         fill="clear"
-        [color]="comment.selfLike ? 'primary' : 'medium'"
+        [color]="isSelfLike(comment.likes) ? 'primary' : 'medium'"
         size="small"
         mode="ios"
       >
         <ion-icon
           #likeIcon
-          [name]="comment.selfLike ? 'thumbs-up' : 'thumbs-up-outline'"
+          [name]="isSelfLike(comment.likes) ? 'thumbs-up' : 'thumbs-up-outline'"
           slot="start"
         ></ion-icon>
         {{ comment.likes.length }}

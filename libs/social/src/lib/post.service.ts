@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, of, tap, Observable } from 'rxjs';
 import { CommentEntity, LikeEntity, PostEntity } from './+state/post.models';
+import { Post } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,13 @@ export class PostService {
   /***************************************************************************
    * Fetch friends "post cards" with user mentions, hashtags, assettags
    ***************************************************************************/
-  fetchFriendsPost(): Observable<Array<PostEntity>> {
+  fetchFriendsPost(): Observable<Post[]> {
     const apiEndpoint =
       this.socialNetServiceURL +
       '/api1/social-networking/posts/by-friends/nufki81?limit=10&offset=0';
 
     console.log(apiEndpoint);
-    return this.http.get<{ items: PostEntity[] }>(apiEndpoint).pipe(
+    return this.http.get<{ items: Post[] }>(apiEndpoint).pipe(
       tap((data) => console.log(data)),
       catchError((error) => of(error)),
       map((posts) => posts || [])
@@ -31,10 +32,7 @@ export class PostService {
    * Fetch post comments, associated tags (user mentions, assetTags &
    * hashTags etc. from the back-end.
    ***************************************************************************/
-  public fetchPostComments(
-    postId: number,
-    page: number = 0
-  ): Observable<PostEntity> {
+  public fetchPostComments(postId: number, page: number = 0): Observable<Post> {
     const apiEndpoint =
       this.socialNetServiceURL +
       '/api1/social-networking/posts/' +
@@ -43,7 +41,7 @@ export class PostService {
       page * 10;
 
     console.log(apiEndpoint);
-    return this.http.get<any>(apiEndpoint).pipe(
+    return this.http.get<Post>(apiEndpoint).pipe(
       tap((data) => console.log(data)),
       catchError((error) => of(error)),
       map((post) => post || [])
@@ -82,7 +80,7 @@ export class PostService {
   /***************************************************************************
    * Update model if the user has liked any post from a list of posts
    ***************************************************************************/
-  public updateSelfLike(posts: PostEntity[]) {
+  public updateSelfLike(posts: Post[]) {
     if (posts) {
       posts.map((post) => {
         const p = post.likes.find((like: LikeEntity) => {
@@ -99,18 +97,9 @@ export class PostService {
     return false;
   }
 
-  public updateSelfLikeComment(post: PostEntity) {
-    post.comments.map((comment) => {
-      const c = comment.likes.find((like: LikeEntity) => {
-        if (like.user.username === 'nufki81') return true;
-        else return false;
-      });
-      if (c) {
-        comment.selfLike = true;
-      } else {
-        comment.selfLike = false;
-      }
-    });
+  // TODO: Can be moved to a utility
+  public isSelfLike(likes: LikeEntity[]) {
+    return likes.find((like: LikeEntity) => like.user.username === 'nufki81');
   }
 
   /***************************************************************************

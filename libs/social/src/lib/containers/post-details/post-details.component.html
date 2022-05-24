@@ -8,25 +8,26 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <united-post-item-view
-    (showPostDetail)="onPostDetail($event)"
-    (postLike)="onPostLike($event)"
-    *ngIf="post$ | async as post; else loading"
-    [post]="post"
-  >
-  </united-post-item-view>
+  <div *ngIf="post$ | async as post; else loading">
+    <united-post-item-view
+      (showPostDetail)="onPostDetail($event)"
+      (postLike)="onPostLike($event)"
+      [post]="post"
+    >
+    </united-post-item-view>
 
-  <ng-template #loading>
-    <div class="vertical-center">
-      <div class="center">
-        <ion-spinner name="crescent"></ion-spinner>
-      </div>
-    </div>
-  </ng-template>
-
-  <united-comments-view
-    *ngIf="post$ | async as post"
-    (commentLike)="onCommentLike(post.id, $event)"
-    [comments]="post.comments"
-  ></united-comments-view>
+    <united-comments-view
+      *ngIf="comments$ | async as comments"
+      (commentLike)="onCommentLike(post.id, $event)"
+      [comments]="comments"
+    ></united-comments-view>
+  </div>
 </ion-content>
+
+<ng-template #loading>
+  <div class="vertical-center">
+    <div class="center">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  </div>
+</ng-template>

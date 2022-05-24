@@ -1,11 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { PostEntity } from './post.models';
+import { Post } from '../models';
 
 export const init = createAction('[Post Page] Init');
 
-export const loadPostSuccess = createAction(
+export const loadPostsSuccess = createAction(
   '[Post/API] Load Post Success',
-  props<{ posts: PostEntity[] }>()
+  props<{ posts: Post[] }>()
 );
 
 export const loadPostFailure = createAction(
@@ -15,7 +16,7 @@ export const loadPostFailure = createAction(
 
 export const loadPostDetailsSuccess = createAction(
   '[Post/API] Load PostDetails Success',
-  props<{ post: PostEntity }>()
+  props<{ post: Post }>()
 );
 
 export const loadPostDetailsFailure = createAction(

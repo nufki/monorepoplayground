@@ -1,6 +1,10 @@
 import { getSelectors } from '@ngrx/router-store';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PostEntity } from './post.models';
+import {
+  createFeatureSelector,
+  createSelector,
+  MemoizedSelector,
+} from '@ngrx/store';
+import { CommentEntity, PostEntity } from './post.models';
 import {
   POST_FEATURE_KEY,
   State,
@@ -14,8 +18,6 @@ export const getPostState = createFeatureSelector<State>(POST_FEATURE_KEY);
 const { selectRouteParams } = getSelectors();
 
 const { selectAll, selectEntities } = postsAdapter.getSelectors();
-const { selectAllComments, selectCommentsEntities } =
-  commentsAdapter.getSelectors();
 
 export const getPostLoaded = createSelector(
   getPostState,
@@ -52,24 +54,26 @@ export const selectPost = createSelector(
   (posts, { id }) => posts[id]
 );
 
-export const selectPostById = (id: string) =>
+export const selectPostById = (
+  id: string
+): MemoizedSelector<object, PostEntity | undefined> =>
   createSelector(getPostEntities, (entities) =>
     id ? entities[id] : undefined
   );
 
-// export const selectCommentById = (postId: string, commentId: string) =>
-//   createSelector(getPostEntities, (entities) =>
-//     entities[postId]?.comments.find((c) => c.id === commentId)
-//   );
-
-export const selectCommentsState = (postId: string) =>
-  createSelector(
-    selectPostById(postId),
-    (post) => post?.comments.getSelectors().selectAll
+export const selectComments = (
+  postId: string
+): MemoizedSelector<object, CommentEntity[] | undefined> =>
+  createSelector(selectPostById(postId), (post) =>
+    post && post.comments
+      ? commentsAdapter.getSelectors().selectAll(post.comments)
+      : undefined
   );
 
-export const selectCommentById = (postId: string, commentId: string) =>
-  createSelector(
-    selectPostById(postId),
-    (post) => post?.comments.getSelectors().selectEntities
+export const selectCommentById = (
+  postId: string,
+  commentId: string
+): MemoizedSelector<object, CommentEntity | undefined> =>
+  createSelector(selectPostById(postId), (post) =>
+    post && post.comments ? post.comments.entities[commentId] : undefined
   );
