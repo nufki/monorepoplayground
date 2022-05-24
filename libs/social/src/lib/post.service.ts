@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, of, tap, Observable } from 'rxjs';
-import { CommentEntity, LikeEntity, PostEntity } from './+state/post.models';
-import { Post } from './models';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import { LikeEntity } from './+state/post.models';
+import { Comment } from './models';
+import { Post } from './models/post.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,7 @@ export class PostService {
     postId: number,
     like: boolean,
     isAnonymous: boolean = false
-  ): Observable<PostEntity> {
+  ): Observable<Post> {
     let apiEndpoint = '';
 
     if (like) {
@@ -98,7 +99,7 @@ export class PostService {
   }
 
   // TODO: Can be moved to a utility
-  public isSelfLike(likes: LikeEntity[]) {
+  public isSelfLike(likes: LikeEntity[] | undefined = []) {
     return likes.find((like: LikeEntity) => like.user.username === 'nufki81');
   }
 
@@ -123,7 +124,7 @@ export class PostService {
   public updateCommentLikeUnlike(
     commentId: number,
     like: boolean
-  ): Observable<CommentEntity> {
+  ): Observable<Comment> {
     let apiEndpoint = '';
 
     if (like) {

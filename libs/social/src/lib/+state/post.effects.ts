@@ -41,13 +41,18 @@ export class PostEffects {
         this.store.select(selectPostById(postId)),
       ]),
       switchMap(([{ postId }, post]) =>
-        this.postService.updatePostLikeUnlike(+postId, !post?.selfLike).pipe(
-          map((post) =>
-            PostActions.updatePostLikeUnlikeSuccess({
-              postId: post.id,
-            })
+        this.postService
+          .updatePostLikeUnlike(
+            +postId,
+            !this.postService.isSelfLike(post?.likes)
           )
-        )
+          .pipe(
+            map((post) =>
+              PostActions.updatePostLikeUnlikeSuccess({
+                post: post,
+              })
+            )
+          )
       ),
       catchError((error) =>
         of(PostActions.updatePostLikeUnlikeFailure({ error }))
@@ -117,12 +122,15 @@ export class PostEffects {
       ]),
       switchMap(([{ postId, commentId }, comment]) =>
         this.postService
-          .updateCommentLikeUnlike(+commentId, !comment?.selfLike)
+          .updateCommentLikeUnlike(
+            +commentId,
+            !this.postService.isSelfLike(comment?.likes)
+          )
           .pipe(
-            map((comment) =>
+            map((c) =>
               PostActions.updateCommentLikeUnlikeSuccess({
                 postId: postId,
-                commentId: comment.id,
+                comment: c,
               })
             )
           )

@@ -1,8 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as PostActions from './post.actions';
-import { PostEntity, CommentEntity } from './post.models';
-import { getSelectedId, selectPost, selectPostById } from './post.selectors';
+import { CommentEntity, PostEntity } from './post.models';
 
 export const POST_FEATURE_KEY = 'Post';
 
@@ -65,11 +64,11 @@ const PostReducer = createReducer(
     ...state,
     error,
   })),
-  on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { postId }) =>
+  on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { post }) =>
     postsAdapter.updateOne(
       {
-        id: postId,
-        changes: { selfLike: !state.entities[postId]?.selfLike },
+        id: post.id,
+        changes: { likes: post.likes },
       },
       state
     )
@@ -79,39 +78,14 @@ const PostReducer = createReducer(
   ),
   on(
     PostActions.updateCommentLikeUnlikeSuccess,
-    (state: State, { postId, commentId }) => {
-      //!state.entities[postId]?.comments.find((c) => c.id === commentId)?.selfLike,
-      // const cm = state.entities[postId]?.comments.find(
-      //   (c) => c.id === commentId
-      // );
-      // if (cm) cm.selfLike = !cm?.selfLike;
-      const post = { ...state.entities[postId] };
-      if (!post.comments) return state;
-
-      const comment = post.comments.entities[commentId];
-      if (!comment) return state;
-
-      const comments = commentsAdapter.updateOne(
+    (state: State, { postId, comment }) =>
+      postsAdapter.updateOne(
         {
-          id: commentId,
-          changes: {
-            selfLike: comment.selfLike,
-          },
-        },
-        post.comments
-      );
-
-      const st = postsAdapter.updateOne(
-        {
-          id: postId,
-          changes: {
-            comments,
-          },
+          id: comment.id,
+          changes: { likes: comment.likes },
         },
         state
-      );
-      return state;
-    }
+      )
   )
 );
 

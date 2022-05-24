@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { PostEntity } from './post.models';
 import { Post } from '../models';
+import { Comment } from './../models/comment.interface';
 
 export const init = createAction('[Post Page] Init');
 
@@ -36,7 +36,7 @@ export const likeUnlikePost = createAction(
 
 export const updatePostLikeUnlikeSuccess = createAction(
   '[Post/API] Update Post Like/Unlike Success',
-  props<{ postId: string }>()
+  props<{ post: Post }>()
 );
 
 export const updatePostLikeUnlikeFailure = createAction(
@@ -66,7 +66,7 @@ export const likeUnlikeComment = createAction(
 
 export const updateCommentLikeUnlikeSuccess = createAction(
   '[Post/API] Update Comment Like/Unlike Success',
-  props<{ postId: string; commentId: string }>()
+  props<{ postId: string; comment: Comment }>()
 );
 
 export const updateCommentLikeUnlikeFailure = createAction(
