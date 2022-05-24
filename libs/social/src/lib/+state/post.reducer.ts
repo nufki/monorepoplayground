@@ -1,7 +1,8 @@
+import { state } from '@angular/animations';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as PostActions from './post.actions';
-import { CommentEntity, PostEntity } from './post.models';
+import { CommentEntity, PostEntity, LikeEntity } from './post.models';
 
 export const POST_FEATURE_KEY = 'Post';
 
@@ -21,12 +22,17 @@ export const postsAdapter: EntityAdapter<PostEntity> =
 export const commentsAdapter: EntityAdapter<CommentEntity> =
   createEntityAdapter<CommentEntity>();
 
+export const likesAdapter: EntityAdapter<LikeEntity> =
+  createEntityAdapter<LikeEntity>();
+
 export const initialState: State = postsAdapter.getInitialState({
   // set initial required properties
   loaded: false,
 });
 
 export const initialCommentState = commentsAdapter.getInitialState({});
+
+export const initialLikeState = likesAdapter.getInitialState({});
 
 const PostReducer = createReducer(
   initialState,
@@ -35,11 +41,14 @@ const PostReducer = createReducer(
     const postEntities: PostEntity[] = posts.map((post) => ({
       ...post,
       comments: initialCommentState,
+      likes: initialLikeState,
     }));
     return postsAdapter.setAll(postEntities, { ...state, loaded: true });
   }),
   on(PostActions.loadPostDetailsSuccess, (state: State, { post }) => {
     const comments = state?.entities[post.id]?.comments ?? initialCommentState;
+    const likes = state?.entities[post.id]?.likes ?? initialLikeState;
+
     return postsAdapter.upsertOne(
       {
         ...post,
@@ -47,6 +56,10 @@ const PostReducer = createReducer(
           post.comments.length > 0
             ? commentsAdapter.upsertMany(post.comments, comments)
             : comments,
+        likes:
+          post.likes.length > 0
+            ? likesAdapter.upsertMany(post.likes, likes)
+            : likes,
       },
       {
         ...state,
@@ -64,15 +77,22 @@ const PostReducer = createReducer(
     ...state,
     error,
   })),
-  on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { post }) =>
-    postsAdapter.updateOne(
+  on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { post }) => {
+    const likes = state?.entities[post.id]?.likes ?? initialLikeState;
+
+    return postsAdapter.updateOne(
       {
         id: post.id,
-        changes: { likes: post.likes },
+        changes: {
+          likes:
+            post.likes.length > 0
+              ? likesAdapter.setAll(post.likes, likes)
+              : likes,
+        },
       },
       state
-    )
-  ),
+    );
+  }),
   on(PostActions.deletePost, (state: State, { postId }) =>
     postsAdapter.removeOne(postId, state)
   ),

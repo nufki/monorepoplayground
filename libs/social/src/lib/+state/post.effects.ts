@@ -1,4 +1,8 @@
-import { selectCommentById, selectPostById } from './post.selectors';
+import {
+  selectCommentById,
+  selectPostById,
+  selectPostLikes,
+} from './post.selectors';
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { getSelectors, ROUTER_NAVIGATED } from '@ngrx/router-store';
@@ -39,13 +43,11 @@ export class PostEffects {
       ofType(PostActions.likeUnlikePost),
       concatLatestFrom(({ postId }) => [
         this.store.select(selectPostById(postId)),
+        this.store.select(selectPostLikes(postId)),
       ]),
-      switchMap(([{ postId }, post]) =>
+      switchMap(([{ postId }, post, likes]) =>
         this.postService
-          .updatePostLikeUnlike(
-            +postId,
-            !this.postService.isSelfLike(post?.likes)
-          )
+          .updatePostLikeUnlike(+postId, !this.postService.isSelfLike(likes))
           .pipe(
             map((post) =>
               PostActions.updatePostLikeUnlikeSuccess({

@@ -9,8 +9,7 @@ export interface PostEntity {
   text: string;
   createdDate: Date;
   commentCnt: number;
-  likes: LikeEntity[];
-  //comments: CommentEntity[];
+  likes: EntityState<LikeEntity>;
   comments: EntityState<CommentEntity>;
   selfLike: boolean;
 }

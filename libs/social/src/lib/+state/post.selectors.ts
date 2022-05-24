@@ -7,6 +7,7 @@ import {
 import { CommentEntity, LikeEntity, PostEntity } from './post.models';
 import {
   commentsAdapter,
+  likesAdapter,
   postsAdapter,
   POST_FEATURE_KEY,
   State,
@@ -78,11 +79,11 @@ export const selectCommentById = (
     post && post.comments ? post.comments.entities[commentId] : undefined
   );
 
-// export const selectPostLikes = (
-//   postId: string
-// ): MemoizedSelector<object, LikeEntity[] | undefined> =>
-//   createSelector(selectPostById(postId), (post) =>
-//     post && post.likes
-//       ? likesAdapter.getSelectors().selectAll(post.likes)
-//       : undefined
-//   );
+export const selectPostLikes = (
+  postId: string
+): MemoizedSelector<object, LikeEntity[] | undefined> =>
+  createSelector(selectPostById(postId), (post) =>
+    post && post.likes
+      ? likesAdapter.getSelectors().selectAll(post.likes)
+      : undefined
+  );

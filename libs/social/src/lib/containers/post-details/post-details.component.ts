@@ -1,6 +1,7 @@
+import { selectPostLikes } from './../../+state/post.selectors';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatestWith, filter, Observable, switchMap } from 'rxjs';
+import { combineLatestWith, filter, map, Observable, switchMap } from 'rxjs';
 import { likeUnlikeComment, likeUnlikePost } from '../../+state/post.actions';
 import { CommentEntity, PostEntity } from '../../+state/post.models';
 import { selectComments, selectPost } from '../../+state/post.selectors';
@@ -15,6 +16,11 @@ export class PostDetailsComponent implements OnInit {
   comments$ = this.post$.pipe(
     filter((post) => !!post),
     switchMap((post) => this.store.select(selectComments(post?.id as string)))
+  );
+
+  likes$ = this.post$.pipe(
+    filter((post) => !!post),
+    switchMap((post) => this.store.select(selectPostLikes(post?.id as string)))
   );
 
   constructor(private readonly store: Store) {}
