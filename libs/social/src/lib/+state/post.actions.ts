@@ -74,7 +74,12 @@ export const updateCommentLikeUnlikeFailure = createAction(
   props<{ error: any }>()
 );
 
-export const showPostLikes = createAction(
-  '[Router] Show Post Likes',
-  props<{ postId: string }>()
-);
+// export const showPostLikes = createAction(
+//   '[Router] Show Post Likes',
+//   props<{ postId: string }>()
+// );
+
+// export const showCommentLikes = createAction(
+//   '[Router] Show Post Likes',
+//   props<{ commentId: string }>()
+// );

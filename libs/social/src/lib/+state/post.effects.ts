@@ -9,6 +9,7 @@ import { PostService } from '../post.service';
 import { PostDetailsComponent } from './../containers/post-details/post-details.component';
 import * as PostActions from './post.actions';
 import { PostLikesComponent } from '../containers/post-likes/post-likes.component';
+import { CommentLikeComponent } from '../containers/comment-like/comment-like.component';
 
 @Injectable()
 export class PostEffects {
@@ -114,22 +115,41 @@ export class PostEffects {
     )
   );
 
+  // SHOW COMMENT LIKES (ROUTING)
+  // commentLikeDetails$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(ROUTER_NAVIGATED),
+  //     concatLatestFrom(() => [
+  //       this.store.select(getSelectors().selectCurrentRoute),
+  //       this.store.select(getSelectors().selectRouteParam('commentId')),
+  //     ]),
+  //     filter(
+  //       ([, route, id]) => route.component === CommentLikeComponent && !!id
+  //     ),
+  //     map(([, , id]) =>
+  //       PostActions.showCommentLikes({
+  //         commentId: id as string,
+  //       })
+  //     )
+  //   )
+  // );
+
   // SHOW POST LIKES (ROUTING)
-  postLikeDetails$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ROUTER_NAVIGATED),
-      concatLatestFrom(() => [
-        this.store.select(getSelectors().selectCurrentRoute),
-        this.store.select(getSelectors().selectRouteParam('id')),
-      ]),
-      filter(([, route, id]) => route.component === PostLikesComponent && !!id),
-      map(([, , id]) =>
-        PostActions.showPostLikes({
-          postId: id as string,
-        })
-      )
-    )
-  );
+  // postLikeDetails$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(ROUTER_NAVIGATED),
+  //     concatLatestFrom(() => [
+  //       this.store.select(getSelectors().selectCurrentRoute),
+  //       this.store.select(getSelectors().selectRouteParam('id')),
+  //     ]),
+  //     filter(([, route, id]) => route.component === PostLikesComponent && !!id),
+  //     map(([, , id]) =>
+  //       PostActions.showPostLikes({
+  //         postId: id as string,
+  //       })
+  //     )
+  //   )
+  // );
 
   // UPDATE LIKE/UNLIKE COMMENT EFFECT
   updateLikeUnlikeComment$ = createEffect(() =>

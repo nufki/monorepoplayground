@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PostEntity } from '../+state/post.models';
-import { LikeEntity } from './../+state/post.models';
 import { PostService } from '../post.service';
+import { LikeEntity } from './../+state/post.models';
 
 @Component({
   selector: 'united-post-item-view',
