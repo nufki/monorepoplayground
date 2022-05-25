@@ -10,6 +10,7 @@
       (postDeleted)="onPostDelete($event)"
       *ngIf="posts$ | async as post; else loading"
       [post]="p"
+      [postLikes]="getPostLikes(p) | async"
     >
     </united-post-item-view>
   </ion-card>

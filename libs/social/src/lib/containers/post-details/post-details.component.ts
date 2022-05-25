@@ -17,11 +17,10 @@ export class PostDetailsComponent implements OnInit {
     filter((post) => !!post),
     switchMap((post) => this.store.select(selectComments(post?.id as string)))
   );
-
-  postLikes$ = this.post$.pipe(
-    filter((post) => !!post),
-    switchMap((post) => this.store.select(selectPostLikes(post?.id as string)))
-  );
+  // postLikes$ = this.post$.pipe(
+  //   filter((post) => !!post),
+  //   switchMap((post) => this.store.select(selectPostLikes(post?.id as string)))
+  // );
 
   constructor(private readonly store: Store) {}
 

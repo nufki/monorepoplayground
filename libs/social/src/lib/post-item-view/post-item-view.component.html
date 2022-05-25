@@ -40,16 +40,10 @@
     <ion-label>
       <p
         class="like-count-text"
-        *ngIf="post.likes.length; else noLikes"
         [routerLink]="['/post-details/' + post.id + '/likes']"
       >
-        {{ printLikeText(post.likes) }}
+        {{ printLikeText(postLikes) }}
       </p>
-      <ng-template #noLikes>
-        <p class="like-count-text">
-          {{ printLikeText(post.likes) }}
-        </p>
-      </ng-template>
     </ion-label>
 
     <!-- COMMENT COUNT  -->
@@ -74,8 +68,8 @@
           color="light"
           ><ion-icon
             #likeIcon
-            [color]="isSelfLike(post.likes) ? 'primary' : ''"
-            [name]="isSelfLike(post.likes) ? 'thumbs-up' : 'thumbs-up-outline'"
+            [color]="isSelfLike(postLikes) ? 'primary' : ''"
+            [name]="isSelfLike(postLikes) ? 'thumbs-up' : 'thumbs-up-outline'"
             size="medium"
           ></ion-icon>
         </ion-button>

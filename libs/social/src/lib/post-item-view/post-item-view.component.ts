@@ -4,6 +4,9 @@ import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PostEntity } from '../+state/post.models';
 import { LikeEntity } from './../+state/post.models';
 import { PostService } from '../post.service';
+import { Store } from '@ngrx/store';
+import { selectPost, selectPostLikes } from '../+state/post.selectors';
+import { filter, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'united-post-item-view',
@@ -12,12 +15,15 @@ import { PostService } from '../post.service';
 })
 export class PostItemViewComponent implements OnInit {
   @Input() post: PostEntity | undefined;
+  //@Input() postLikes: LikeEntity[] | undefined | null;
+  // @Input() postLikes: LikeEntity[] = [];
   @Output() showPostDetail = new EventEmitter<string>();
   @Output() postLike = new EventEmitter<string>();
   @Output() postDeleted = new EventEmitter<string>();
 
   constructor(
     private router: Router,
+    private readonly store: Store,
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
     private postService: PostService // TODO: this should be a utility which is used for checking self-like etc.

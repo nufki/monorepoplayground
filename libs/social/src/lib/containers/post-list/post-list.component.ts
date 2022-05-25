@@ -3,8 +3,13 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { deletePost, init } from '../../+state/post.actions';
-import { PostEntity } from '../../+state/post.models';
-import { getAllPosts, getPostError } from '../../+state/post.selectors';
+import { LikeEntity, PostEntity } from '../../+state/post.models';
+import {
+  getAllPosts,
+  getPostError,
+  selectPostLikes,
+} from '../../+state/post.selectors';
+import { Post } from '../../models';
 import { likeUnlikePost } from './../../+state/post.actions';
 
 @Component({
@@ -13,12 +18,13 @@ import { likeUnlikePost } from './../../+state/post.actions';
   styleUrls: ['./post-list.component.scss'],
 })
 export class PostListComponent implements OnInit {
-  posts$: Observable<PostEntity[]>;
-  postsError$: Observable<any>;
+  posts$: Observable<PostEntity[]> = this.store.select(getAllPosts);
+  postsError$: Observable<any> = this.store.select(getPostError);
 
-  constructor(private store: Store, private router: Router) {
-    this.posts$ = store.select(getAllPosts);
-    this.postsError$ = store.select(getPostError);
+  constructor(private store: Store, private router: Router) {}
+
+  getPostLikes(post: PostEntity) {
+    return this.store.select(selectPostLikes(post.id as string));
   }
 
   ngOnInit(): void {

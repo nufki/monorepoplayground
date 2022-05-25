@@ -1,8 +1,7 @@
-import { state } from '@angular/animations';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as PostActions from './post.actions';
-import { CommentEntity, PostEntity, LikeEntity } from './post.models';
+import { CommentEntity, LikeEntity, PostEntity } from './post.models';
 
 export const POST_FEATURE_KEY = 'Post';
 
