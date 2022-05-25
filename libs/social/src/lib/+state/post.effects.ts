@@ -8,6 +8,7 @@ import { catchError, filter, map, of, switchMap } from 'rxjs';
 import { PostService } from '../post.service';
 import { PostDetailsComponent } from './../containers/post-details/post-details.component';
 import * as PostActions from './post.actions';
+import { PostLikesComponent } from '../containers/post-likes/post-likes.component';
 
 @Injectable()
 export class PostEffects {
@@ -107,6 +108,23 @@ export class PostEffects {
       ),
       map(([, , id]) =>
         PostActions.showPost({
+          postId: id as string,
+        })
+      )
+    )
+  );
+
+  // SHOW POST LIKES (ROUTING)
+  postLikeDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      concatLatestFrom(() => [
+        this.store.select(getSelectors().selectCurrentRoute),
+        this.store.select(getSelectors().selectRouteParam('id')),
+      ]),
+      filter(([, route, id]) => route.component === PostLikesComponent && !!id),
+      map(([, , id]) =>
+        PostActions.showPostLikes({
           postId: id as string,
         })
       )
