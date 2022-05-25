@@ -79,7 +79,7 @@ export class PostEffects {
     )
   );
 
-  // LOAD POST DETAILS EFFECT
+  // LOAD POST DETAILS (COMMENTS FROM BACKEND) EFFECT
   loadPostDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.showPost),
@@ -116,23 +116,23 @@ export class PostEffects {
   );
 
   // SHOW COMMENT LIKES (ROUTING)
-  // commentLikeDetails$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(ROUTER_NAVIGATED),
-  //     concatLatestFrom(() => [
-  //       this.store.select(getSelectors().selectCurrentRoute),
-  //       this.store.select(getSelectors().selectRouteParam('commentId')),
-  //     ]),
-  //     filter(
-  //       ([, route, id]) => route.component === CommentLikeComponent && !!id
-  //     ),
-  //     map(([, , id]) =>
-  //       PostActions.showCommentLikes({
-  //         commentId: id as string,
-  //       })
-  //     )
-  //   )
-  // );
+  commentLikeDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      concatLatestFrom(() => [
+        this.store.select(getSelectors().selectCurrentRoute),
+        this.store.select(getSelectors().selectRouteParam('id')),
+      ]),
+      filter(
+        ([, route, id]) => route.component === CommentLikeComponent && !!id
+      ),
+      map(([, , id]) =>
+        PostActions.showCommentLikes({
+          commentId: id as string,
+        })
+      )
+    )
+  );
 
   // SHOW POST LIKES (ROUTING)
   // postLikeDetails$ = createEffect(() =>

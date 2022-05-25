@@ -79,7 +79,7 @@ export const updateCommentLikeUnlikeFailure = createAction(
 //   props<{ postId: string }>()
 // );
 
-// export const showCommentLikes = createAction(
-//   '[Router] Show Post Likes',
-//   props<{ commentId: string }>()
-// );
+export const showCommentLikes = createAction(
+  '[Router] Show Post Likes',
+  props<{ commentId: string }>()
+);

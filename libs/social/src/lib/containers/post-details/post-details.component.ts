@@ -20,7 +20,7 @@ export class PostDetailsComponent implements OnInit {
   constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
-    console.log('post');
+    console.log('PostDetailsComponent - ngOnInit');
     this.post$.subscribe((p) => {
       console.log('post: ', p);
     });
