@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CommentEntity } from '../../+state/post.models';
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'united-comment-like',
@@ -14,7 +15,15 @@ export class CommentLikeComponent implements OnInit {
     selectCommentById('513', '789')
   );
 
-  constructor(private readonly store: Store) {}
+  constructor(
+    private readonly store: Store,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.params.subscribe((params: Params) => {
+      console.log('params', params);
+    });
+  }
 
   ngOnInit(): void {
     console.log('CommentLikeComponent - ngOnInit');
