@@ -10,18 +10,18 @@ import { filter, Observable, switchMap } from 'rxjs';
   styleUrls: ['./likes-view.component.css'],
 })
 export class LikesViewComponent implements OnInit {
-  post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
-  comments$ = this.post$.pipe(
-    filter((post) => !!post),
-    switchMap((post) => this.store.select(selectComments(post?.id as string)))
-  );
+  // post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
+  // comments$ = this.post$.pipe(
+  //   filter((post) => !!post),
+  //   switchMap((post) => this.store.select(selectComments(post?.id as string)))
+  // );
 
   constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
     console.log('post');
-    this.post$.subscribe((p) => {
-      console.log('post: ', p);
-    });
+    // this.post$.subscribe((p) => {
+    //   console.log('post: ', p);
+    // });
   }
 }

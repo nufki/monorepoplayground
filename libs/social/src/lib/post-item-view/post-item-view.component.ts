@@ -100,6 +100,15 @@ export class PostItemViewComponent implements OnInit {
   public async showLikes() {
     console.log('show all user likes', this.post?.likes);
     // this.router.navigate(['likes']);
+    /*
+    if (this.post.likes.length === 0) return;
+    const navigationExtras: NavigationExtras = {
+      state: {
+        post, // Unfortunatly, arrays cannot be simply handed over... thats why post and extract the likes again from there...
+      },
+    };
+    this.router.navigate(['tabs/likes'], navigationExtras);
+*/
   }
 
   /***************************************************************************
