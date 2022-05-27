@@ -74,10 +74,10 @@ export const updateCommentLikeUnlikeFailure = createAction(
   props<{ error: any }>()
 );
 
-// export const showPostLikes = createAction(
-//   '[Router] Show Post Likes',
-//   props<{ postId: string }>()
-// );
+export const deleteComment = createAction(
+  '[Post/API] Delete Comment',
+  props<{ postId: string; commentId: string }>()
+);
 
 export const showCommentLikes = createAction(
   '[Router] Show Post Likes',
@@ -96,5 +96,15 @@ export const createCommentSuccess = createAction(
 
 export const createCommentFailure = createAction(
   '[Post/API] Create Comment Failure',
+  props<{ error: any }>()
+);
+
+export const deleteCommentSuccess = createAction(
+  '[Post/API] Delete Comment Success',
+  props<{ postId: string; commentId: string }>()
+);
+
+export const deleteCommentFailure = createAction(
+  '[Post/API] Delete Comment Failure',
   props<{ error: any }>()
 );

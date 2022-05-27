@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatestWith, filter, Observable, switchMap } from 'rxjs';
-import { likeUnlikeComment, likeUnlikePost } from '../../+state/post.actions';
+import {
+  deleteComment,
+  likeUnlikeComment,
+  likeUnlikePost,
+} from '../../+state/post.actions';
 import { CommentEntity, PostEntity } from '../../+state/post.models';
 import { selectComments, selectPost } from '../../+state/post.selectors';
 
@@ -39,6 +43,13 @@ export class PostDetailsComponent implements OnInit {
     console.log('comment like clicked: ', commentId);
     this.store.dispatch(
       likeUnlikeComment({ postId: postId, commentId: commentId })
+    );
+  }
+
+  onCommentDelete(postId: string, commentId: string) {
+    console.log('comment delete clicked: ', commentId);
+    this.store.dispatch(
+      deleteComment({ postId: postId, commentId: commentId })
     );
   }
 }

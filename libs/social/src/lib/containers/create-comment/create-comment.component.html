@@ -1,25 +1,29 @@
-<ion-footer class="ion-no-border" *ngIf="post$ | async">
-  <ion-row class="ion-no-padding ion-no-margin">
-    <ion-col size="12">
-      <textarea [rows]="2" [(ngModel)]="commentText"> </textarea>
-    </ion-col>
-  </ion-row>
+<ion-footer>
+  <ion-toolbar>
+    <div class="ion-no-border" *ngIf="post$ | async">
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col size="12">
+          <textarea [rows]="2" [(ngModel)]="commentText"> </textarea>
+        </ion-col>
+      </ion-row>
 
-  <ion-row class="ion-no-padding ion-no-margin">
-    <ion-col class="ion-no-padding ion-text-end" size="12">
-      <div *ngIf="post$ | async as post">
-        <!-- Create and Edit Comment -->
-        <ion-button
-          (click)="onCreateComment(post)"
-          [disabled]="commentText.length === 0"
-          fill="solid"
-          color="primary"
-          size="small"
-          mode="ios"
-        >
-          Post
-        </ion-button>
-      </div>
-    </ion-col>
-  </ion-row>
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col class="ion-no-padding ion-text-end" size="12">
+          <div *ngIf="post$ | async as post">
+            <!-- Create and Edit Comment -->
+            <ion-button
+              (click)="onCreateComment(post)"
+              [disabled]="commentText.length === 0"
+              fill="solid"
+              color="primary"
+              size="small"
+              mode="ios"
+            >
+              Post
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-toolbar>
 </ion-footer>

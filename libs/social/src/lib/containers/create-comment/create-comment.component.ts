@@ -20,5 +20,6 @@ export class CreateCommentComponent {
     this.store.dispatch(
       createComment({ postId: post.id, text: this.commentText })
     );
+    this.commentText = '';
   }
 }

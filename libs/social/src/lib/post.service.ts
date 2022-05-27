@@ -30,7 +30,7 @@ export class PostService {
   }
 
   /***************************************************************************
-   * Fetch post comments, associated tags (user mentions, assetTags &
+   * Fetch post card and comments, associated tags (user mentions, assetTags &
    * hashTags etc. from the back-end.
    ***************************************************************************/
   public fetchPostComments(postId: number, page: number = 0): Observable<Post> {
@@ -50,7 +50,7 @@ export class PostService {
   }
 
   /***************************************************************************
-   * Send a like of an existing post to the back-end
+   * Like / Unlike a post in the social service
    ***************************************************************************/
   public updatePostLikeUnlike(
     postId: number,
@@ -79,32 +79,14 @@ export class PostService {
   }
 
   /***************************************************************************
-   * Update model if the user has liked any post from a list of posts
+   * TODO: Can be moved to a utility
    ***************************************************************************/
-  public updateSelfLike(posts: Post[]) {
-    if (posts) {
-      posts.map((post) => {
-        const p = post.likes.find((like: LikeEntity) => {
-          if (like.user.username === 'nufki81') return true;
-          else return false;
-        });
-        if (p) {
-          post.selfLike = true;
-        } else {
-          post.selfLike = false;
-        }
-      });
-    }
-    return false;
-  }
-
-  // TODO: Can be moved to a utility
   public isSelfLike(likes: LikeEntity[] | undefined = []) {
     return likes.find((like: LikeEntity) => like.user.username === 'nufki81');
   }
 
   /***************************************************************************
-   * Delete a post and apply it in the back-end
+   * Delete a post in the social service
    ***************************************************************************/
   public deletePost(postId: number) {
     const apiEndpoint =
@@ -119,7 +101,7 @@ export class PostService {
   }
 
   /***************************************************************************
-   * Send a like of an existing comment to the back-end
+   * Like / Unlike a comment in the social service
    ***************************************************************************/
   public updateCommentLikeUnlike(
     commentId: number,
@@ -147,7 +129,7 @@ export class PostService {
   }
 
   /***************************************************************************
-   * Create a new comment of an existing post and send it to the back-end
+   * Create a comment in the social service
    ***************************************************************************/
   public createComment(postId: number, text: string): Observable<Comment> {
     const apiEndpoint =
@@ -158,5 +140,19 @@ export class PostService {
 
     console.log(apiEndpoint);
     return this.http.post<any>(apiEndpoint, { text: text });
+  }
+
+  /***************************************************************************
+   * Delete a comment in the social service
+   ***************************************************************************/
+  public deleteComment(commentId: number) {
+    const apiEndpoint =
+      this.socialNetServiceURL +
+      '/api1/social-networking/posts/comments/' +
+      commentId +
+      '?username=nufki81';
+
+    console.log(apiEndpoint);
+    return this.http.delete<any>(apiEndpoint);
   }
 }
