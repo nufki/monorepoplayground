@@ -1,3 +1,4 @@
+import { ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -16,9 +17,21 @@ export class PostListComponent implements OnInit {
   posts$: Observable<PostEntity[]>;
   postsError$: Observable<any>;
 
-  constructor(private store: Store, private router: Router) {
+  constructor(
+    private store: Store,
+    private router: Router,
+    private toastController: ToastController
+  ) {
     this.posts$ = store.select(getAllPosts);
     this.postsError$ = store.select(getPostError);
+
+    this.postsError$.subscribe(async (error) => {
+      const toast = await this.toastController.create({
+        message: error.message,
+        duration: 2000,
+      });
+      toast.present();
+    });
   }
 
   ngOnInit(): void {

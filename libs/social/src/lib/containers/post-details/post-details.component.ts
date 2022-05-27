@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { combineLatestWith, filter, Observable, switchMap } from 'rxjs';
+import { filter, Observable, switchMap } from 'rxjs';
 import {
   deleteComment,
   likeUnlikeComment,
   likeUnlikePost,
 } from '../../+state/post.actions';
-import { CommentEntity, PostEntity } from '../../+state/post.models';
-import { selectComments, selectPost } from '../../+state/post.selectors';
+import { PostEntity } from '../../+state/post.models';
+import {
+  getPostError,
+  selectComments,
+  selectPost,
+} from '../../+state/post.selectors';
 
 @Component({
   selector: 'united-post-details',
@@ -20,6 +25,7 @@ export class PostDetailsComponent implements OnInit {
     filter((post) => !!post),
     switchMap((post) => this.store.select(selectComments(post?.id as string)))
   );
+  postError$: Observable<any> = this.store.select(getPostError);
 
   constructor(private readonly store: Store) {}
 
