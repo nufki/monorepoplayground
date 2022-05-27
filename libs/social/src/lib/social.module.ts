@@ -15,6 +15,7 @@ import { CommentsViewComponent } from './comments-view/comments-view.component';
 import { LikesViewComponent } from './likes-view/likes-view.component';
 import { PostLikesComponent } from './containers/post-likes/post-likes.component';
 import { CommentLikeComponent } from './containers/comment-like/comment-like.component';
+import { CreateCommentComponent } from './containers/create-comment/create-comment.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { CommentLikeComponent } from './containers/comment-like/comment-like.com
     LikesViewComponent,
     PostLikesComponent,
     CommentLikeComponent,
+    CreateCommentComponent,
   ],
   exports: [PostListComponent, PostItemViewComponent, PostDetailsComponent],
   providers: [PostService],

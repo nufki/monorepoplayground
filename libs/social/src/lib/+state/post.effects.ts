@@ -179,6 +179,24 @@ export class PostEffects {
     )
   );
 
+  // CREATE COMMENT EFFECT
+  createComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.createComment),
+      switchMap(({ postId, text }) =>
+        this.postService.createComment(+postId, text).pipe(
+          map((comment) =>
+            PostActions.createCommentSuccess({
+              postId: postId,
+              comment: comment,
+            })
+          )
+        )
+      ),
+      catchError((error) => of(PostActions.createCommentFailure({ error })))
+    )
+  );
+
   constructor(
     private readonly actions$: Actions,
     private readonly store: Store,

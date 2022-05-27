@@ -83,3 +83,18 @@ export const showCommentLikes = createAction(
   '[Router] Show Post Likes',
   props<{ commentId: string }>()
 );
+
+export const createComment = createAction(
+  '[Router] Create Comment',
+  props<{ postId: string; text: string }>()
+);
+
+export const createCommentSuccess = createAction(
+  '[Post/API] Create Comment Success',
+  props<{ postId: string; comment: Comment }>()
+);
+
+export const createCommentFailure = createAction(
+  '[Post/API] Create Comment Failure',
+  props<{ error: any }>()
+);

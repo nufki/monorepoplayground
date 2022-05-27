@@ -145,4 +145,18 @@ export class PostService {
 
     return this.http.patch<any>(apiEndpoint, null);
   }
+
+  /***************************************************************************
+   * Create a new comment of an existing post and send it to the back-end
+   ***************************************************************************/
+  public createComment(postId: number, text: string): Observable<Comment> {
+    const apiEndpoint =
+      this.socialNetServiceURL +
+      '/api1/social-networking/posts/' +
+      postId +
+      '/comments?username=nufki81';
+
+    console.log(apiEndpoint);
+    return this.http.post<any>(apiEndpoint, { text: text });
+  }
 }

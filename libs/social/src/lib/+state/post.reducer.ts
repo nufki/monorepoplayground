@@ -94,7 +94,23 @@ const PostReducer = createReducer(
         },
         state
       )
-  )
+  ),
+  on(PostActions.createCommentSuccess, (state: State, { postId, comment }) => {
+    const cmtCnt = state.entities[postId]?.commentCnt;
+    return postsAdapter.updateOne(
+      {
+        id: postId,
+        changes: {
+          comments: commentsAdapter.addOne(
+            comment,
+            state.entities[postId]?.comments ?? initialCommentState
+          ),
+          commentCnt: cmtCnt ? cmtCnt + 1 : 1,
+        },
+      },
+      state
+    );
+  })
 );
 
 //comments[commentId].selfLike: !state.entities[postId]?.comments.find((c) => c.id === commentId)?.selfLike,

@@ -10,9 +10,11 @@ import { PostEntity } from '../+state/post.models';
 export class LikesViewComponent implements OnInit {
   @Input() post: PostEntity | undefined;
 
-  constructor() {}
+  constructor() {
+    console.log('LikesViewComponent - constructor', this.post);
+  }
 
   ngOnInit(): void {
-    console.log('post', this.post);
+    console.log('LikesViewComponent - ngOnInit', this.post);
   }
 }
