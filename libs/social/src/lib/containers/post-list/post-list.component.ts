@@ -1,5 +1,5 @@
 import { ToastController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,27 +14,29 @@ import { likeUnlikePost } from './../../+state/post.actions';
   styleUrls: ['./post-list.component.scss'],
 })
 export class PostListComponent implements OnInit {
-  posts$: Observable<PostEntity[]>;
-  postsError$: Observable<any>;
+  @Input() posts: PostEntity[] = [];
+  // posts$: Observable<PostEntity[]>;
+  // postsError$: Observable<any>;
 
-  constructor(
-    private store: Store,
-    private router: Router,
-    private toastController: ToastController
-  ) {
-    this.posts$ = store.select(getAllPosts);
-    this.postsError$ = store.select(getPostError);
+  // constructor(
+  //   private store: Store,
+  //   private router: Router,
+  //   private toastController: ToastController
+  // ) {
+  //   this.posts$ = store.select(getAllPosts);
+  //   this.postsError$ = store.select(getPostError);
 
-    this.postsError$.subscribe(async (error) => {
-      if (error) {
-        const toast = await this.toastController.create({
-          message: error.error.apierror.message,
-          duration: 2000,
-        });
-        toast.present();
-      }
-    });
-  }
+  //   this.postsError$.subscribe(async (error) => {
+  //     if (error) {
+  //       const toast = await this.toastController.create({
+  //         message: error.error.apierror.message,
+  //         duration: 2000,
+  //       });
+  //       toast.present();
+  //     }
+  //   });
+  // }
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
     this.store.dispatch(init());

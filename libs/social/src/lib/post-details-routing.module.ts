@@ -4,6 +4,7 @@ import { CommentLikeComponent } from './containers/comment-like/comment-like.com
 import { PostDetailsComponent } from './containers/post-details/post-details.component';
 import { PostLikesComponent } from './containers/post-likes/post-likes.component';
 import { PostListComponent } from './containers/post-list/post-list.component';
+import { TimelineComponent } from './containers/timeline/timeline.component';
 import { LikesViewComponent } from './likes-view/likes-view.component';
 
 export enum PostDetailsRoutesNames {
@@ -20,7 +21,7 @@ export const POST_ROUTES: Routes = [
   },
   {
     path: defaultRoute,
-    component: PostListComponent,
+    component: TimelineComponent,
   },
   {
     path: defaultRoute + '/:id',

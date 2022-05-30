@@ -16,6 +16,7 @@ import { LikesViewComponent } from './likes-view/likes-view.component';
 import { PostLikesComponent } from './containers/post-likes/post-likes.component';
 import { CommentLikeComponent } from './containers/comment-like/comment-like.component';
 import { CreateCommentComponent } from './containers/create-comment/create-comment.component';
+import { TimelineComponent } from './containers/timeline/timeline.component';
 
 @NgModule({
   imports: [
@@ -35,8 +36,14 @@ import { CreateCommentComponent } from './containers/create-comment/create-comme
     PostLikesComponent,
     CommentLikeComponent,
     CreateCommentComponent,
+    TimelineComponent,
   ],
-  exports: [PostListComponent, PostItemViewComponent, PostDetailsComponent],
+  exports: [
+    // PostListComponent,
+    // PostItemViewComponent,
+    // PostDetailsComponent,
+    TimelineComponent,
+  ],
   providers: [PostService],
 })
 export class PostModule {}

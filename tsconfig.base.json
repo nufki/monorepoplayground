@@ -20,7 +20,6 @@
       "@united/counter": ["libs/counter/src/index.ts"],
       "@united/my-lib": ["libs/my-lib/src/index.ts"],
       "@united/social": ["libs/social/src/index.ts"],
-      "@united/timeline": ["libs/timeline/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

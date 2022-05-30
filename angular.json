@@ -11,7 +11,6 @@
     "my-lib": "libs/my-lib",
     "social": "libs/social",
     "test": "apps/test",
-    "test-e2e": "apps/test-e2e",
-    "timeline": "libs/timeline"
+    "test-e2e": "apps/test-e2e"
   }
 }

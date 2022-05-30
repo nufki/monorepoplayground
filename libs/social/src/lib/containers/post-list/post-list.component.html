@@ -3,22 +3,13 @@
     {{ (postsError$ | async).message }}
   </div> -->
 
-  <ion-card *ngFor="let p of posts$ | async">
+  <ion-card *ngFor="let p of posts">
     <united-post-item-view
       (showPostDetail)="onPostDetail($event)"
       (postLike)="onPostLike($event)"
       (postDeleted)="onPostDelete($event)"
-      *ngIf="posts$ | async as post; else loading"
       [post]="p"
     >
     </united-post-item-view>
   </ion-card>
-
-  <ng-template #loading>
-    <div class="vertical-center">
-      <div class="center">
-        <ion-spinner name="crescent"></ion-spinner>
-      </div>
-    </div>
-  </ng-template>
 </ion-content>
