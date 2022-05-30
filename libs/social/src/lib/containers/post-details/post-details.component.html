@@ -26,7 +26,12 @@
   </div>
 </ion-content>
 
-<united-create-comment *ngIf="!editingComment"></united-create-comment>
+<united-create-comment
+  (inputFocus)="inputFocus($event)"
+  *ngIf="!editingComment"
+>
+</united-create-comment>
+
 <united-edit-comment
   *ngIf="editingComment"
   [comment]="editingComment"

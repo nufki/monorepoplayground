@@ -26,12 +26,11 @@
             >
               Cancel
             </ion-button>
-            <!-- [disabled]="editingComment.length === 0" -->
           </div>
         </ion-col>
         <ion-col class="ion-no-padding ion-text-end" size="2">
           <div *ngIf="comment">
-            <!-- Create and Edit Comment -->
+            <!-- Edit Comment -->
             <ion-button
               (click)="onEditComment()"
               fill="solid"

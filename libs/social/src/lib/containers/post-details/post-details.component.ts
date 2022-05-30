@@ -72,4 +72,12 @@ export class PostDetailsComponent implements OnInit {
     );
     this.editingComment = undefined;
   }
+
+  public inputFocus(event: boolean) {
+    console.log('PostDetailsComponent', event);
+    // setTimeout(() => {
+    //   this.showKeyboard = event;
+    //   this.commentInputFocus = false;
+    // });
+  }
 }

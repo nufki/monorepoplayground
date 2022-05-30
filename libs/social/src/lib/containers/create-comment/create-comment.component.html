@@ -3,14 +3,19 @@
     <div class="ion-no-border" *ngIf="post$ | async">
       <ion-row class="ion-no-padding ion-no-margin">
         <ion-col size="12">
-          <textarea [rows]="2" [(ngModel)]="commentText"> </textarea>
+          <textarea
+            [rows]="2"
+            (focus)="onFocusEvent($event)"
+            [(ngModel)]="commentText"
+          >
+          </textarea>
         </ion-col>
       </ion-row>
 
       <ion-row class="ion-no-padding ion-no-margin">
         <ion-col class="ion-no-padding ion-text-end" size="12">
           <div *ngIf="post$ | async as post">
-            <!-- Create and Edit Comment -->
+            <!-- Create Comment -->
             <ion-button
               (click)="onCreateComment(post)"
               [disabled]="commentText.length === 0"

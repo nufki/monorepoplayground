@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { createComment } from '../../+state/post.actions';
@@ -13,6 +13,7 @@ import { selectPost } from '../../+state/post.selectors';
 export class CreateCommentComponent {
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
   commentText = '';
+  @Output() inputFocus = new EventEmitter<boolean>();
 
   constructor(private readonly store: Store) {}
 
@@ -21,5 +22,10 @@ export class CreateCommentComponent {
       createComment({ postId: post.id, text: this.commentText })
     );
     this.commentText = '';
+  }
+
+  onFocusEvent(event: any) {
+    console.log(event);
+    this.inputFocus.emit(true);
   }
 }
