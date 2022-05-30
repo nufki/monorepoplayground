@@ -1,5 +1,7 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -7,6 +9,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { editComment } from '../../+state/post.actions';
@@ -17,12 +20,15 @@ import { CommentEntity } from './../../+state/post.models';
   templateUrl: './edit-comment.component.html',
   styleUrls: ['./edit-comment.component.scss'],
 })
-export class EditCommentComponent implements OnInit, OnDestroy, OnChanges {
+export class EditCommentComponent
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit
+{
   //post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
   @Input() comment: CommentEntity | undefined;
   @Input() postId: string | undefined;
   @Output() editCancel = new EventEmitter<string>();
   editingComment = '';
+  @ViewChild('commentArea') $commentArea?: ElementRef<HTMLTextAreaElement>;
 
   constructor(private readonly store: Store) {}
 
@@ -35,6 +41,17 @@ export class EditCommentComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     console.log('EditCommentComponent - ngOnInit');
+  }
+
+  /***************************************************************************
+   * Set initial height of the text area
+   ***************************************************************************/
+  ngAfterViewInit(): void {
+    if (this.editingComment) {
+      setTimeout(() => {
+        this.$commentArea?.nativeElement.focus();
+      }, 500);
+    }
   }
 
   ngOnDestroy(): void {

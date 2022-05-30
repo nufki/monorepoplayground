@@ -3,7 +3,12 @@
     <div class="ion-no-border">
       <ion-row class="ion-no-padding ion-no-margin">
         <ion-col size="12">
-          <textarea *ngIf="comment" [rows]="2" [(ngModel)]="editingComment">
+          <textarea
+            #commentArea
+            *ngIf="comment"
+            [rows]="2"
+            [(ngModel)]="editingComment"
+          >
           </textarea>
         </ion-col>
       </ion-row>
