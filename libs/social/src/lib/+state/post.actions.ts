@@ -34,12 +34,12 @@ export const likeUnlikePost = createAction(
   props<{ postId: string }>()
 );
 
-export const updatePostLikeUnlikeSuccess = createAction(
+export const likeUnlikePostSuccess = createAction(
   '[Post/API] Update Post Like/Unlike Success',
   props<{ post: Post }>()
 );
 
-export const updatePostLikeUnlikeFailure = createAction(
+export const likeUnlikePostFailure = createAction(
   '[Post/API] Update Post Like/Unlike Failure',
   props<{ error: any }>()
 );
@@ -64,12 +64,12 @@ export const likeUnlikeComment = createAction(
   props<{ postId: string; commentId: string }>()
 );
 
-export const updateCommentLikeUnlikeSuccess = createAction(
+export const likeUnlikeCommentSuccess = createAction(
   '[Post/API] Update Comment Like/Unlike Success',
   props<{ postId: string; comment: Comment }>()
 );
 
-export const updateCommentLikeUnlikeFailure = createAction(
+export const likeUnlikeCommentFailure = createAction(
   '[Post/API] Update Comment Like/Unlike Failure',
   props<{ error: any }>()
 );

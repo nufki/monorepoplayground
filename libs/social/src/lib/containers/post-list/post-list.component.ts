@@ -26,11 +26,13 @@ export class PostListComponent implements OnInit {
     this.postsError$ = store.select(getPostError);
 
     this.postsError$.subscribe(async (error) => {
-      const toast = await this.toastController.create({
-        message: error.message,
-        duration: 2000,
-      });
-      toast.present();
+      if (error) {
+        const toast = await this.toastController.create({
+          message: error.error.apierror.message,
+          duration: 2000,
+        });
+        toast.present();
+      }
     });
   }
 

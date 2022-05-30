@@ -64,7 +64,7 @@ const PostReducer = createReducer(
     ...state,
     error,
   })),
-  on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { post }) =>
+  on(PostActions.likeUnlikePostSuccess, (state: State, { post }) =>
     postsAdapter.updateOne(
       {
         id: post.id,
@@ -73,7 +73,7 @@ const PostReducer = createReducer(
       state
     )
   ),
-  on(PostActions.updatePostLikeUnlikeFailure, (state, { error }) => ({
+  on(PostActions.likeUnlikePostFailure, (state, { error }) => ({
     ...state,
     error,
   })),
@@ -85,7 +85,7 @@ const PostReducer = createReducer(
     error,
   })),
   on(
-    PostActions.updateCommentLikeUnlikeSuccess,
+    PostActions.likeUnlikeCommentSuccess,
     (state: State, { postId, comment }) => {
       return postsAdapter.updateOne(
         {
@@ -104,7 +104,7 @@ const PostReducer = createReducer(
       );
     }
   ),
-  on(PostActions.updateCommentLikeUnlikeFailure, (state, { error }) => ({
+  on(PostActions.likeUnlikeCommentFailure, (state, { error }) => ({
     ...state,
     error,
   })),

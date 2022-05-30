@@ -34,8 +34,8 @@ export class PostEffects {
     )
   );
 
-  // UPDATE LIKE/UNLIKE POST EFFECT
-  updateLikeUnlikePost$ = createEffect(() =>
+  // LIKE/UNLIKE POST EFFECT
+  likeUnlikePost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.likeUnlikePost),
       concatLatestFrom(({ postId }) => [
@@ -49,15 +49,13 @@ export class PostEffects {
           )
           .pipe(
             map((post) =>
-              PostActions.updatePostLikeUnlikeSuccess({
+              PostActions.likeUnlikePostSuccess({
                 post: post,
               })
             )
           )
       ),
-      catchError((error) =>
-        of(PostActions.updatePostLikeUnlikeFailure({ error }))
-      )
+      catchError((error) => of(PostActions.likeUnlikePostFailure({ error })))
     )
   );
 
@@ -95,7 +93,7 @@ export class PostEffects {
     )
   );
 
-  // SHOW POST DETAILS (ROUTING)
+  // TRIGGER SHOW POST DETAILS FROM ROUTE
   postDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),
@@ -133,25 +131,8 @@ export class PostEffects {
     )
   );
 
-  // SHOW POST LIKES (ROUTING)
-  // postLikeDetails$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(ROUTER_NAVIGATED),
-  //     concatLatestFrom(() => [
-  //       this.store.select(getSelectors().selectCurrentRoute),
-  //       this.store.select(getSelectors().selectRouteParam('id')),
-  //     ]),
-  //     filter(([, route, id]) => route.component === PostLikesComponent && !!id),
-  //     map(([, , id]) =>
-  //       PostActions.showPostLikes({
-  //         postId: id as string,
-  //       })
-  //     )
-  //   )
-  // );
-
   // LIKE/UNLIKE COMMENT EFFECT
-  updateLikeUnlikeComment$ = createEffect(() =>
+  likeUnlikeComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.likeUnlikeComment),
       concatLatestFrom(({ postId, commentId }) => [
@@ -165,16 +146,14 @@ export class PostEffects {
           )
           .pipe(
             map((c) =>
-              PostActions.updateCommentLikeUnlikeSuccess({
+              PostActions.likeUnlikeCommentSuccess({
                 postId: postId,
                 comment: c,
               })
             )
           )
       ),
-      catchError((error) =>
-        of(PostActions.updateCommentLikeUnlikeFailure({ error }))
-      )
+      catchError((error) => of(PostActions.likeUnlikeCommentFailure({ error })))
     )
   );
 
