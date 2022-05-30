@@ -1,6 +1,4 @@
-import { CommentEntity } from './../../+state/post.models';
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { filter, Observable, switchMap } from 'rxjs';
 import {
@@ -14,6 +12,7 @@ import {
   selectComments,
   selectPost,
 } from '../../+state/post.selectors';
+import { CommentEntity } from './../../+state/post.models';
 
 @Component({
   selector: 'united-post-details',
@@ -43,31 +42,34 @@ export class PostDetailsComponent implements OnInit {
   }
 
   onPostLike(id: string) {
-    console.log('post like clicked: ', id);
+    console.log('PostDetailsComponent - post like clicked: ', id);
     this.store.dispatch(likeUnlikePost({ postId: id }));
   }
 
   onCommentLike(postId: string, commentId: string) {
-    console.log('comment like clicked: ', commentId);
+    console.log('PostDetailsComponent - comment like clicked: ', commentId);
     this.store.dispatch(
       likeUnlikeComment({ postId: postId, commentId: commentId })
     );
   }
 
   onCommentDelete(postId: string, commentId: string) {
-    console.log('comment delete clicked: ', commentId);
+    console.log('PostDetailsComponent - comment delete clicked: ', commentId);
     this.store.dispatch(
       deleteComment({ postId: postId, commentId: commentId })
     );
   }
 
   onCommentEdit(comment: CommentEntity) {
-    console.log('comment edit clicked: ', comment);
+    console.log('PostDetailsComponent - comment edit clicked: ', comment);
     this.editingComment = comment;
   }
 
   onCommentCancelEdit(commentId: string) {
-    console.log('comment edit cancel clicked: ', commentId);
+    console.log(
+      'PostDetailsComponent - comment edit cancel clicked: ',
+      commentId
+    );
     this.editingComment = undefined;
   }
 }

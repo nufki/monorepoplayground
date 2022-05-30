@@ -44,7 +44,7 @@ export class EditCommentComponent
   }
 
   /***************************************************************************
-   * Set initial height of the text area
+   * Set initial Focus
    ***************************************************************************/
   ngAfterViewInit(): void {
     if (this.editingComment) {
@@ -59,7 +59,10 @@ export class EditCommentComponent
   }
 
   onEditComment() {
-    console.log('Edited comment text: ' + this.editingComment, this.comment);
+    console.log(
+      'EditCommentComponent - Edited comment text: ' + this.editingComment,
+      this.comment
+    );
 
     if (this.postId && this.comment)
       this.store.dispatch(

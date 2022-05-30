@@ -45,12 +45,12 @@ export class PostListComponent implements OnInit {
   }
 
   onPostLike(id: string) {
-    console.log('post like clicked: ', id);
+    console.log('PostListComponent - post like clicked: ', id);
     this.store.dispatch(likeUnlikePost({ postId: id }));
   }
 
   onPostDelete(id: string) {
-    console.log('post delete clicked: ', id);
+    console.log('PostListComponent - post delete clicked: ', id);
     this.store.dispatch(deletePost({ postId: id }));
   }
 }

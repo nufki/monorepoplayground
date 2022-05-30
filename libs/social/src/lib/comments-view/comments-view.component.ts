@@ -27,12 +27,12 @@ export class CommentsViewComponent implements OnInit {
   }
 
   likeActionMenu(comment: CommentEntity) {
-    console.log('Like Comment clicked...');
+    console.log('CommentsViewComponent - Like Comment clicked...');
     this.commentLike.emit(comment.id);
   }
 
   async commentAtionMenu(comment: CommentEntity) {
-    console.log('Comment Action Menu clicked...');
+    console.log('CommentsViewComponent - Comment Action Menu clicked...');
 
     const actionSheet = await this.actionSheetController.create({
       buttons: [
@@ -92,7 +92,7 @@ export class CommentsViewComponent implements OnInit {
   }
 
   showLikes(comment: CommentEntity) {
-    console.log('show likes clicked...');
+    console.log('CommentsViewComponent - show likes clicked...');
   }
 
   isSelfLike(likes: LikeEntity[]) {
