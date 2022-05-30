@@ -20,12 +20,19 @@
       *ngIf="comments$ | async as comments"
       (commentLike)="onCommentLike(post.id, $event)"
       (commentDelete)="onCommentDelete(post.id, $event)"
+      (commentEdit)="onCommentEdit($event)"
       [comments]="comments"
     ></united-comments-view>
   </div>
 </ion-content>
 
-<united-create-comment></united-create-comment>
+<united-create-comment *ngIf="!editingComment"></united-create-comment>
+<united-edit-comment
+  *ngIf="editingComment"
+  [comment]="editingComment"
+  [postId]="(post$ | async)?.id"
+  (editCancel)="onCommentCancelEdit($event)"
+></united-edit-comment>
 
 <ng-template #loading>
   <div class="vertical-center">

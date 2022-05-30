@@ -155,4 +155,23 @@ export class PostService {
     console.log(apiEndpoint);
     return this.http.delete<any>(apiEndpoint);
   }
+
+  /***************************************************************************
+   * Edit existing comment
+   ***************************************************************************/
+  public editComment(commentId: number, text: string): Observable<Comment> {
+    const apiEndpoint =
+      this.socialNetServiceURL +
+      '/api1/social-networking/posts/comments/' +
+      commentId +
+      '/?username=nufki81';
+
+    console.log(apiEndpoint);
+    return this.http.patch<any>(apiEndpoint, { text: text }).pipe(
+      tap((data) => console.log(data)),
+      map((comment) => {
+        return comment;
+      })
+    );
+  }
 }

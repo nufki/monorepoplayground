@@ -12,6 +12,7 @@ export class CommentsViewComponent implements OnInit {
   @Input() comments: CommentEntity[] | undefined;
   @Output() commentLike = new EventEmitter<string>();
   @Output() commentDelete = new EventEmitter<string>();
+  @Output() commentEdit = new EventEmitter<CommentEntity>();
 
   constructor(
     private postService: PostService, // TODO: this should be a utility which is used for checking self-like etc.
@@ -67,6 +68,7 @@ export class CommentsViewComponent implements OnInit {
           icon: 'create-outline',
           handler: () => {
             console.log('Edit Comment clicked', comment);
+            this.commentEdit.emit(comment);
           },
         },
         {

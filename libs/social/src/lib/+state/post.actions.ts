@@ -108,3 +108,18 @@ export const deleteCommentFailure = createAction(
   '[Post/API] Delete Comment Failure',
   props<{ error: any }>()
 );
+
+export const editComment = createAction(
+  '[Post/API] Edit Comment',
+  props<{ postId: string; commentId: string; text: string }>()
+);
+
+export const editCommentSuccess = createAction(
+  '[Post/API] Edit Comment Success',
+  props<{ postId: string; comment: Comment }>()
+);
+
+export const editCommentFailure = createAction(
+  '[Post/API] Edit Comment Failure',
+  props<{ error: any }>()
+);

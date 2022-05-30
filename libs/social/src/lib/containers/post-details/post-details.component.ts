@@ -1,3 +1,4 @@
+import { CommentEntity } from './../../+state/post.models';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
@@ -26,6 +27,7 @@ export class PostDetailsComponent implements OnInit {
     switchMap((post) => this.store.select(selectComments(post?.id as string)))
   );
   postError$: Observable<any> = this.store.select(getPostError);
+  editingComment: CommentEntity | undefined;
 
   constructor(private readonly store: Store) {}
 
@@ -57,5 +59,15 @@ export class PostDetailsComponent implements OnInit {
     this.store.dispatch(
       deleteComment({ postId: postId, commentId: commentId })
     );
+  }
+
+  onCommentEdit(comment: CommentEntity) {
+    console.log('comment edit clicked: ', comment);
+    this.editingComment = comment;
+  }
+
+  onCommentCancelEdit(commentId: string) {
+    console.log('comment edit cancel clicked: ', commentId);
+    this.editingComment = undefined;
   }
 }

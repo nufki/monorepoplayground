@@ -150,6 +150,27 @@ const PostReducer = createReducer(
   on(PostActions.deleteCommentFailure, (state, { error }) => ({
     ...state,
     error,
+  })),
+  on(PostActions.editCommentSuccess, (state: State, { postId, comment }) => {
+    return postsAdapter.updateOne(
+      {
+        id: postId,
+        changes: {
+          comments: commentsAdapter.updateOne(
+            {
+              id: comment.id,
+              changes: { text: comment.text },
+            },
+            state.entities[postId]?.comments ?? initialCommentState
+          ),
+        },
+      },
+      state
+    );
+  }),
+  on(PostActions.editCommentFailure, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );
 

@@ -1,0 +1,45 @@
+<ion-footer>
+  <ion-toolbar>
+    <div class="ion-no-border">
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col size="12">
+          <textarea *ngIf="comment" [rows]="2" [(ngModel)]="editingComment">
+          </textarea>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-no-padding ion-no-margin">
+        <ion-col class="ion-no-padding ion-text-end" offset="8" size="2">
+          <div *ngIf="comment">
+            <!-- Cancel Comment editing -->
+            <ion-button
+              (click)="onEditCommentCancel()"
+              fill="solid"
+              color="primary"
+              size="small"
+              mode="ios"
+            >
+              Cancel
+            </ion-button>
+            <!-- [disabled]="editingComment.length === 0" -->
+          </div>
+        </ion-col>
+        <ion-col class="ion-no-padding ion-text-end" size="2">
+          <div *ngIf="comment">
+            <!-- Create and Edit Comment -->
+            <ion-button
+              (click)="onEditComment()"
+              fill="solid"
+              color="primary"
+              size="small"
+              mode="ios"
+            >
+              Post
+            </ion-button>
+            <!-- [disabled]="editingComment.length === 0" -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-toolbar>
+</ion-footer>

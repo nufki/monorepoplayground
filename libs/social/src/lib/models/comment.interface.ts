@@ -8,4 +8,5 @@ export interface Comment {
   createdDate: Date;
   selfLike: boolean;
   likes: Like[];
+  lastEdited: Date;
 }
