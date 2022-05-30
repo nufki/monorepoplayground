@@ -52,7 +52,7 @@ export class PostService {
   /***************************************************************************
    * Like / Unlike a post in the social service
    ***************************************************************************/
-  public updatePostLikeUnlike(
+  public likeUnlikePost(
     postId: number,
     like: boolean,
     isAnonymous: boolean = false
@@ -103,7 +103,7 @@ export class PostService {
   /***************************************************************************
    * Like / Unlike a comment in the social service
    ***************************************************************************/
-  public updateCommentLikeUnlike(
+  public likeUnlikeComment(
     commentId: number,
     like: boolean
   ): Observable<Comment> {
