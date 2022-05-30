@@ -64,7 +64,7 @@ const PostReducer = createReducer(
     ...state,
     error,
   })),
-  on(PostActions.updatePostLikeUnlikeSuccess, (state: State, { post }) =>
+  on(PostActions.likeUnlikePostSuccess, (state: State, { post }) =>
     postsAdapter.updateOne(
       {
         id: post.id,
@@ -73,13 +73,21 @@ const PostReducer = createReducer(
       state
     )
   ),
-  on(PostActions.deletePost, (state: State, { postId }) =>
+  on(PostActions.likeUnlikePostFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(PostActions.deletePostSuccess, (state: State, { postId }) =>
     postsAdapter.removeOne(postId, state)
   ),
+  on(PostActions.deletePostFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
   on(
-    PostActions.updateCommentLikeUnlikeSuccess,
-    (state: State, { postId, comment }) =>
-      postsAdapter.updateOne(
+    PostActions.likeUnlikeCommentSuccess,
+    (state: State, { postId, comment }) => {
+      return postsAdapter.updateOne(
         {
           id: postId,
           changes: {
@@ -93,11 +101,57 @@ const PostReducer = createReducer(
           },
         },
         state
-      )
-  )
+      );
+    }
+  ),
+  on(PostActions.likeUnlikeCommentFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(PostActions.createCommentSuccess, (state: State, { postId, comment }) => {
+    const cmtCnt = state.entities[postId]?.commentCnt;
+    return postsAdapter.updateOne(
+      {
+        id: postId,
+        changes: {
+          comments: commentsAdapter.addOne(
+            comment,
+            state.entities[postId]?.comments ?? initialCommentState
+          ),
+          commentCnt: cmtCnt ? cmtCnt + 1 : 1,
+        },
+      },
+      state
+    );
+  }),
+  on(PostActions.createCommentFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(
+    PostActions.deleteCommentSuccess,
+    (state: State, { postId, commentId }) => {
+      const cmtCnt = state.entities[postId]?.commentCnt;
+      return postsAdapter.updateOne(
+        {
+          id: postId,
+          changes: {
+            comments: commentsAdapter.removeOne(
+              commentId,
+              state.entities[postId]?.comments ?? initialCommentState
+            ),
+            commentCnt: cmtCnt ? cmtCnt - 1 : 1,
+          },
+        },
+        state
+      );
+    }
+  ),
+  on(PostActions.deleteCommentFailure, (state, { error }) => ({
+    ...state,
+    error,
+  }))
 );
-
-//comments[commentId].selfLike: !state.entities[postId]?.comments.find((c) => c.id === commentId)?.selfLike,
 
 export function reducer(state: State | undefined, action: Action) {
   return PostReducer(state, action);

@@ -1,4 +1,4 @@
-<ion-row class="wrapper" *ngFor="let comment of comments">
+<ion-row class="wrapper" *ngFor="let comment of comments?.reverse()">
   <!-- SHOW AVATAR OF THE USER -->
   <ion-col size="2">
     <ion-avatar>
@@ -18,7 +18,7 @@
           <span class="country-time"> {{ comment.createdDate | date }}</span>
         </ion-col>
         <ion-col class="ion-padding-start ion-padding-bottom" size="2">
-          <ion-label>
+          <ion-label (click)="commentAtionMenu(comment)">
             <ion-icon
               size="small"
               color="primary"

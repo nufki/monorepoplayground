@@ -1,13 +1,14 @@
-import { selectCommentById, selectPostById } from './post.selectors';
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { getSelectors, ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { fetch } from '@nrwl/angular';
 import { catchError, filter, map, of, switchMap } from 'rxjs';
+import { CommentLikeComponent } from '../containers/comment-like/comment-like.component';
 import { PostService } from '../post.service';
 import { PostDetailsComponent } from './../containers/post-details/post-details.component';
 import * as PostActions from './post.actions';
+import { selectCommentById, selectPostById } from './post.selectors';
 
 @Injectable()
 export class PostEffects {
@@ -33,8 +34,8 @@ export class PostEffects {
     )
   );
 
-  // UPDATE LIKE/UNLIKE POST EFFECT
-  updateLikeUnlikePost$ = createEffect(() =>
+  // LIKE/UNLIKE POST EFFECT
+  likeUnlikePost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.likeUnlikePost),
       concatLatestFrom(({ postId }) => [
@@ -48,15 +49,13 @@ export class PostEffects {
           )
           .pipe(
             map((post) =>
-              PostActions.updatePostLikeUnlikeSuccess({
+              PostActions.likeUnlikePostSuccess({
                 post: post,
               })
             )
           )
       ),
-      catchError((error) =>
-        of(PostActions.updatePostLikeUnlikeFailure({ error }))
-      )
+      catchError((error) => of(PostActions.likeUnlikePostFailure({ error })))
     )
   );
 
@@ -77,7 +76,7 @@ export class PostEffects {
     )
   );
 
-  // LOAD POST DETAILS EFFECT
+  // LOAD POST DETAILS (COMMENTS FROM BACKEND) EFFECT
   loadPostDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.showPost),
@@ -94,7 +93,7 @@ export class PostEffects {
     )
   );
 
-  // SHOW POST DETAILS (ROUTING)
+  // TRIGGER SHOW POST DETAILS FROM ROUTE
   postDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),
@@ -113,8 +112,27 @@ export class PostEffects {
     )
   );
 
-  // UPDATE LIKE/UNLIKE COMMENT EFFECT
-  updateLikeUnlikeComment$ = createEffect(() =>
+  // SHOW COMMENT LIKES (ROUTING)
+  commentLikeDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      concatLatestFrom(() => [
+        this.store.select(getSelectors().selectCurrentRoute),
+        this.store.select(getSelectors().selectRouteParam('id')),
+      ]),
+      filter(
+        ([, route, id]) => route.component === CommentLikeComponent && !!id
+      ),
+      map(([, , id]) =>
+        PostActions.showCommentLikes({
+          commentId: id as string,
+        })
+      )
+    )
+  );
+
+  // LIKE/UNLIKE COMMENT EFFECT
+  likeUnlikeComment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.likeUnlikeComment),
       concatLatestFrom(({ postId, commentId }) => [
@@ -128,16 +146,50 @@ export class PostEffects {
           )
           .pipe(
             map((c) =>
-              PostActions.updateCommentLikeUnlikeSuccess({
+              PostActions.likeUnlikeCommentSuccess({
                 postId: postId,
                 comment: c,
               })
             )
           )
       ),
-      catchError((error) =>
-        of(PostActions.updateCommentLikeUnlikeFailure({ error }))
-      )
+      catchError((error) => of(PostActions.likeUnlikeCommentFailure({ error })))
+    )
+  );
+
+  // CREATE COMMENT EFFECT
+  createComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.createComment),
+      switchMap(({ postId, text }) =>
+        this.postService.createComment(+postId, text).pipe(
+          map((comment) =>
+            PostActions.createCommentSuccess({
+              postId: postId,
+              comment: comment,
+            })
+          )
+        )
+      ),
+      catchError((error) => of(PostActions.createCommentFailure({ error })))
+    )
+  );
+
+  // DELETE COMMENT EFFECT
+  deleteComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.deleteComment),
+      switchMap(({ postId, commentId }) =>
+        this.postService.deleteComment(+commentId).pipe(
+          map(() =>
+            PostActions.deleteCommentSuccess({
+              postId: postId,
+              commentId,
+            })
+          )
+        )
+      ),
+      catchError((error) => of(PostActions.deleteCommentFailure({ error })))
     )
   );
 

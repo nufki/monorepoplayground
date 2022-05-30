@@ -4,7 +4,7 @@ import {
   createSelector,
   MemoizedSelector,
 } from '@ngrx/store';
-import { CommentEntity, LikeEntity, PostEntity } from './post.models';
+import { CommentEntity, PostEntity } from './post.models';
 import {
   commentsAdapter,
   postsAdapter,

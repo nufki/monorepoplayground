@@ -1,10 +1,7 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title> Like Details </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content> </ion-content>
+<ion-item *ngFor="let liker of post?.likes">
+  <ion-avatar>
+    <ion-img src="../assets/icon/generic-avatar.png"></ion-img>
+  </ion-avatar>
+  <ion-label>{{ liker.user.username }}</ion-label>
+  <ion-label>{{ liker.likeDate | date }}</ion-label>
+</ion-item>

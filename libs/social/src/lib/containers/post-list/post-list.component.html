@@ -1,7 +1,7 @@
 <ion-content>
-  <div *ngIf="postsError$ | async">
+  <!-- <div *ngIf="postsError$ | async">
     {{ (postsError$ | async).message }}
-  </div>
+  </div> -->
 
   <ion-card *ngFor="let p of posts$ | async">
     <united-post-item-view

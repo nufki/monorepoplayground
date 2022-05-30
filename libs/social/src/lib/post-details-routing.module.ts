@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CommentLikeComponent } from './containers/comment-like/comment-like.component';
 import { PostDetailsComponent } from './containers/post-details/post-details.component';
+import { PostLikesComponent } from './containers/post-likes/post-likes.component';
 import { PostListComponent } from './containers/post-list/post-list.component';
 import { LikesViewComponent } from './likes-view/likes-view.component';
 
@@ -26,11 +28,11 @@ export const POST_ROUTES: Routes = [
   },
   {
     path: defaultRoute + '/:id/likes',
-    component: LikesViewComponent,
+    component: PostLikesComponent,
   },
   {
     path: defaultRoute + '/:id/comments/:id/likes',
-    component: LikesViewComponent,
+    component: CommentLikeComponent,
   },
 ];
 
