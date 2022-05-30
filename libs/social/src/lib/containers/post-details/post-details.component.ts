@@ -27,6 +27,7 @@ export class PostDetailsComponent implements OnInit {
   );
   postError$: Observable<any> = this.store.select(getPostError);
   editingComment: CommentEntity | undefined;
+  showKeyboard = false;
 
   constructor(private readonly store: Store) {}
 
@@ -76,7 +77,7 @@ export class PostDetailsComponent implements OnInit {
   public inputFocus(event: boolean) {
     console.log('PostDetailsComponent', event);
     // setTimeout(() => {
-    //   this.showKeyboard = event;
+    this.showKeyboard = event;
     //   this.commentInputFocus = false;
     // });
   }

@@ -14,6 +14,7 @@ export class CreateCommentComponent {
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
   commentText = '';
   @Output() inputFocus = new EventEmitter<boolean>();
+  showKeyboard = false;
 
   constructor(private readonly store: Store) {}
 
@@ -27,10 +28,12 @@ export class CreateCommentComponent {
   onFocusEvent(event: any) {
     console.log('onFocusEvent');
     this.inputFocus.emit(true);
+    this.showKeyboard = true;
   }
 
   onFocusOutEvent(event: any) {
     console.log('onFocusOutEvent');
     this.inputFocus.emit(false);
+    this.showKeyboard = false;
   }
 }

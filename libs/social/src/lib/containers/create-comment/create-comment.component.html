@@ -18,6 +18,7 @@
           <div *ngIf="post$ | async as post">
             <!-- Create Comment -->
             <ion-button
+              *ngIf="showKeyboard"
               (click)="onCreateComment(post)"
               [disabled]="commentText.length === 0"
               fill="solid"
