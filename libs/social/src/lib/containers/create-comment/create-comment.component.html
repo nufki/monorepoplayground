@@ -6,6 +6,7 @@
           <textarea
             [rows]="2"
             (focus)="onFocusEvent($event)"
+            (focusout)="onFocusOutEvent($event)"
             [(ngModel)]="commentText"
           >
           </textarea>

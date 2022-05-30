@@ -25,7 +25,12 @@ export class CreateCommentComponent {
   }
 
   onFocusEvent(event: any) {
-    console.log(event);
+    console.log('onFocusEvent');
     this.inputFocus.emit(true);
+  }
+
+  onFocusOutEvent(event: any) {
+    console.log('onFocusOutEvent');
+    this.inputFocus.emit(false);
   }
 }
