@@ -8,6 +8,8 @@
             (focus)="onFocusEvent($event)"
             (focusout)="onFocusOutEvent($event)"
             [(ngModel)]="commentText"
+            placeholder="Write a comment"
+            #commentArea
           >
           </textarea>
         </ion-col>

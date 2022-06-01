@@ -26,11 +26,17 @@
   </div>
 </ion-content>
 
-<united-create-comment
-  (inputFocus)="inputFocus($event)"
-  *ngIf="!editingComment"
->
-</united-create-comment>
+<!-- <div *ngIf="!editingComment"> -->
+<div *ngIf="post$ | async as post; else loading">
+  <united-create-comment
+    *ngIf="comments$ | async as comments"
+    (inputFocus)="inputFocus($event)"
+    [initalFocus]="(comments$ | async)?.length === 0"
+    [comments]="comments"
+  >
+  </united-create-comment>
+</div>
+<!-- </div> -->
 
 <united-edit-comment
   *ngIf="editingComment"
