@@ -1,20 +1,18 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { filter, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { createComment } from '../../+state/post.actions';
 import { CommentEntity, PostEntity } from '../../+state/post.models';
-import { selectComments, selectPost } from '../../+state/post.selectors';
+import { selectPost } from '../../+state/post.selectors';
 
 @Component({
   selector: 'united-create-comment',

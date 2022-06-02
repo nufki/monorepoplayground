@@ -64,6 +64,7 @@ export class PostDetailsComponent implements OnInit {
   onCommentEdit(comment: CommentEntity) {
     console.log('PostDetailsComponent - comment edit clicked: ', comment);
     this.editingComment = comment;
+    this.showKeyboard = true;
   }
 
   onCommentCancelEdit(commentId: string) {
@@ -76,9 +77,6 @@ export class PostDetailsComponent implements OnInit {
 
   public inputFocus(event: boolean) {
     console.log('PostDetailsComponent', event);
-    // setTimeout(() => {
     this.showKeyboard = event;
-    //   this.commentInputFocus = false;
-    // });
   }
 }

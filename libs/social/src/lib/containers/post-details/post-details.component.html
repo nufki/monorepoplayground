@@ -26,24 +26,28 @@
   </div>
 </ion-content>
 
-<!-- <div *ngIf="!editingComment"> -->
 <div *ngIf="post$ | async as post; else loading">
-  <united-create-comment
-    *ngIf="comments$ | async as comments"
-    (inputFocus)="inputFocus($event)"
-    [initalFocus]="(comments$ | async)?.length === 0"
-    [comments]="comments"
-  >
-  </united-create-comment>
-</div>
-<!-- </div> -->
+  <div *ngIf="!editingComment">
+    <united-create-comment
+      *ngIf="comments$ | async as comments"
+      (inputFocus)="inputFocus($event)"
+      [initalFocus]="(comments$ | async)?.length === 0"
+      [comments]="comments"
+    >
+    </united-create-comment>
+  </div>
 
-<united-edit-comment
-  *ngIf="editingComment"
-  [comment]="editingComment"
-  [postId]="(post$ | async)?.id"
-  (editCancel)="onCommentCancelEdit($event)"
-></united-edit-comment>
+  <div *ngIf="editingComment">
+    <united-edit-comment
+      *ngIf="comments$ | async as comments"
+      [comment]="editingComment"
+      [postId]="(post$ | async)?.id"
+      (editCancel)="onCommentCancelEdit($event)"
+      (inputFocus)="inputFocus($event)"
+      [focus]="showKeyboard"
+    ></united-edit-comment>
+  </div>
+</div>
 
 <ng-template #loading>
   <div class="vertical-center">
