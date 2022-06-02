@@ -21,14 +21,14 @@ import { CommentEntity } from './../../+state/post.models';
   styleUrls: ['./edit-comment.component.scss'],
 }) /* ,AfterViewInit */
 export class EditCommentComponent implements OnInit, OnDestroy, OnChanges {
-  //post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
   @Input() comment: CommentEntity | undefined;
   @Input() postId: string | undefined;
-  @Input() focus: boolean | undefined;
+  @Input() focus: boolean | undefined; // Required to manage the focus
   @Output() editCancel = new EventEmitter<string>();
   @Output() inputFocus = new EventEmitter<boolean>();
   @ViewChild('commentArea') $commentArea?: ElementRef<HTMLTextAreaElement>;
-  editingComment = '';
+
+  editingCommentText = '';
   showKeyboard = false;
 
   constructor(private readonly store: Store) {}
@@ -36,24 +36,16 @@ export class EditCommentComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     console.log('changes: ', changes);
 
-    if (changes['comment']) {
-      if (changes['comment'].currentValue) {
-        this.editingComment = changes['comment'].currentValue.text;
-        if (this.focus) {
-          setTimeout(() => {
-            this.$commentArea?.nativeElement.focus();
-          }, 1000);
-        }
-      }
+    if (changes['comment'] && changes['comment'].currentValue) {
+      this.editingCommentText = changes['comment'].currentValue.text;
     }
-    if (changes['focus']) {
-      if (changes['focus'].currentValue) {
-        this.focus = changes['focus'].currentValue;
-        if (this.focus) {
-          setTimeout(() => {
-            this.$commentArea?.nativeElement.focus();
-          }, 1000);
-        }
+
+    if (changes['focus'] && changes['focus'].currentValue) {
+      this.focus = changes['focus'].currentValue;
+      if (this.focus) {
+        setTimeout(() => {
+          this.$commentArea?.nativeElement.focus();
+        }, 500);
       }
     }
   }
@@ -62,25 +54,13 @@ export class EditCommentComponent implements OnInit, OnDestroy, OnChanges {
     console.log('EditCommentComponent - ngOnInit');
   }
 
-  /***************************************************************************
-   * Set initial Focus
-   ***************************************************************************/
-  // ngAfterViewInit(): void {
-  //   console.log('ngAfterViewInit');
-  //   if (this.editingComment) {
-  //     setTimeout(() => {
-  //       this.$commentArea?.nativeElement.focus();
-  //     }, 500);
-  //   }
-  // }
-
   ngOnDestroy(): void {
     console.log('EditCommentComponent - ngOnDestroy');
   }
 
   onEditComment() {
     console.log(
-      'EditCommentComponent - Edited comment text: ' + this.editingComment,
+      'EditCommentComponent - Edited comment text: ' + this.editingCommentText,
       this.comment
     );
 
@@ -89,15 +69,15 @@ export class EditCommentComponent implements OnInit, OnDestroy, OnChanges {
         editComment({
           postId: this.postId,
           commentId: this.comment.id,
-          text: this.editingComment,
+          text: this.editingCommentText,
         })
       );
-    this.editingComment = '';
+    this.editingCommentText = '';
   }
 
   onEditCommentCancel() {
     this.editCancel.emit(this.comment?.id);
-    this.editingComment = '';
+    this.editingCommentText = '';
   }
 
   onFocusEvent(event: any) {

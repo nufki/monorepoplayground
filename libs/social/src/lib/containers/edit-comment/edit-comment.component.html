@@ -9,7 +9,7 @@
             [rows]="2"
             (focus)="onFocusEvent($event)"
             (focusout)="onFocusOutEvent($event)"
-            [(ngModel)]="editingComment"
+            [(ngModel)]="editingCommentText"
           >
           </textarea>
         </ion-col>
@@ -42,7 +42,7 @@
             >
               Post
             </ion-button>
-            <!-- [disabled]="editingComment.length === 0" -->
+            <!-- [disabled]="editingCommentText.length === 0" -->
           </div>
         </ion-col>
       </ion-row>

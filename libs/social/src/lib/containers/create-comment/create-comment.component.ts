@@ -21,21 +21,31 @@ import { selectPost } from '../../+state/post.selectors';
 })
 export class CreateCommentComponent implements OnChanges {
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
+  @Output() inputFocus = new EventEmitter<boolean>();
+  @Input() initalFocus = false;
+  @ViewChild('commentArea') $commentArea?: ElementRef<HTMLTextAreaElement>;
 
   commentText = '';
-  @ViewChild('commentArea') $commentArea?: ElementRef<HTMLTextAreaElement>;
-  @Output() inputFocus = new EventEmitter<boolean>();
   showKeyboard = false;
-  @Input() initalFocus = false;
-  @Input() comments: CommentEntity[] | undefined;
 
   constructor(private readonly store: Store) {}
 
   ngOnChanges(changes: SimpleChanges) {
     console.log('changes: ', changes);
+    /*
     if (changes['comments'].currentValue) {
       this.comments = changes['comments'].currentValue;
       console.log('comments (from on changes): ', this.comments);
+      if (this.initalFocus) {
+        setTimeout(() => {
+          this.$commentArea?.nativeElement.focus();
+        }, 500);
+      }
+    }
+*/
+
+    if (changes['initalFocus'] && changes['initalFocus'].currentValue) {
+      this.initalFocus = changes['initalFocus'].currentValue;
       if (this.initalFocus) {
         setTimeout(() => {
           this.$commentArea?.nativeElement.focus();

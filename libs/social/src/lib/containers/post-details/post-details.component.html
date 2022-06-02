@@ -32,7 +32,6 @@
       *ngIf="comments$ | async as comments"
       (inputFocus)="inputFocus($event)"
       [initalFocus]="(comments$ | async)?.length === 0"
-      [comments]="comments"
     >
     </united-create-comment>
   </div>
