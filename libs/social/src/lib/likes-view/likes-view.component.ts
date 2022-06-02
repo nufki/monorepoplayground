@@ -4,7 +4,7 @@ import { LikeEntity } from './../+state/post.models';
 @Component({
   selector: 'united-likes-view',
   templateUrl: './likes-view.component.html',
-  styleUrls: ['./likes-view.component.css'],
+  styleUrls: ['./likes-view.component.scss'],
 })
 export class LikesViewComponent implements OnInit {
   @Input() likes: LikeEntity[] | undefined;

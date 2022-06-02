@@ -7,7 +7,7 @@ import { PostService } from '../post.service';
 @Component({
   selector: 'united-comments-view',
   templateUrl: './comments-view.component.html',
-  styleUrls: ['./comments-view.component.css'],
+  styleUrls: ['./comments-view.component.scss'],
 })
 export class CommentsViewComponent implements OnInit {
   @Input() comments: CommentEntity[] | undefined;

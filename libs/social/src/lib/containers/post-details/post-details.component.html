@@ -29,15 +29,19 @@
 </ion-content>
 
 <div *ngIf="post$ | async as post; else loading">
+  <!-- CREATE NEW COMMENT -->
   <div *ngIf="!editingComment">
     <united-create-comment
       *ngIf="comments$ | async as comments"
       (inputFocus)="inputFocus($event)"
-      [initalFocus]="(comments$ | async)?.length === 0"
+      [numComments]="post.commentCnt"
     >
     </united-create-comment>
   </div>
+  <!-- [comments]="comments" -->
+  <!-- [initalFocus]="(comments$ | async)?.length === 0" -->
 
+  <!-- EDIT EXISTING COMMENT -->
   <div *ngIf="editingComment">
     <united-edit-comment
       *ngIf="comments$ | async as comments"

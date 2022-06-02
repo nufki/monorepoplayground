@@ -8,9 +8,9 @@ import { LikeEntity } from './../+state/post.models';
 @Component({
   selector: 'united-post-item-view',
   templateUrl: './post-item-view.component.html',
-  styleUrls: ['./post-item-view.component.css'],
+  styleUrls: ['./post-item-view.component.scss'],
 })
-export class PostItemViewComponent implements OnInit {
+export class PostItemViewComponent {
   @Input() post: PostEntity | undefined;
   @Output() showPostDetail = new EventEmitter<string>();
   @Output() postLike = new EventEmitter<string>();
@@ -21,13 +21,7 @@ export class PostItemViewComponent implements OnInit {
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
     private postService: PostService // TODO: this should be a utility which is used for checking self-like etc.
-  ) {
-    console.log('PostItemViewComponent');
-  }
-
-  ngOnInit(): void {
-    console.log('PostItemViewComponent - ngOnInit', this.post);
-  }
+  ) {}
 
   isSelfLike(likes: LikeEntity[]) {
     return this.postService.isSelfLike(likes);

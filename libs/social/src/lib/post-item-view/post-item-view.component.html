@@ -1,4 +1,4 @@
-<div *ngIf="post">
+<ion-card *ngIf="post">
   <ion-grid class="ion-no-margin ion-no-padding">
     <!-- WHO REGULAR POST-->
     <ion-row class="ion-no-margin ion-padding-bottom">
@@ -34,34 +34,34 @@
     <p>{{ post.text }}</p>
   </ion-card-content>
 
-  <ion-item slot="end" lines="none">
-    <!-- LIKE COUNT -->
-    <!-- (click)="showLikes()" -->
-    <ion-label>
-      <p
-        class="like-count-text"
-        *ngIf="post.likes.length; else noLikes"
-        [routerLink]="['post-details/' + post.id + '/likes']"
-      >
-        {{ printLikeText(post.likes) }}
-      </p>
-      <ng-template #noLikes>
-        <p class="like-count-text">
+  <div>
+    <ion-item slot="end" lines="none">
+      <!-- LIKE COUNT -->
+      <ion-label>
+        <p
+          class="like-count-text"
+          *ngIf="post.likes.length; else noLikes"
+          [routerLink]="['post-details/' + post.id + '/likes']"
+        >
           {{ printLikeText(post.likes) }}
         </p>
-      </ng-template>
-    </ion-label>
-
-    <!-- COMMENT COUNT  -->
-    <ion-button fill="clear" mode="ios">
-      <ion-label (click)="showPostComments()">
-        <p class="comment-cnt-text">
-          {{ printCommentText() }}
-        </p>
+        <ng-template #noLikes>
+          <p class="like-count-text">
+            {{ printLikeText(post.likes) }}
+          </p>
+        </ng-template>
       </ion-label>
-    </ion-button>
-  </ion-item>
 
+      <!-- COMMENT COUNT  -->
+      <ion-button fill="clear" mode="ios">
+        <ion-label (click)="showPostComments()">
+          <p class="comment-cnt-text">
+            {{ printCommentText() }}
+          </p>
+        </ion-label>
+      </ion-button>
+    </ion-item>
+  </div>
   <!-- SOCIAL ITERACTION BUTTONS -->
   <ion-grid class="ion-no-padding ion-no-margin">
     <ion-row>
@@ -97,4 +97,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</div>
+</ion-card>

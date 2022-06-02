@@ -1,0 +1,28 @@
+ion-card {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
+  ion-card-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+
+.like-count-text {
+  text-decoration: none;
+  display: block;
+  font-size: 11px;
+  text-align: left;
+  margin-top: 5px;
+  padding-left: 3px;
+}
+
+
+.comment-cnt-text {
+  text-decoration: none;
+  display: block;
+  font-size: 11px;
+  text-align: right;
+  margin-top: 5px;
+}

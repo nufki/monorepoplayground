@@ -23,7 +23,7 @@ export class PostService {
 
     console.log(apiEndpoint);
     return this.http.get<{ items: Post[] }>(apiEndpoint).pipe(
-      tap((data) => console.log(data)),
+      // tap((data) => console.log(data)),
       catchError((error) => of(error)),
       map((posts) => posts || [])
     );
@@ -43,7 +43,7 @@ export class PostService {
 
     console.log(apiEndpoint);
     return this.http.get<Post>(apiEndpoint).pipe(
-      tap((data) => console.log(data)),
+      // tap((data) => console.log(data)),
       catchError((error) => of(error)),
       map((post) => post || [])
     );
@@ -168,7 +168,7 @@ export class PostService {
 
     console.log(apiEndpoint);
     return this.http.patch<any>(apiEndpoint, { text: text }).pipe(
-      tap((data) => console.log(data)),
+      // tap((data) => console.log(data)),
       map((comment) => {
         return comment;
       })

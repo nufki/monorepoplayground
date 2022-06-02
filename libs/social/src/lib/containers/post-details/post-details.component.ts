@@ -33,9 +33,9 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('PostDetailsComponent - ngOnInit');
-    this.post$.subscribe((p) => {
-      console.log('post: ', p);
-    });
+    // this.post$.subscribe((p) => {
+    //   console.log('post: ', p);
+    // });
   }
 
   onPostDetail(id: string) {

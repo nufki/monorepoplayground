@@ -6,3 +6,7 @@ textarea {
   overflow: hidden;
   -webkit-appearance: none;
 }
+
+textarea:focus {
+  outline: none;
+}

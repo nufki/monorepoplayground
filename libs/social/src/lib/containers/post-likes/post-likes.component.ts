@@ -7,7 +7,7 @@ import { selectPost } from '../../+state/post.selectors';
 @Component({
   selector: 'united-post-likes',
   templateUrl: './post-likes.component.html',
-  styleUrls: ['./post-likes.component.css'],
+  styleUrls: ['./post-likes.component.scss'],
 })
 export class PostLikesComponent implements OnInit {
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);

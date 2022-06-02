@@ -11,7 +11,7 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { createComment } from '../../+state/post.actions';
-import { CommentEntity, PostEntity } from '../../+state/post.models';
+import { PostEntity } from '../../+state/post.models';
 import { selectPost } from '../../+state/post.selectors';
 
 @Component({
@@ -23,6 +23,9 @@ export class CreateCommentComponent implements OnChanges {
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
   @Output() inputFocus = new EventEmitter<boolean>();
   @Input() initalFocus = false;
+  // @Input() comments: CommentEntity[] | undefined;
+  @Input() numComments = 0;
+
   @ViewChild('commentArea') $commentArea?: ElementRef<HTMLTextAreaElement>;
 
   commentText = '';
@@ -32,41 +35,17 @@ export class CreateCommentComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     console.log('changes: ', changes);
-    /*
-    if (changes['comments'].currentValue) {
-      this.comments = changes['comments'].currentValue;
-      console.log('comments (from on changes): ', this.comments);
-      if (this.initalFocus) {
-        setTimeout(() => {
-          this.$commentArea?.nativeElement.focus();
-        }, 500);
-      }
-    }
-*/
 
-    if (changes['initalFocus'] && changes['initalFocus'].currentValue) {
-      this.initalFocus = changes['initalFocus'].currentValue;
-      if (this.initalFocus) {
+    if (changes['numComments']) {
+      //console.log('numComments: ', this.numComments);
+      if (this.numComments === 0) {
         setTimeout(() => {
+          //console.log('set focus since num comments is: ' + this.numComments);
           this.$commentArea?.nativeElement.focus();
         }, 500);
       }
     }
   }
-
-  /***************************************************************************
-   * Set initial Focus
-   ***************************************************************************/
-  // ngAfterViewInit(): void {
-  //   console.log('initalFocus: ', this.initalFocus);
-  //   console.log('comments: ', this.comments);
-
-  //   if (this.initalFocus) {
-  //     setTimeout(() => {
-  //       this.$commentArea?.nativeElement.focus();
-  //     }, 500);
-  //   }
-  // }
 
   onCreateComment(post: PostEntity) {
     this.store.dispatch(

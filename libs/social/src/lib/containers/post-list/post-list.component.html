@@ -9,7 +9,7 @@
     {{ (postsError$ | async).message }}
   </div> -->
 
-  <ion-card *ngFor="let p of posts$ | async">
+  <div *ngFor="let p of posts$ | async">
     <united-post-item-view
       (showPostDetail)="onPostDetail($event)"
       (postLike)="onPostLike($event)"
@@ -18,7 +18,7 @@
       [post]="p"
     >
     </united-post-item-view>
-  </ion-card>
+  </div>
 
   <ng-template #loading>
     <div class="vertical-center">
