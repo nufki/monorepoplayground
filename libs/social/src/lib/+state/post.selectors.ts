@@ -54,8 +54,15 @@ export const selectPost = createSelector(
   (posts, { id }) => posts[id]
 );
 
+export const selectedComment = createSelector(
+  getSelected,
+  selectRouteParams,
+  (post, { id }) =>
+    post && post.comments ? post.comments.entities[id] : undefined
+);
+
 export const selectPostById = (
-  id: string
+  id: string | number
 ): MemoizedSelector<object, PostEntity | undefined> =>
   createSelector(getPostEntities, (entities) =>
     id ? entities[id] : undefined
@@ -71,18 +78,9 @@ export const selectComments = (
   );
 
 export const selectCommentById = (
-  postId: string,
+  postId: string | number,
   commentId: string
 ): MemoizedSelector<object, CommentEntity | undefined> =>
   createSelector(selectPostById(postId), (post) =>
     post && post.comments ? post.comments.entities[commentId] : undefined
   );
-
-// export const selectPostLikes = (
-//   postId: string
-// ): MemoizedSelector<object, LikeEntity[] | undefined> =>
-//   createSelector(selectPostById(postId), (post) =>
-//     post && post.likes
-//       ? likesAdapter.getSelectors().selectAll(post.likes)
-//       : undefined
-//   );

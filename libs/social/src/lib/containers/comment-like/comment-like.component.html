@@ -8,8 +8,11 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="comment$ | async as comment">
+    {{ comment | json }}
+  </div>
   <!-- <united-likes-view
-    *ngIf="post$ | async as post"
-    [post]="post"
+    *ngIf="comment$ | async as comment"
+    [comment]="post"
   ></united-likes-view> -->
 </ion-content>

@@ -1,4 +1,7 @@
-import { selectCommentById } from './../../+state/post.selectors';
+import {
+  selectCommentById,
+  selectedComment,
+} from './../../+state/post.selectors';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CommentEntity } from '../../+state/post.models';
@@ -11,9 +14,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   styleUrls: ['./comment-like.component.css'],
 })
 export class CommentLikeComponent implements OnInit {
-  comment$: Observable<CommentEntity | undefined> = this.store.select(
-    selectCommentById('513', '789')
-  );
+  // comment$: Observable<CommentEntity | undefined> = this.store.select(
+  //   selectCommentById('513', '778')
+  // );
+  comment$: Observable<CommentEntity | undefined> =
+    this.store.select(selectedComment);
 
   constructor(
     private readonly store: Store,

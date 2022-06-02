@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
@@ -19,7 +20,7 @@ import { CommentEntity } from './../../+state/post.models';
   selector: 'united-edit-comment',
   templateUrl: './edit-comment.component.html',
   styleUrls: ['./edit-comment.component.scss'],
-}) /* ,AfterViewInit */
+})
 export class EditCommentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() comment: CommentEntity | undefined;
   @Input() postId: string | undefined;
