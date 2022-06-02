@@ -1,6 +1,6 @@
 import { ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { deletePost, init } from '../../+state/post.actions';
@@ -20,7 +20,8 @@ export class PostListComponent implements OnInit {
   constructor(
     private store: Store,
     private router: Router,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private activatedRoute: ActivatedRoute
   ) {
     this.posts$ = store.select(getAllPosts);
     this.postsError$ = store.select(getPostError);
@@ -41,7 +42,9 @@ export class PostListComponent implements OnInit {
   }
 
   onPostDetail(id: string) {
-    this.router.navigate(['post-details/' + id]);
+    this.router.navigate(['post-details/' + id], {
+      relativeTo: this.activatedRoute,
+    });
   }
 
   onPostLike(id: string) {

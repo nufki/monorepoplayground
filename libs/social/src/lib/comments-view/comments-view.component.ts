@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { CommentEntity, LikeEntity } from './../+state/post.models';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -17,10 +18,10 @@ export class CommentsViewComponent implements OnInit {
   constructor(
     private postService: PostService, // TODO: this should be a utility which is used for checking self-like etc.
     private actionSheetController: ActionSheetController,
-    private alertController: AlertController
-  ) {
-    console.log('CommentsViewComponent');
-  }
+    private alertController: AlertController,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     console.log('ngOnInit');
@@ -93,6 +94,11 @@ export class CommentsViewComponent implements OnInit {
 
   showLikes(comment: CommentEntity) {
     console.log('CommentsViewComponent - show likes clicked...');
+    if (comment.likes.length > 0) {
+      this.router.navigate(['comments/' + comment.id + '/likes'], {
+        relativeTo: this.activatedRoute,
+      });
+    }
   }
 
   isSelfLike(likes: LikeEntity[]) {

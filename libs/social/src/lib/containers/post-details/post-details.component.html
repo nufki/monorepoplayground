@@ -9,6 +9,7 @@
 
 <ion-content [fullscreen]="true">
   <div *ngIf="post$ | async as post; else loading">
+    <!-- SHOW POST CARD -->
     <united-post-item-view
       (showPostDetail)="onPostDetail($event)"
       (postLike)="onPostLike($event)"
@@ -16,6 +17,7 @@
     >
     </united-post-item-view>
 
+    <!-- SHOW POST COMMENTS -->
     <united-comments-view
       *ngIf="comments$ | async as comments"
       (commentLike)="onCommentLike(post.id, $event)"

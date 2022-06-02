@@ -10,6 +10,6 @@
 <ion-content>
   <united-likes-view
     *ngIf="post$ | async as post"
-    [post]="post"
+    [likes]="post.likes"
   ></united-likes-view>
 </ion-content>

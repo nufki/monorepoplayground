@@ -16,7 +16,7 @@ export const POST_ROUTES: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: defaultRoute,
+    component: PostListComponent,
   },
   {
     path: defaultRoute,
