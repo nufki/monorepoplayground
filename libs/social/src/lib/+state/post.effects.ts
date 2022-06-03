@@ -12,14 +12,34 @@ import { selectCommentById, selectPostById } from './post.selectors';
 
 @Injectable()
 export class PostEffects {
-  // INIT
-  init$ = createEffect(() =>
+  // HOME TIMELINE INIT
+  initHomeTimeline$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostActions.init),
+      ofType(PostActions.initHomeTimeline),
       fetch({
         run: (action) => {
-          // Your custom service 'load' logic goes here. For now just return a success action...
           return this.postService.fetchFriendsPost().pipe(
+            map((posts) => {
+              //console.log('friends post api ', posts);
+              return PostActions.loadPostsSuccess({ posts });
+            })
+          );
+        },
+        onError: (action, error) => {
+          console.error('Error', error);
+          return PostActions.loadPostFailure({ error });
+        },
+      })
+    )
+  );
+
+  initAssetFeed$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.initAssetTagFeed),
+      fetch({
+        run: (par) => {
+          // Your custom service 'load' logic goes here. For now just return a success action...
+          return this.postService.fetchAssetTagPosts(par.assetTag).pipe(
             map((posts) => {
               //console.log('friends post api ', posts);
               return PostActions.loadPostsSuccess({ posts });

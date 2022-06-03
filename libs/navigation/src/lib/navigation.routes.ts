@@ -1,13 +1,13 @@
-import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
 import { Routes } from '@angular/router';
+import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation.component';
 
 export enum NavigationRoutesNames {
-  HOME = 'home',
+  MYHOME = 'myhome',
   TRADING = 'trading',
-  INSTRUMENT = 'instruments',
+  INSTRUMENT = 'instrument',
 }
 
-export const defaultRoute = NavigationRoutesNames.HOME;
+export const defaultRoute = NavigationRoutesNames.MYHOME;
 
 export const NAVIGATION_ROUTES: Routes = [
   {
@@ -20,9 +20,9 @@ export const NAVIGATION_ROUTES: Routes = [
         redirectTo: defaultRoute,
       },
       {
-        path: NavigationRoutesNames.HOME,
+        path: NavigationRoutesNames.MYHOME,
         loadChildren: () =>
-          import('@united/social').then((module) => module.PostModule),
+          import('@united/myhome').then((module) => module.MyhomeModule),
       },
       {
         path: NavigationRoutesNames.TRADING,
@@ -31,8 +31,10 @@ export const NAVIGATION_ROUTES: Routes = [
       },
       {
         path: NavigationRoutesNames.INSTRUMENT,
-        // loadChildren: () =>
-        //   import('@yeekatee/instruments-feature-details').then((module) => module.InstrumentsFeatureDetailsModule),
+        loadChildren: () =>
+          import('@united/instrument').then(
+            (module) => module.InstrumentModule
+          ),
       },
     ],
   },

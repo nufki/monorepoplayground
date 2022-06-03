@@ -30,6 +30,24 @@ export class PostService {
   }
 
   /***************************************************************************
+   * Fetch assetTag posts, associated comments, user mentions, assetTags,
+   * hashTags etc. from the back-end.
+   ***************************************************************************/
+  public fetchAssetTagPosts(assetTag: string): Observable<Post[]> {
+    const apiEndpoint =
+      this.socialNetServiceURL +
+      '/api1/social-networking/posts/by-assettags/' +
+      assetTag +
+      '?username=nufki81&limit=10&offset=0';
+
+    console.log(apiEndpoint);
+    return this.http.get<any>(apiEndpoint).pipe(
+      tap((data) => console.log(data)),
+      map((posts) => posts || [])
+    );
+  }
+
+  /***************************************************************************
    * Fetch post card and comments, associated tags (user mentions, assetTags &
    * hashTags etc. from the back-end.
    ***************************************************************************/

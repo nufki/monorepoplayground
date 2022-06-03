@@ -1,9 +1,19 @@
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { deletePost, init } from '../../+state/post.actions';
+import {
+  deletePost,
+  initAssetTagFeed,
+  initHomeTimeline,
+} from '../../+state/post.actions';
 import { PostEntity } from '../../+state/post.models';
 import { getAllPosts, getPostError } from '../../+state/post.selectors';
 import { likeUnlikePost } from './../../+state/post.actions';
@@ -13,9 +23,12 @@ import { likeUnlikePost } from './../../+state/post.actions';
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss'],
 })
-export class PostListComponent implements OnInit {
+export class PostListComponent implements OnInit, OnChanges {
   posts$: Observable<PostEntity[]>;
   postsError$: Observable<any>;
+  @Input() assetTag: string | undefined;
+  @Input() timelineUpdate: Date | undefined;
+  @Input() assetTagUpdate: Date | undefined;
 
   constructor(
     private store: Store,
@@ -38,7 +51,28 @@ export class PostListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(init());
+    // if (this.assetTag) {
+    //   this.store.dispatch(initAssetTagFeed({ assetTag: this.assetTag }));
+    // } else {
+    //   this.store.dispatch(initHomeTimeline());
+    // }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('*** changes ***', changes);
+
+    if (changes['timelineUpdate']) {
+      this.store.dispatch(initHomeTimeline());
+      return;
+    }
+
+    if (changes['assetTagUpdate']) {
+      if (changes['assetTag']) {
+        this.assetTag = changes['assetTag'].currentValue;
+      }
+      if (this.assetTag)
+        this.store.dispatch(initAssetTagFeed({ assetTag: this.assetTag }));
+    }
   }
 
   onPostDetail(id: string) {

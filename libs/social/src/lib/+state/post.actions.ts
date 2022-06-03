@@ -2,7 +2,14 @@ import { createAction, props } from '@ngrx/store';
 import { Post } from '../models';
 import { Comment } from './../models/comment.interface';
 
-export const init = createAction('[Post Page] Init');
+// export const init = createAction('[Post Page] Init');
+
+export const initHomeTimeline = createAction('[Post Page] Init Home Timeline');
+
+export const initAssetTagFeed = createAction(
+  '[Post/API] Init AssetTag Feed',
+  props<{ assetTag: string }>()
+);
 
 export const loadPostsSuccess = createAction(
   '[Post/API] Load Post Success',

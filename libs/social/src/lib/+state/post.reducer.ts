@@ -30,7 +30,11 @@ export const initialCommentState = commentsAdapter.getInitialState({});
 
 const PostReducer = createReducer(
   initialState,
-  on(PostActions.init, (state) => ({ ...state, loaded: false, error: null })),
+  on(PostActions.initHomeTimeline, (state) => ({
+    ...state,
+    loaded: false,
+    error: null,
+  })),
   on(PostActions.loadPostsSuccess, (state, { posts }) => {
     const postEntities: PostEntity[] = posts.map((post) => ({
       ...post,
