@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title> Instrument Feed of {{ this.instrumentSymbol }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- prices, logo etc... -->
+
+  <united-post-list
+    [assetTagUpdate]="timestamp"
+    [assetTag]="instrumentSymbol"
+  ></united-post-list>
+
+  <ng-template #loading>
+    <div class="vertical-center">
+      <div class="center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    </div>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/instrument",
+  "sourceRoot": "libs/instrument/src",
+  "prefix": "united",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/instrument"],
+      "options": {
+        "jestConfig": "libs/instrument/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/instrument/src/**/*.ts",
+          "libs/instrument/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

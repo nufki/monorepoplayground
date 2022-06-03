@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title> Home Feed </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- prices, logo etc... -->
+
+  <united-post-list [timelineUpdate]="timestamp"></united-post-list>
+
+  <ng-template #loading>
+    <div class="vertical-center">
+      <div class="center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    </div>
+  </ng-template>
+</ion-content>
