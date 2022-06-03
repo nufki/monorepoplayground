@@ -21,7 +21,7 @@ export class PostEffects {
           // Your custom service 'load' logic goes here. For now just return a success action...
           return this.postService.fetchFriendsPost().pipe(
             map((posts) => {
-              console.log('friends post api ', posts);
+              //console.log('friends post api ', posts);
               return PostActions.loadPostsSuccess({ posts });
             })
           );

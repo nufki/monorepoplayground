@@ -23,7 +23,6 @@ export class CreateCommentComponent implements OnChanges {
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
   @Output() inputFocus = new EventEmitter<boolean>();
   @Input() initalFocus = false;
-  // @Input() comments: CommentEntity[] | undefined;
   @Input() numComments = 0;
 
   @ViewChild('commentArea') $commentArea?: ElementRef<HTMLTextAreaElement>;
@@ -34,13 +33,9 @@ export class CreateCommentComponent implements OnChanges {
   constructor(private readonly store: Store) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('changes: ', changes);
-
     if (changes['numComments']) {
-      //console.log('numComments: ', this.numComments);
       if (this.numComments === 0) {
         setTimeout(() => {
-          //console.log('set focus since num comments is: ' + this.numComments);
           this.$commentArea?.nativeElement.focus();
         }, 500);
       }

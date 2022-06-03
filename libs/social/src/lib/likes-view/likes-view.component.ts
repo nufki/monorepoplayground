@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LikeEntity } from './../+state/post.models';
 
 @Component({
@@ -6,14 +6,10 @@ import { LikeEntity } from './../+state/post.models';
   templateUrl: './likes-view.component.html',
   styleUrls: ['./likes-view.component.scss'],
 })
-export class LikesViewComponent implements OnInit {
+export class LikesViewComponent {
   @Input() likes: LikeEntity[] | undefined;
 
   constructor() {
-    console.log('LikesViewComponent - constructor', this.likes);
-  }
-
-  ngOnInit(): void {
-    console.log('LikesViewComponent - ngOnInit', this.likes);
+    console.log('LikesViewComponent - constructor');
   }
 }

@@ -1,7 +1,40 @@
-<ion-item *ngFor="let liker of likes">
+<!-- <ion-item *ngFor="let liker of likes">
   <ion-avatar>
     <ion-img src="../assets/icon/generic-avatar.png"></ion-img>
   </ion-avatar>
   <ion-label>{{ liker.user.username }}</ion-label>
   <ion-label>{{ liker.likeDate | date }}</ion-label>
-</ion-item>
+</ion-item> -->
+
+<div class="like-container">
+  <ion-grid
+    *ngFor="let liker of this.likes"
+    class="ion-no-margin ion-no-padding"
+  >
+    <ion-row class="ion-no-margin ion-no-padding custom-row-margin">
+      <!-- SHOW AVATAR OF THE USER -->
+      <ion-col size="2" class="ion-padding-start">
+        <ion-avatar>
+          <ion-img src="../assets/icon/generic-avatar.png"></ion-img>
+        </ion-avatar>
+      </ion-col>
+
+      <ion-col class="ion-padding-start" size="5">
+        <p class="profile-username">{{ liker.user.username }}</p>
+      </ion-col>
+      <!-- NO FRIENDSHIP -->
+      <ion-col class="ion-padding-start ion-padding-end" size="5">
+        <div>
+          <ion-button
+            size="small"
+            fill="outline"
+            expand="block"
+            color="primary"
+            mode="ios"
+            >Add friend</ion-button
+          >
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
