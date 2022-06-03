@@ -41,7 +41,7 @@
         <p
           class="like-count-text"
           *ngIf="post.likes.length; else noLikes"
-          [routerLink]="['post-details/' + post.id + '/likes']"
+          (click)="showPostLikes(post)"
         >
           {{ printLikeText(post.likes) }}
         </p>

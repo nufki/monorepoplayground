@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PostEntity } from '../+state/post.models';
 import { PostService } from '../post.service';
@@ -18,6 +18,7 @@ export class PostItemViewComponent {
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
     private postService: PostService // TODO: this should be a utility which is used for checking self-like etc.
@@ -34,10 +35,24 @@ export class PostItemViewComponent {
   }
 
   /***************************************************************************
-   * Navigate to single post respectively commment section where all the
-   * comments to the posts are shown.
+   * Navigate to likes overview
    ***************************************************************************/
-  public async showPostComments() {
+  showPostLikes(post: PostEntity) {
+    // Already in post-details?
+    if (this.router.url.indexOf('post-details') > 0) {
+      this.router.navigate(['likes'], {
+        relativeTo: this.activatedRoute,
+      });
+    }
+    // In post-list overview
+    else {
+      this.router.navigate(['post-details/' + post.id + '/likes'], {
+        relativeTo: this.activatedRoute,
+      });
+    }
+  }
+
+  showPostComments() {
     if (this.post) {
       this.showPostDetail.emit(this.post.id);
     }
@@ -46,7 +61,7 @@ export class PostItemViewComponent {
   /***************************************************************************
    * Return comment text
    ***************************************************************************/
-  public printCommentText(): string {
+  printCommentText(): string {
     if (this.post) {
       if (this.post.commentCnt === 0) {
         return '';
@@ -62,7 +77,7 @@ export class PostItemViewComponent {
   /***************************************************************************
    * Evaluate and show like text
    ***************************************************************************/
-  public printLikeText(likes: LikeEntity[]): string {
+  printLikeText(likes: LikeEntity[]): string {
     let iLiked = false;
     // Handle no likes
     if (likes.length === 0) {
@@ -88,27 +103,9 @@ export class PostItemViewComponent {
   }
 
   /***************************************************************************
-   * Navigate to single post respectively commment section where all the
-   * comments to the posts are shown.
-   ***************************************************************************/
-  public async showLikes() {
-    console.log('show all user likes', this.post?.likes);
-    // this.router.navigate(['likes']);
-    /*
-    if (this.post.likes.length === 0) return;
-    const navigationExtras: NavigationExtras = {
-      state: {
-        post, // Unfortunatly, arrays cannot be simply handed over... thats why post and extract the likes again from there...
-      },
-    };
-    this.router.navigate(['tabs/likes'], navigationExtras);
-*/
-  }
-
-  /***************************************************************************
    * Post Menu Actions (Delete, Edit, ...)
    ***************************************************************************/
-  public async postActionMenu() {
+  async postActionMenu() {
     const actionSheet = await this.actionSheetController.create({
       buttons: [
         {

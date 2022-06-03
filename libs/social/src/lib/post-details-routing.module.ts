@@ -4,7 +4,6 @@ import { CommentLikeComponent } from './containers/comment-like/comment-like.com
 import { PostDetailsComponent } from './containers/post-details/post-details.component';
 import { PostLikesComponent } from './containers/post-likes/post-likes.component';
 import { PostListComponent } from './containers/post-list/post-list.component';
-import { LikesViewComponent } from './likes-view/likes-view.component';
 
 export enum PostDetailsRoutesNames {
   POST_DETAILS = 'post-details',

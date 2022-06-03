@@ -75,7 +75,7 @@ export class PostDetailsComponent implements OnInit {
     this.editingComment = undefined;
   }
 
-  public inputFocus(event: boolean) {
+  inputFocus(event: boolean) {
     console.log('PostDetailsComponent', event);
     this.showKeyboard = event;
   }

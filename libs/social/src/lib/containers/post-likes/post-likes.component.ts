@@ -15,9 +15,6 @@ export class PostLikesComponent implements OnInit {
   constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
-    console.log('post');
-    this.post$.subscribe((p) => {
-      console.log('post: ', p);
-    });
+    console.log('PostLikesComponent - ngOnInit');
   }
 }
