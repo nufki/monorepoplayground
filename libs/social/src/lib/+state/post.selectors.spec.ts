@@ -47,14 +47,14 @@ describe('Post Selectors', () => {
       expect(selId).toBe('PRODUCT-BBB');
     });
 
-    it('getPostLoaded() should return the current "loaded" status', () => {
-      const result = PostSelectors.getPostLoaded(state);
+    it('getPostsLoaded() should return the current "loaded" status', () => {
+      const result = PostSelectors.getPostsLoaded(state);
 
       expect(result).toBe(true);
     });
 
-    it('getPostError() should return the current "error" state', () => {
-      const result = PostSelectors.getPostError(state);
+    it('getPostsError() should return the current "error" state', () => {
+      const result = PostSelectors.getPostsError(state);
 
       expect(result).toBe(ERROR_MSG);
     });

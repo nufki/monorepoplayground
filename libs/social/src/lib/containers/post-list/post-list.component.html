@@ -1,17 +1,19 @@
-<div *ngFor="let p of posts$ | async">
-  <united-post-item-view
-    (showPostDetail)="onPostDetail($event)"
-    (postLike)="onPostLike($event)"
-    (postDeleted)="onPostDelete($event)"
-    *ngIf="posts$ | async as post; else loading"
-    [post]="p"
-  >
-  </united-post-item-view>
+<div *ngIf="postsLoaded$ | async as post; else loading">
+  <div *ngIf="posts$ | async as posts; else loading">
+    <united-post-item-view
+      *ngFor="let p of posts"
+      (showPostDetail)="onPostDetail($event)"
+      (postLike)="onPostLike($event)"
+      (postDeleted)="onPostDelete($event)"
+      [post]="p"
+    >
+    </united-post-item-view>
+  </div>
 </div>
 
 <ng-template #loading>
   <div class="vertical-center">
-    <div class="center">
+    <div class="spin">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
   </div>

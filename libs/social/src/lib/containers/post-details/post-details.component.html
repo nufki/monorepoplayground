@@ -8,24 +8,29 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="post$ | async as post; else loading">
-    <!-- SHOW POST CARD -->
-    <united-post-item-view
-      (showPostDetail)="onPostDetail($event)"
-      (postLike)="onPostLike($event)"
-      [post]="post"
-    >
-    </united-post-item-view>
+  <div *ngIf="postsLoaded$ | async as post; else loading">
+    <div *ngIf="post$ | async as post; else loading">
+      <!-- SHOW POST CARD -->
+      <united-post-item-view (postLike)="onPostLike($event)" [post]="post">
+      </united-post-item-view>
 
-    <!-- SHOW POST COMMENTS -->
-    <united-comments-view
-      *ngIf="comments$ | async as comments"
-      (commentLike)="onCommentLike(post.id, $event)"
-      (commentDelete)="onCommentDelete(post.id, $event)"
-      (commentEdit)="onCommentEdit($event)"
-      [comments]="comments"
-    ></united-comments-view>
+      <!-- SHOW POST COMMENTS -->
+      <united-comments-view
+        *ngIf="comments$ | async as comments"
+        (commentLike)="onCommentLike(post.id, $event)"
+        (commentDelete)="onCommentDelete(post.id, $event)"
+        (commentEdit)="onCommentEdit($event)"
+        [comments]="comments"
+      ></united-comments-view>
+    </div>
   </div>
+  <ng-template #loading>
+    <div class="vertical-center">
+      <div class="spin">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    </div>
+  </ng-template>
 </ion-content>
 
 <div *ngIf="post$ | async as post; else loading">
@@ -54,7 +59,7 @@
 
 <ng-template #loading>
   <div class="vertical-center">
-    <div class="center">
+    <div class="spin">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
   </div>

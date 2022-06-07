@@ -8,7 +8,8 @@ import {
 } from '../../+state/post.actions';
 import { PostEntity } from '../../+state/post.models';
 import {
-  getPostError,
+  getPostsError,
+  getPostsLoaded,
   selectComments,
   selectPost,
 } from '../../+state/post.selectors';
@@ -20,12 +21,15 @@ import { CommentEntity } from './../../+state/post.models';
   styleUrls: ['./post-details.component.scss'],
 })
 export class PostDetailsComponent implements OnInit {
+  postsLoaded$: Observable<boolean | undefined> =
+    this.store.select(getPostsLoaded);
+
   post$: Observable<PostEntity | undefined> = this.store.select(selectPost);
   comments$ = this.post$.pipe(
     filter((post) => !!post),
     switchMap((post) => this.store.select(selectComments(post?.id as string)))
   );
-  postError$: Observable<any> = this.store.select(getPostError);
+  postError$: Observable<any> = this.store.select(getPostsError);
   editingComment: CommentEntity | undefined;
   showKeyboard = false;
 
@@ -33,13 +37,9 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('PostDetailsComponent - ngOnInit');
-    // this.post$.subscribe((p) => {
-    //   console.log('post: ', p);
-    // });
-  }
-
-  onPostDetail(id: string) {
-    //this.router.navigate(['post-details/' + id]);
+    this.post$.subscribe((p) => {
+      console.log('post: ', p);
+    });
   }
 
   onPostLike(id: string) {

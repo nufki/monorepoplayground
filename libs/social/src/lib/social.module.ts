@@ -24,7 +24,7 @@ import { EditCommentComponent } from './containers/edit-comment/edit-comment.com
     CommonModule,
     FormsModule,
     PostDetailsRoutingModule,
-    StoreModule.forFeature(fromPost.POST_FEATURE_KEY, fromPost.reducer),
+    StoreModule.forFeature(fromPost.POSTS_FEATURE_KEY, fromPost.reducer),
     EffectsModule.forFeature([PostEffects]),
   ],
   declarations: [

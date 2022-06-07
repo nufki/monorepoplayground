@@ -8,37 +8,37 @@ import { CommentEntity, PostEntity } from './post.models';
 import {
   commentsAdapter,
   postsAdapter,
-  POST_FEATURE_KEY,
+  POSTS_FEATURE_KEY,
   State,
 } from './post.reducer';
 
 // Lookup the 'Post' feature state managed by NgRx
-export const getPostState = createFeatureSelector<State>(POST_FEATURE_KEY);
+export const getPostsState = createFeatureSelector<State>(POSTS_FEATURE_KEY);
 
 const { selectRouteParams } = getSelectors();
 
 const { selectAll, selectEntities } = postsAdapter.getSelectors();
 
-export const getPostLoaded = createSelector(
-  getPostState,
+export const getPostsLoaded = createSelector(
+  getPostsState,
   (state: State) => state.loaded
 );
 
-export const getPostError = createSelector(
-  getPostState,
+export const getPostsError = createSelector(
+  getPostsState,
   (state: State) => state.error
 );
 
-export const getAllPosts = createSelector(getPostState, (state: State) =>
+export const getAllPosts = createSelector(getPostsState, (state: State) =>
   selectAll(state)
 );
 
-export const getPostEntities = createSelector(getPostState, (state: State) =>
+export const getPostEntities = createSelector(getPostsState, (state: State) =>
   selectEntities(state)
 );
 
 export const getSelectedId = createSelector(
-  getPostState,
+  getPostsState,
   (state: State) => state.selectedId
 );
 

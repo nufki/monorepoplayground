@@ -3,7 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as PostActions from './post.actions';
 import { CommentEntity, PostEntity } from './post.models';
 
-export const POST_FEATURE_KEY = 'Post';
+export const POSTS_FEATURE_KEY = 'Posts';
 
 export interface State extends EntityState<PostEntity> {
   selectedId?: string | number; // which Post record has been selected
@@ -12,7 +12,7 @@ export interface State extends EntityState<PostEntity> {
 }
 
 export interface PostPartialState {
-  readonly [POST_FEATURE_KEY]: State;
+  readonly [POSTS_FEATURE_KEY]: State;
 }
 
 export const postsAdapter: EntityAdapter<PostEntity> =

@@ -15,7 +15,11 @@ import {
   initHomeTimeline,
 } from '../../+state/post.actions';
 import { PostEntity } from '../../+state/post.models';
-import { getAllPosts, getPostError } from '../../+state/post.selectors';
+import {
+  getAllPosts,
+  getPostsError,
+  getPostsLoaded,
+} from '../../+state/post.selectors';
 import { likeUnlikePost } from './../../+state/post.actions';
 
 @Component({
@@ -24,6 +28,9 @@ import { likeUnlikePost } from './../../+state/post.actions';
   styleUrls: ['./post-list.component.scss'],
 })
 export class PostListComponent implements OnInit, OnChanges {
+  postsLoaded$: Observable<boolean | undefined> =
+    this.store.select(getPostsLoaded);
+
   posts$: Observable<PostEntity[]>;
   postsError$: Observable<any>;
   @Input() assetTag: string | undefined;
@@ -37,7 +44,7 @@ export class PostListComponent implements OnInit, OnChanges {
     private activatedRoute: ActivatedRoute
   ) {
     this.posts$ = store.select(getAllPosts);
-    this.postsError$ = store.select(getPostError);
+    this.postsError$ = store.select(getPostsError);
 
     this.postsError$.subscribe(async (error) => {
       if (error) {
