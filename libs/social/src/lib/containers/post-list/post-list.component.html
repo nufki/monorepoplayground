@@ -1,14 +1,12 @@
 <div *ngIf="postsLoaded$ | async as post; else loading">
-  <div *ngIf="posts$ | async as posts; else loading">
-    <united-post-item-view
-      *ngFor="let p of posts"
-      (showPostDetail)="onPostDetail($event)"
-      (postLike)="onPostLike($event)"
-      (postDeleted)="onPostDelete($event)"
-      [post]="p"
-    >
-    </united-post-item-view>
-  </div>
+  <united-post-item-view
+    *ngFor="let p of posts$ | async"
+    (showPostDetail)="onPostDetail($event)"
+    (postLike)="onPostLike($event)"
+    (postDeleted)="onPostDelete($event)"
+    [post]="p"
+  >
+  </united-post-item-view>
 </div>
 
 <ng-template #loading>
