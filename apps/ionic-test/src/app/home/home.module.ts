@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import { PostModule } from '@united/social';
+import { SocialModule } from '@united/social';
 
 @NgModule({
   imports: [
@@ -13,7 +13,7 @@ import { PostModule } from '@united/social';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    PostModule,
+    SocialModule,
   ],
   declarations: [HomePage],
 })

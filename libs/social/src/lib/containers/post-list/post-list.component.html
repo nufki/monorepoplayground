@@ -1,4 +1,9 @@
-<div *ngIf="postsLoaded$ | async as post; else loading">
+<ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+
+<!-- <div *ngIf="postsLoaded$ | async as post; else loading"> -->
+<div *ngIf="!isLoading; else loading">
   <united-post-item-view
     *ngFor="let p of posts$ | async"
     (showPostDetail)="onPostDetail($event)"
@@ -8,6 +13,11 @@
   >
   </united-post-item-view>
 </div>
+
+<ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll-content loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
 
 <ng-template #loading>
   <div class="vertical-center">

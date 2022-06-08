@@ -37,12 +37,8 @@
   <div>
     <ion-item slot="end" lines="none">
       <!-- LIKE COUNT -->
-      <ion-label>
-        <p
-          class="like-count-text"
-          *ngIf="post.likes.length; else noLikes"
-          (click)="showPostLikes(post)"
-        >
+      <ion-label (click)="showPostLikes(post)">
+        <p class="like-count-text" *ngIf="post.likes.length; else noLikes">
           {{ printLikeText(post.likes) }}
         </p>
         <ng-template #noLikes>
@@ -53,8 +49,8 @@
       </ion-label>
 
       <!-- COMMENT COUNT  -->
-      <ion-button fill="clear" mode="ios">
-        <ion-label (click)="showPostComments()">
+      <ion-button fill="clear" mode="ios" (click)="showPostComments()">
+        <ion-label>
           <p class="comment-cnt-text">
             {{ printCommentText() }}
           </p>

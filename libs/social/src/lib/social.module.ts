@@ -41,4 +41,4 @@ import { EditCommentComponent } from './containers/edit-comment/edit-comment.com
   exports: [PostListComponent, PostItemViewComponent, PostDetailsComponent],
   providers: [PostService],
 })
-export class PostModule {}
+export class SocialModule {}

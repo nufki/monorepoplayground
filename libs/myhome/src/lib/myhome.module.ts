@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { PostModule } from '@united/social';
+import { SocialModule } from '@united/social';
 import { TimelineComponent } from './containers/timeline/timeline.component';
 import { MyHomeRoutingModule } from './myhome-routing.module';
 
@@ -11,7 +11,7 @@ import { MyHomeRoutingModule } from './myhome-routing.module';
     MyHomeRoutingModule,
     CommonModule,
     IonicModule,
-    PostModule,
+    SocialModule,
   ],
   declarations: [TimelineComponent],
 })

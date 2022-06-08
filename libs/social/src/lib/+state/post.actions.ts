@@ -4,7 +4,14 @@ import { Comment } from './../models/comment.interface';
 
 // export const init = createAction('[Post Page] Init');
 
-export const initHomeTimeline = createAction('[Post Page] Init Home Timeline');
+//export const initHomeTimeline = createAction('[Post Page] Init Home Timeline');
+
+export const loadHomeTimeline = createAction('[Post Page] Init Home Timeline');
+
+export const loadMoreTimelinePosts = createAction(
+  '[Post/API] Load more timeline posts',
+  props<{ page: number }>()
+);
 
 export const initAssetTagFeed = createAction(
   '[Post/API] Init AssetTag Feed',
@@ -16,8 +23,18 @@ export const loadPostsSuccess = createAction(
   props<{ posts: Post[] }>()
 );
 
-export const loadPostFailure = createAction(
+export const loadPostsFailure = createAction(
   '[Post/API] Load Post Failure',
+  props<{ error: any }>()
+);
+
+export const loadMorePostsSuccess = createAction(
+  '[Post/API] Load More Post Success',
+  props<{ posts: Post[] }>()
+);
+
+export const loadMorePostsFailure = createAction(
+  '[Post/API] Load More Post Failure',
   props<{ error: any }>()
 );
 

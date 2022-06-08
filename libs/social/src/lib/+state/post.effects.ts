@@ -13,6 +13,7 @@ import { selectCommentById, selectPostById } from './post.selectors';
 @Injectable()
 export class PostEffects {
   // HOME TIMELINE INIT
+  /*
   initHomeTimeline$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.initHomeTimeline),
@@ -32,6 +33,35 @@ export class PostEffects {
       })
     )
   );
+  */
+
+  loadHomeTimeline$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.loadHomeTimeline),
+      switchMap(() =>
+        this.postService.fetchFriendsPost(0).pipe(
+          map((posts) => {
+            return PostActions.loadPostsSuccess({ posts });
+          })
+        )
+      ),
+      catchError((error) => of(PostActions.loadPostsFailure({ error })))
+    )
+  );
+
+  loadMoreTimelinePosts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.loadMoreTimelinePosts),
+      switchMap(({ page }) =>
+        this.postService.fetchFriendsPost(page).pipe(
+          map((posts) => {
+            return PostActions.loadMorePostsSuccess({ posts });
+          })
+        )
+      ),
+      catchError((error) => of(PostActions.loadMorePostsFailure({ error })))
+    )
+  );
 
   initAssetFeed$ = createEffect(() =>
     this.actions$.pipe(
@@ -48,7 +78,7 @@ export class PostEffects {
         },
         onError: (action, error) => {
           console.error('Error', error);
-          return PostActions.loadPostFailure({ error });
+          return PostActions.loadPostsFailure({ error });
         },
       })
     )
@@ -110,6 +140,18 @@ export class PostEffects {
         )
       ),
       catchError((error) => of(PostActions.loadPostDetailsFailure({ error })))
+    )
+  );
+
+  // TRIGGER HOME TIMELINE LOADING WHEN ROUTE INVOLVES THE TIMELINE COMPONENT
+  loadPosts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      concatLatestFrom(() => [
+        this.store.select(getSelectors().selectCurrentRoute),
+      ]),
+      filter(([, route]) => route.component.name === 'TimelineComponent'),
+      map(() => PostActions.loadHomeTimeline())
     )
   );
 

@@ -10,16 +10,21 @@ import { Post } from './models/post.interface';
 })
 export class PostService {
   socialNetServiceURL = 'https://social-service.mvp-634705352654.yeekatee.com';
+  limit = 5;
 
   constructor(private http: HttpClient) {}
 
   /***************************************************************************
    * Fetch friends "post cards" with user mentions, hashtags, assettags
    ***************************************************************************/
-  fetchFriendsPost(): Observable<Post[]> {
+  fetchFriendsPost(page: number): Observable<Post[]> {
     const apiEndpoint =
       this.socialNetServiceURL +
-      '/api1/social-networking/posts/by-friends/nufki81?limit=10&offset=0';
+      '/api1/social-networking/posts/by-friends/nufki81' +
+      '?limit=' +
+      this.limit +
+      '&offset=' +
+      page * this.limit;
 
     console.log(apiEndpoint);
     return this.http.get<{ items: Post[] }>(apiEndpoint).pipe(

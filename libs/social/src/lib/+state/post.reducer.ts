@@ -30,7 +30,7 @@ export const initialCommentState = commentsAdapter.getInitialState({});
 
 const PostReducer = createReducer(
   initialState,
-  on(PostActions.initHomeTimeline, (state) => ({
+  on(PostActions.loadHomeTimeline, (state) => ({
     ...state,
     loaded: false,
     error: null,
@@ -42,6 +42,26 @@ const PostReducer = createReducer(
     }));
     return postsAdapter.setAll(postEntities, { ...state, loaded: true });
   }),
+  on(PostActions.loadPostsFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(PostActions.loadMoreTimelinePosts, (state) => ({
+    ...state,
+    loaded: false,
+    error: null,
+  })),
+  on(PostActions.loadMorePostsSuccess, (state, { posts }) => {
+    const postEntities: PostEntity[] = posts.map((post) => ({
+      ...post,
+      comments: initialCommentState,
+    }));
+    return postsAdapter.addMany(postEntities, { ...state, loaded: true });
+  }),
+  on(PostActions.loadMorePostsFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
   on(PostActions.loadPostDetailsSuccess, (state: State, { post }) => {
     const comments = state?.entities[post.id]?.comments ?? initialCommentState;
     return postsAdapter.upsertOne(
@@ -63,10 +83,6 @@ const PostReducer = createReducer(
     ...state,
     selectedId: postId,
     loaded: false,
-  })),
-  on(PostActions.loadPostFailure, (state, { error }) => ({
-    ...state,
-    error,
   })),
   on(PostActions.likeUnlikePostSuccess, (state: State, { post }) =>
     postsAdapter.updateOne(
