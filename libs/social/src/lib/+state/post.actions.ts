@@ -7,11 +7,22 @@ import { Comment } from './../models/comment.interface';
 //export const initHomeTimeline = createAction('[Post Page] Init Home Timeline');
 
 export const loadHomeTimeline = createAction('[Post Page] Init Home Timeline');
+export const loadInstrumentPosts = createAction(
+  '[Post Page] Init Instrument Posts',
+  props<{ assetTag: string }>()
+);
 
-export const loadMoreTimelinePosts = createAction(
-  '[Post/API] Load more timeline posts',
+export const loadMorePosts = createAction(
+  '[Post/API] Load more posts',
   props<{ page: number }>()
 );
+
+export const loadPosts = createAction('[Post/API] Load posts');
+
+// export const loadMoreTimelinePosts = createAction(
+//   '[Post/API] Load more timeline posts',
+//   props<{ page: number }>()
+// );
 
 export const initAssetTagFeed = createAction(
   '[Post/API] Init AssetTag Feed',

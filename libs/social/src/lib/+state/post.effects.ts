@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { getSelectors, ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
-import { fetch } from '@nrwl/angular';
 import { catchError, filter, map, of, switchMap } from 'rxjs';
 import { CommentLikeComponent } from '../containers/comment-like/comment-like.component';
 import { PostService } from '../post.service';
 import { PostDetailsComponent } from './../containers/post-details/post-details.component';
 import * as PostActions from './post.actions';
-import { selectCommentById, selectPostById } from './post.selectors';
+import { PostType } from './post.reducer';
+import { getFilter, selectCommentById, selectPostById } from './post.selectors';
 
 @Injectable()
 export class PostEffects {
@@ -35,7 +35,7 @@ export class PostEffects {
   );
   */
 
-  loadHomeTimeline$ = createEffect(() =>
+  loadHomeTimelinePosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostActions.loadHomeTimeline),
       switchMap(() =>
@@ -49,38 +49,95 @@ export class PostEffects {
     )
   );
 
-  loadMoreTimelinePosts$ = createEffect(() =>
+  loadInstrumentPosts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostActions.loadMoreTimelinePosts),
-      switchMap(({ page }) =>
-        this.postService.fetchFriendsPost(page).pipe(
-          map((posts) => {
-            return PostActions.loadMorePostsSuccess({ posts });
-          })
-        )
-      ),
+      ofType(PostActions.loadInstrumentPosts),
+      concatLatestFrom(() => this.store.select(getFilter)),
+      switchMap(([, filter]) => {
+        if (filter?.assetTag) {
+          return this.postService.fetchInstrumentPosts(filter.assetTag, 0).pipe(
+            map((posts) => {
+              return PostActions.loadPostsSuccess({ posts });
+            })
+          );
+        }
+        return of(
+          PostActions.loadMorePostsFailure({ error: 'Invalid filter' })
+        );
+      }),
+      catchError((error) => of(PostActions.loadPostsFailure({ error })))
+    )
+  );
+
+  loadPosts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostActions.loadPosts),
+      concatLatestFrom(() => this.store.select(getFilter)),
+      switchMap(([, filter]) => {
+        switch (filter?.type) {
+          case PostType.TIMELINE:
+            return this.postService.fetchFriendsPost(0).pipe(
+              map((posts) => {
+                return PostActions.loadMorePostsSuccess({ posts });
+              })
+            );
+          case PostType.INSTRUMENT:
+            if (filter.assetTag) {
+              return this.postService
+                .fetchInstrumentPosts(filter.assetTag, 0)
+                .pipe(
+                  map((posts) => {
+                    //console.log('friends post api ', posts);
+                    return PostActions.loadMorePostsSuccess({ posts });
+                  })
+                );
+            }
+            return of(
+              PostActions.loadMorePostsFailure({ error: 'Invalid filter' })
+            );
+          default:
+            return of(
+              PostActions.loadMorePostsFailure({ error: 'Invalid filter' })
+            );
+        }
+      }),
       catchError((error) => of(PostActions.loadMorePostsFailure({ error })))
     )
   );
 
-  initAssetFeed$ = createEffect(() =>
+  loadMorePosts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PostActions.initAssetTagFeed),
-      fetch({
-        run: (par) => {
-          // Your custom service 'load' logic goes here. For now just return a success action...
-          return this.postService.fetchAssetTagPosts(par.assetTag).pipe(
-            map((posts) => {
-              //console.log('friends post api ', posts);
-              return PostActions.loadPostsSuccess({ posts });
-            })
-          );
-        },
-        onError: (action, error) => {
-          console.error('Error', error);
-          return PostActions.loadPostsFailure({ error });
-        },
-      })
+      ofType(PostActions.loadMorePosts),
+      concatLatestFrom(() => this.store.select(getFilter)),
+      switchMap(([{ page }, filter]) => {
+        switch (filter?.type) {
+          case PostType.TIMELINE:
+            return this.postService.fetchFriendsPost(page).pipe(
+              map((posts) => {
+                return PostActions.loadMorePostsSuccess({ posts });
+              })
+            );
+          case PostType.INSTRUMENT:
+            if (filter.assetTag) {
+              return this.postService
+                .fetchInstrumentPosts(filter.assetTag, page)
+                .pipe(
+                  map((posts) => {
+                    //console.log('friends post api ', posts);
+                    return PostActions.loadMorePostsSuccess({ posts });
+                  })
+                );
+            }
+            return of(
+              PostActions.loadMorePostsFailure({ error: 'Invalid filter' })
+            );
+          default:
+            return of(
+              PostActions.loadMorePostsFailure({ error: 'Invalid filter' })
+            );
+        }
+      }),
+      catchError((error) => of(PostActions.loadMorePostsFailure({ error })))
     )
   );
 
@@ -144,7 +201,7 @@ export class PostEffects {
   );
 
   // TRIGGER HOME TIMELINE LOADING WHEN ROUTE INVOLVES THE TIMELINE COMPONENT
-  loadPosts$ = createEffect(() =>
+  homeTimelinePostsRouted$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ROUTER_NAVIGATED),
       concatLatestFrom(() => [
@@ -152,6 +209,24 @@ export class PostEffects {
       ]),
       filter(([, route]) => route.component.name === 'TimelineComponent'),
       map(() => PostActions.loadHomeTimeline())
+    )
+  );
+
+  // TRIGGER HOME TIMELINE LOADING WHEN ROUTE INVOLVES THE INSTRUMENT COMPONENT
+  instrumentPostsRouted$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      concatLatestFrom(() => [
+        this.store.select(getSelectors().selectCurrentRoute),
+        this.store.select(getSelectors().selectRouteParam('id')),
+      ]),
+      filter(([, route]) => route.component.name === 'InstrumentViewComponent'),
+      map(([, , id]) => {
+        console.log('assettag: ', id);
+        return PostActions.loadInstrumentPosts({
+          assetTag: id as string,
+        });
+      })
     )
   );
 

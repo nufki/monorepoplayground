@@ -9,6 +9,18 @@ export interface State extends EntityState<PostEntity> {
   selectedId?: string | number; // which Post record has been selected
   loaded: boolean; // has the Post list been loaded
   error?: string | null; // last known error (if any)
+  filter?: PostFilter;
+}
+
+export interface PostFilter {
+  type: PostType;
+  assetTag?: string;
+}
+
+export enum PostType {
+  TIMELINE = 'TIMELINE',
+  INSTRUMENT = 'INSTRUMENT',
+  USERPROFILE = 'USERPROFILE',
 }
 
 export interface PostPartialState {
@@ -24,16 +36,32 @@ export const commentsAdapter: EntityAdapter<CommentEntity> =
 export const initialState: State = postsAdapter.getInitialState({
   // set initial required properties
   loaded: false,
+  filter: {
+    type: PostType.TIMELINE,
+  },
 });
 
 export const initialCommentState = commentsAdapter.getInitialState({});
 
 const PostReducer = createReducer(
   initialState,
+  // Post initializers triggered by routes
   on(PostActions.loadHomeTimeline, (state) => ({
     ...state,
     loaded: false,
     error: null,
+    filter: {
+      type: PostType.TIMELINE,
+    },
+  })),
+  on(PostActions.loadInstrumentPosts, (state, { assetTag }) => ({
+    ...state,
+    loaded: false,
+    error: null,
+    filter: {
+      type: PostType.INSTRUMENT,
+      assetTag: assetTag,
+    },
   })),
   on(PostActions.loadPostsSuccess, (state, { posts }) => {
     const postEntities: PostEntity[] = posts.map((post) => ({
@@ -46,7 +74,8 @@ const PostReducer = createReducer(
     ...state,
     error,
   })),
-  on(PostActions.loadMoreTimelinePosts, (state) => ({
+  // Load more
+  on(PostActions.loadMorePosts, (state) => ({
     ...state,
     loaded: false,
     error: null,

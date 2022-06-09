@@ -4,7 +4,7 @@ import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation
 export enum NavigationRoutesNames {
   MYHOME = 'myhome',
   TRADING = 'trading',
-  INSTRUMENT = 'instrument',
+  INSTRUMENTS = 'instruments',
 }
 
 export const defaultRoute = NavigationRoutesNames.MYHOME;
@@ -30,7 +30,7 @@ export const NAVIGATION_ROUTES: Routes = [
         //   import('@yeekatee/trading').then((module) => module.TradingModule),
       },
       {
-        path: NavigationRoutesNames.INSTRUMENT,
+        path: NavigationRoutesNames.INSTRUMENTS,
         loadChildren: () =>
           import('@united/instrument').then(
             (module) => module.InstrumentModule

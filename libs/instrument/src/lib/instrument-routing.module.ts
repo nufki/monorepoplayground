@@ -1,27 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InstrumentComponent } from './containers/instrument/instrument.component';
+import { InstrumentViewComponent } from './containers/instrument-view/instrument-view.component';
+import { InstrumentListComponent } from './containers/instrument/instrument-list.component';
 
-export enum InstrumentRoutesNames {
-  INSTRUMENT = 'instrument',
+export enum InstrumentDetailsRoutesNames {
+  INSTRUMENT_DETAILS = 'details',
 }
 
-export const defaultRoute = InstrumentRoutesNames.INSTRUMENT;
+export const defaultRoute = InstrumentDetailsRoutesNames.INSTRUMENT_DETAILS;
 
-export const POST_ROUTES: Routes = [
+export const INSTRUMENT_ROUTES: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: InstrumentComponent,
+    redirectTo: defaultRoute,
   },
   {
     path: defaultRoute,
-    component: InstrumentComponent,
+    component: InstrumentListComponent,
+  },
+  {
+    path: defaultRoute + '/:id',
+    component: InstrumentViewComponent,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(POST_ROUTES)],
+  imports: [RouterModule.forChild(INSTRUMENT_ROUTES)],
   exports: [RouterModule],
 })
 export class InstrumentRoutingModule {}

@@ -84,3 +84,8 @@ export const selectCommentById = (
   createSelector(selectPostById(postId), (post) =>
     post && post.comments ? post.comments.entities[commentId] : undefined
   );
+
+export const getFilter = createSelector(
+  getPostsState,
+  (state: State) => state.filter
+);

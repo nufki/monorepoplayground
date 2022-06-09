@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Instrument List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item
+      *ngFor="let instrument of instruments"
+      [routerLink]="[instrument.symbol]"
+    >
+      <ion-label class="ion-padding-vertical">{{ instrument.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

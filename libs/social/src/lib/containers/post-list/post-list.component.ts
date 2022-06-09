@@ -15,8 +15,8 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import {
   deletePost,
-  loadHomeTimeline,
-  loadMoreTimelinePosts,
+  loadMorePosts,
+  loadPosts,
 } from '../../+state/post.actions';
 import { PostEntity } from '../../+state/post.models';
 import {
@@ -37,9 +37,6 @@ export class PostListComponent implements OnChanges {
   // postsLoaded$: Observable<boolean> | undefined;
   posts$: Observable<PostEntity[]>;
   postsError$: Observable<any>;
-  @Input() assetTag: string | undefined;
-  @Input() timelineUpdate: Date | undefined;
-  @Input() assetTagUpdate: Date | undefined;
   pageNumber = 1;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll | undefined;
   @ViewChild(IonRefresher) refresher: IonRefresher | undefined;
@@ -100,15 +97,15 @@ export class PostListComponent implements OnChanges {
    * Fetch timeline posts
    * @param event: Triggered by ion-infinite-scroll or or ion-refresher
    ***************************************************************************/
-  private getTimeline(event: any, isRefresh: boolean = false) {
+  private getPosts(event: any, isRefresh: boolean = false) {
     if (event && isRefresh) {
       // Refresh posts
-      this.store.dispatch(loadHomeTimeline());
+      this.store.dispatch(loadPosts());
       return;
     }
     if (event) {
       // Load more and merge
-      this.store.dispatch(loadMoreTimelinePosts({ page: this.pageNumber }));
+      this.store.dispatch(loadMorePosts({ page: this.pageNumber }));
     }
   }
 
@@ -120,7 +117,7 @@ export class PostListComponent implements OnChanges {
     console.log('refresh');
     // No loading spinner as
     this.pageNumber = 0;
-    this.getTimeline(event, true);
+    this.getPosts(event, true);
   }
 
   /***************************************************************************
@@ -129,7 +126,7 @@ export class PostListComponent implements OnChanges {
    ***************************************************************************/
   public loadMore(event: Event) {
     console.log('load more');
-    this.getTimeline(event, false);
+    this.getPosts(event, false);
   }
 
   onPostDetail(id: string) {

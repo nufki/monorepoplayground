@@ -38,12 +38,16 @@ export class PostService {
    * Fetch assetTag posts, associated comments, user mentions, assetTags,
    * hashTags etc. from the back-end.
    ***************************************************************************/
-  public fetchAssetTagPosts(assetTag: string): Observable<Post[]> {
+  public fetchInstrumentPosts(
+    assetTag: string,
+    page: number = 0
+  ): Observable<Post[]> {
     const apiEndpoint =
       this.socialNetServiceURL +
       '/api1/social-networking/posts/by-assettags/' +
       assetTag +
-      '?username=nufki81&limit=10&offset=0';
+      '?username=nufki81&limit=10&offset=' +
+      page * 10;
 
     console.log(apiEndpoint);
     return this.http.get<any>(apiEndpoint).pipe(
