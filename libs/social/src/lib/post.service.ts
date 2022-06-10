@@ -46,8 +46,10 @@ export class PostService {
       this.socialNetServiceURL +
       '/api1/social-networking/posts/by-assettags/' +
       assetTag +
-      '?username=nufki81&limit=10&offset=' +
-      page * 10;
+      '?username=nufki81&limit=' +
+      this.limit +
+      '&offset=' +
+      page * this.limit;
 
     console.log(apiEndpoint);
     return this.http.get<any>(apiEndpoint).pipe(

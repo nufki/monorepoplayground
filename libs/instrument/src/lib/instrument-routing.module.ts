@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InstrumentViewComponent } from './containers/instrument-view/instrument-view.component';
-import { InstrumentListComponent } from './containers/instrument/instrument-list.component';
+import { InstrumentListComponent } from './containers/instrument-list/instrument-list.component';
 
 export enum InstrumentDetailsRoutesNames {
   INSTRUMENT_DETAILS = 'details',

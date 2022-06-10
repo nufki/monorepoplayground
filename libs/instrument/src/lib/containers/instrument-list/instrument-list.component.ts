@@ -41,8 +41,4 @@ export class InstrumentListComponent implements OnInit {
   ngOnInit(): void {
     console.log('InstrumentComponent - ngOnInit');
   }
-
-  // ionViewDidEnter() {
-  //   console.log('InstrumentComponent - ionViewDidEnter');
-  // }
 }
