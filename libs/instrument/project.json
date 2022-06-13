@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/instrument",
   "sourceRoot": "libs/instrument/src",
   "prefix": "united",
   "targets": {

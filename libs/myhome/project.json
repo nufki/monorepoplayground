@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/myhome",
   "sourceRoot": "libs/myhome/src",
   "prefix": "united",
   "targets": {

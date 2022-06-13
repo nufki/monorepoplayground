@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/social",
   "sourceRoot": "libs/social/src",
   "prefix": "united",
   "targets": {

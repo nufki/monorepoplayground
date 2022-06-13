@@ -1,6 +1,5 @@
 {
   "projectType": "application",
-  "root": "apps/ionic-test",
   "sourceRoot": "apps/ionic-test/src",
   "prefix": "united",
   "targets": {

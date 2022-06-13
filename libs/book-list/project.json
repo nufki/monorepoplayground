@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/book-list",
   "sourceRoot": "libs/book-list/src",
   "prefix": "united",
   "targets": {

@@ -1,6 +1,5 @@
 {
   "projectType": "application",
-  "root": "apps/my-app",
   "sourceRoot": "apps/my-app/src",
   "prefix": "united",
   "targets": {

@@ -1,6 +1,5 @@
 {
   "projectType": "library",
-  "root": "libs/counter",
   "sourceRoot": "libs/counter/src",
   "prefix": "united",
   "targets": {
