@@ -78,7 +78,7 @@ export class PostEffects {
           case PostType.TIMELINE:
             return this.postService.fetchFriendsPost(0).pipe(
               map((posts) => {
-                return PostActions.loadMorePostsSuccess({ posts });
+                return PostActions.loadPostsSuccess({ posts });
               })
             );
           case PostType.INSTRUMENT:
@@ -88,20 +88,20 @@ export class PostEffects {
                 .pipe(
                   map((posts) => {
                     //console.log('friends post api ', posts);
-                    return PostActions.loadMorePostsSuccess({ posts });
+                    return PostActions.loadPostsSuccess({ posts });
                   })
                 );
             }
             return of(
-              PostActions.loadMorePostsFailure({ error: 'Invalid filter' })
+              PostActions.loadPostsFailure({ error: 'Invalid filter' })
             );
           default:
             return of(
-              PostActions.loadMorePostsFailure({ error: 'Invalid filter' })
+              PostActions.loadPostsFailure({ error: 'Invalid filter' })
             );
         }
       }),
-      catchError((error) => of(PostActions.loadMorePostsFailure({ error })))
+      catchError((error) => of(PostActions.loadPostsFailure({ error })))
     )
   );
 

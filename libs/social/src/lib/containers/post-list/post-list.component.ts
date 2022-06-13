@@ -1,7 +1,9 @@
 import {
+  AfterViewInit,
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -31,17 +33,17 @@ import { likeUnlikePost } from './../../+state/post.actions';
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.scss'],
 })
-export class PostListComponent implements OnChanges {
-  // postsLoaded$: Observable<boolean | undefined> =
-  //   this.store.select(getPostsLoaded);
-  // postsLoaded$: Observable<boolean> | undefined;
+export class PostListComponent implements OnChanges, OnDestroy {
+  postsLoaded$: Observable<boolean | undefined> =
+    this.store.select(getPostsLoaded);
   posts$: Observable<PostEntity[]>;
   postsError$: Observable<any>;
   pageNumber = 1;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll | undefined;
   @ViewChild(IonRefresher) refresher: IonRefresher | undefined;
-  postsLoaded: Subscription;
+  postsLoadedSubscr: Subscription;
   isLoading = true;
+  initialLoaded = false;
 
   constructor(
     private store: Store,
@@ -62,19 +64,34 @@ export class PostListComponent implements OnChanges {
       }
     });
 
-    this.postsLoaded = this.store
+    this.postsLoadedSubscr = this.store
       .select(getPostsLoaded)
-      .subscribe((isLoading) => {
-        console.log('xxxx: ', isLoading);
-        if (this.infiniteScroll && !isLoading) {
+      .subscribe((loaded) => {
+        console.log('loaded: ' + loaded);
+        console.log('initialLoaded: ' + this.initialLoaded);
+
+        this.isLoading = !loaded;
+        console.log('isLoading: ', this.isLoading);
+        if (this.infiniteScroll && !loaded && this.initialLoaded) {
           this.infiniteScroll.complete();
-          this.refresher?.complete();
           this.pageNumber++;
+          console.log('xxxx');
         }
-        this.isLoading = false;
+        if (this.refresher && !loaded && this.initialLoaded) {
+          this.refresher?.complete();
+          console.log('yyyy');
+        }
+        if (!this.isLoading && !this.initialLoaded) {
+          this.initialLoaded = true;
+        }
       });
   }
 
+  ngOnDestroy(): void {
+    if (this.postsLoadedSubscr) {
+      this.postsLoadedSubscr.unsubscribe();
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     console.log('*** changes ***', changes);
     /*
@@ -117,6 +134,7 @@ export class PostListComponent implements OnChanges {
     console.log('refresh');
     // No loading spinner as
     this.pageNumber = 0;
+    this.isLoading = false;
     this.getPosts(event, true);
   }
 

@@ -63,6 +63,12 @@ const PostReducer = createReducer(
       assetTag: assetTag,
     },
   })),
+  // Triggered when refreshing posts (reset loaded)
+  on(PostActions.loadPosts, (state) => ({
+    ...state,
+    loaded: false,
+    error: null,
+  })),
   on(PostActions.loadPostsSuccess, (state, { posts }) => {
     const postEntities: PostEntity[] = posts.map((post) => ({
       ...post,
@@ -74,7 +80,7 @@ const PostReducer = createReducer(
     ...state,
     error,
   })),
-  // Load more
+  // Load more (reset loaded)
   on(PostActions.loadMorePosts, (state) => ({
     ...state,
     loaded: false,
