@@ -1,11 +1,14 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/navigation/src",
   "prefix": "united",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/navigation"],
+      "outputs": [
+        "coverage/libs/navigation"
+      ],
       "options": {
         "jestConfig": "libs/navigation/jest.config.js",
         "passWithNoTests": true

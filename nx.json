@@ -50,5 +50,6 @@
       "style": "scss"
     }
   },
-  "defaultProject": "my-app"
+  "defaultProject": "my-app",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

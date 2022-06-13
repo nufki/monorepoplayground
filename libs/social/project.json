@@ -1,11 +1,14 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/social/src",
   "prefix": "united",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/social"],
+      "outputs": [
+        "coverage/libs/social"
+      ],
       "options": {
         "jestConfig": "libs/social/jest.config.js",
         "passWithNoTests": true

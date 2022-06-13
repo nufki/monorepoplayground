@@ -1,11 +1,14 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/counter/src",
   "prefix": "united",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/counter"],
+      "outputs": [
+        "coverage/libs/counter"
+      ],
       "options": {
         "jestConfig": "libs/counter/jest.config.js",
         "passWithNoTests": true
