@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   displayName: 'social',
   preset: '../../jest.preset.js',

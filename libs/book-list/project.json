@@ -6,11 +6,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/book-list"
-      ],
+      "outputs": ["coverage/libs/book-list"],
       "options": {
-        "jestConfig": "libs/book-list/jest.config.js",
+        "jestConfig": "libs/book-list/jest.config.ts",
         "passWithNoTests": true
       }
     },

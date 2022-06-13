@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/ionic-test",
         "index": "apps/ionic-test/src/index.html",
@@ -94,11 +92,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/ionic-test"
-      ],
+      "outputs": ["coverage/apps/ionic-test"],
       "options": {
-        "jestConfig": "apps/ionic-test/jest.config.js",
+        "jestConfig": "apps/ionic-test/jest.config.ts",
         "passWithNoTests": true
       }
     },

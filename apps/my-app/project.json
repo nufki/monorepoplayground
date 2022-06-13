@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/my-app",
         "index": "apps/my-app/src/index.html",
@@ -16,13 +14,8 @@
         "polyfills": "apps/my-app/src/polyfills.ts",
         "tsConfig": "apps/my-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/my-app/src/favicon.ico",
-          "apps/my-app/src/assets"
-        ],
-        "styles": [
-          "apps/my-app/src/styles.scss"
-        ],
+        "assets": ["apps/my-app/src/favicon.ico", "apps/my-app/src/assets"],
+        "styles": ["apps/my-app/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -87,11 +80,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/my-app"
-      ],
+      "outputs": ["coverage/apps/my-app"],
       "options": {
-        "jestConfig": "apps/my-app/jest.config.js",
+        "jestConfig": "apps/my-app/jest.config.ts",
         "passWithNoTests": true
       }
     }

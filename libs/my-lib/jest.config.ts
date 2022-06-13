@@ -1,5 +1,6 @@
+/* eslint-disable */
 module.exports = {
-  displayName: 'counter',
+  displayName: 'my-lib',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +9,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/libs/counter',
+  coverageDirectory: '../../coverage/libs/my-lib',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

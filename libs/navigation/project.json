@@ -6,11 +6,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/navigation"
-      ],
+      "outputs": ["coverage/libs/navigation"],
       "options": {
-        "jestConfig": "libs/navigation/jest.config.js",
+        "jestConfig": "libs/navigation/jest.config.ts",
         "passWithNoTests": true
       }
     },

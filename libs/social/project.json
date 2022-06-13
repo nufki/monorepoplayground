@@ -6,11 +6,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/social"
-      ],
+      "outputs": ["coverage/libs/social"],
       "options": {
-        "jestConfig": "libs/social/jest.config.js",
+        "jestConfig": "libs/social/jest.config.ts",
         "passWithNoTests": true
       }
     },

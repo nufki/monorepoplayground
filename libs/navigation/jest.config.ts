@@ -1,5 +1,6 @@
+/* eslint-disable */
 module.exports = {
-  displayName: 'ionic-test',
+  displayName: 'navigation',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +9,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/ionic-test',
+  coverageDirectory: '../../coverage/libs/navigation',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
