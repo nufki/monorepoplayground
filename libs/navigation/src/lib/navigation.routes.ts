@@ -3,7 +3,6 @@ import { BottomNavigationComponent } from './bottom-navigation/bottom-navigation
 
 export enum NavigationRoutesNames {
   MYHOME = 'myhome',
-  TRADING = 'trading',
   INSTRUMENTS = 'instruments',
 }
 
@@ -23,11 +22,6 @@ export const NAVIGATION_ROUTES: Routes = [
         path: NavigationRoutesNames.MYHOME,
         loadChildren: () =>
           import('@united/myhome').then((module) => module.MyhomeModule),
-      },
-      {
-        path: NavigationRoutesNames.TRADING,
-        // loadChildren: () =>
-        //   import('@yeekatee/trading').then((module) => module.TradingModule),
       },
       {
         path: NavigationRoutesNames.INSTRUMENTS,

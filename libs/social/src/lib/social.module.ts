@@ -17,6 +17,7 @@ import { PostLikesComponent } from './containers/post-likes/post-likes.component
 import { CommentLikeComponent } from './containers/comment-like/comment-like.component';
 import { CreateCommentComponent } from './containers/create-comment/create-comment.component';
 import { EditCommentComponent } from './containers/edit-comment/edit-comment.component';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { EditCommentComponent } from './containers/edit-comment/edit-comment.com
     CommonModule,
     FormsModule,
     PostDetailsRoutingModule,
+    SwiperModule,
     StoreModule.forFeature(fromPost.POSTS_FEATURE_KEY, fromPost.reducer),
     EffectsModule.forFeature([PostEffects]),
   ],

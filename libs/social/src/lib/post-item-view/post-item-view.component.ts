@@ -4,6 +4,7 @@ import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PostEntity } from '../+state/post.models';
 import { PostService } from '../post.service';
 import { LikeEntity } from './../+state/post.models';
+import SwiperCore, { SwiperOptions } from 'swiper';
 
 @Component({
   selector: 'united-post-item-view',
@@ -15,6 +16,13 @@ export class PostItemViewComponent {
   @Output() showPostDetail = new EventEmitter<string>();
   @Output() postLike = new EventEmitter<string>();
   @Output() postDeleted = new EventEmitter<string>();
+  config: SwiperOptions = {
+    slidesPerView: 3,
+    spaceBetween: 50,
+    navigation: true,
+    pagination: { clickable: true },
+    scrollbar: { draggable: true },
+  };
 
   constructor(
     private router: Router,
@@ -23,6 +31,13 @@ export class PostItemViewComponent {
     private alertController: AlertController,
     private postService: PostService // TODO: this should be a utility which is used for checking self-like etc.
   ) {}
+
+  onSwiper(swiper: any) {
+    console.log(swiper);
+  }
+  onSlideChange() {
+    console.log('slide change');
+  }
 
   isSelfLike(likes: LikeEntity[]) {
     return this.postService.isSelfLike(likes);

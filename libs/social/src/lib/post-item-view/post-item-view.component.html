@@ -58,6 +58,22 @@
       </ion-button>
     </ion-item>
   </div>
+
+  <div>
+    <swiper
+      [config]="config"
+      (swiper)="onSwiper($event)"
+      (slideChange)="onSlideChange()"
+    >
+      <ng-template swiperSlide>Slide 1</ng-template>
+      <ng-template swiperSlide>Slide 2</ng-template>
+      <ng-template swiperSlide>Slide 3</ng-template>
+      <ng-template swiperSlide>Slide 4</ng-template>
+      <ng-template swiperSlide>Slide 5</ng-template>
+      <ng-template swiperSlide>Slide 6</ng-template>
+    </swiper>
+  </div>
+
   <!-- SOCIAL ITERACTION BUTTONS -->
   <ion-grid class="ion-no-padding ion-no-margin">
     <ion-row>
