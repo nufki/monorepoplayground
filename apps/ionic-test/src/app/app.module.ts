@@ -14,32 +14,31 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    BrowserModule,
-    HttpClientModule,
-    StoreModule.forRoot(ROOT_REDUCERS, {
-      metaReducers,
-      runtimeChecks: {
-        strictActionImmutability: true,
-        strictActionSerializability: false,
-        strictActionTypeUniqueness: true,
-        strictActionWithinNgZone: true,
-        strictStateImmutability: false,
-        strictStateSerializability: false,
-      },
-    }),
-    StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot([]),
-    SocialModule,
-    StoreRouterConnectingModule.forRoot({
-      routerState: RouterState.Full,
-    }),
-  ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        BrowserModule,
+        HttpClientModule,
+        StoreModule.forRoot(ROOT_REDUCERS, {
+            metaReducers,
+            runtimeChecks: {
+                strictActionImmutability: true,
+                strictActionSerializability: false,
+                strictActionTypeUniqueness: true,
+                strictActionWithinNgZone: true,
+                strictStateImmutability: false,
+                strictStateSerializability: false,
+            },
+        }),
+        StoreDevtoolsModule.instrument(),
+        EffectsModule.forRoot([]),
+        SocialModule,
+        StoreRouterConnectingModule.forRoot({
+            routerState: RouterState.Full,
+        }),
+    ],
+    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
