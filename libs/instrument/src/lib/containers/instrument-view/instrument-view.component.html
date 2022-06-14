@@ -9,7 +9,11 @@
 
 <ion-content>
   <!-- prices, logo etc... -->
-
+  <ion-card>
+    <ion-card-content>
+      Price information of.... {{ this.instrumentSymbol }}
+    </ion-card-content>
+  </ion-card>
   <united-post-list></united-post-list>
 
   <ng-template #loading>

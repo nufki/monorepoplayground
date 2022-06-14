@@ -91,6 +91,7 @@ const PostReducer = createReducer(
       ...post,
       comments: initialCommentState,
     }));
+
     return postsAdapter.addMany(postEntities, { ...state, loaded: true });
   }),
   on(PostActions.loadMorePostsFailure, (state, { error }) => ({

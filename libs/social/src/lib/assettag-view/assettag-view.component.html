@@ -1,0 +1,21 @@
+<div *ngIf="assetTags">
+  <p *ngIf="assetTags.length > 0" class="asset-tag-text">
+    Tagged financial instruments
+  </p>
+
+  <swiper
+    #swiper
+    [config]="config"
+    (swiper)="onSwiper($event)"
+    (slideChange)="onSlideChange()"
+  >
+    <ng-template swiperSlide *ngFor="let assetTag of assetTags">
+      <div class="asset-item">
+        <ion-avatar (click)="showInstrumentDetails(assetTag.symbol)">
+          <img [src]="assetTag.logo" class="img" />
+          <p class="assettag-symbol">{{ shorten(assetTag.symbol) }}</p>
+        </ion-avatar>
+      </div>
+    </ng-template>
+  </swiper>
+</div>

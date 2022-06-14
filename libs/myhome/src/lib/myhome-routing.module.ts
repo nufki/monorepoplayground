@@ -18,6 +18,11 @@ export const POST_ROUTES: Routes = [
     path: defaultRoute,
     component: TimelineComponent,
   },
+  {
+    path: 'instruments',
+    loadChildren: () =>
+      import('@united/instrument').then((module) => module.InstrumentModule),
+  },
 ];
 
 @NgModule({

@@ -18,6 +18,7 @@ import { CommentLikeComponent } from './containers/comment-like/comment-like.com
 import { CreateCommentComponent } from './containers/create-comment/create-comment.component';
 import { EditCommentComponent } from './containers/edit-comment/edit-comment.component';
 import { SwiperModule } from 'swiper/angular';
+import { AssettagViewComponent } from './assettag-view/assettag-view.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { SwiperModule } from 'swiper/angular';
     CommentLikeComponent,
     CreateCommentComponent,
     EditCommentComponent,
+    AssettagViewComponent,
   ],
   exports: [PostListComponent, PostItemViewComponent, PostDetailsComponent],
   providers: [PostService],
