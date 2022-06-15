@@ -49,10 +49,12 @@ export class AssettagViewComponent implements AfterViewChecked {
     if (this.router.url.indexOf('post-details') > 0) {
       console.log('xxxx');
       this.router.navigate(['instruments/details/' + assetTag]);
+      return;
     } else if (this.router.url.indexOf('instruments/details') > 0) {
       this.router.navigate(['../' + assetTag], {
         relativeTo: this.activatedRoute,
       });
+      return;
     }
     // In post-list overview
     else {
