@@ -7,7 +7,10 @@ import { State, initialState, reducer } from './books.reducer';
 describe('Books Reducer', () => {
   const createBooksEntity = (id: string, name = ''): BooksEntity => ({
     id,
-    name: name || `name-${id}`,
+    volumeInfo: {
+      title: `name-${id}`,
+      authors: [],
+    },
   });
 
   describe('valid Books actions', () => {

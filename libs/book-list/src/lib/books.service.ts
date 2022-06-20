@@ -8,7 +8,7 @@ import { BooksEntity } from './+state/books.models';
 export class GoogleBooksService {
   constructor(private http: HttpClient) {}
 
-  getBooks(): Observable<Array<BooksEntity>> {
+  getBooks(): Observable<BooksEntity[]> {
     return this.http
       .get<{ items: BooksEntity[] }>(
         'https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=oliver%20sacks'

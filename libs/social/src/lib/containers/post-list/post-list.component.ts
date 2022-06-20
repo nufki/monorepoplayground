@@ -75,11 +75,9 @@ export class PostListComponent implements OnChanges, OnDestroy {
         if (this.infiniteScroll && !loaded && this.initialLoaded) {
           this.infiniteScroll.complete();
           this.pageNumber++;
-          console.log('xxxx');
         }
         if (this.refresher && !loaded && this.initialLoaded) {
           this.refresher?.complete();
-          console.log('yyyy');
         }
         if (!this.isLoading && !this.initialLoaded) {
           this.initialLoaded = true;

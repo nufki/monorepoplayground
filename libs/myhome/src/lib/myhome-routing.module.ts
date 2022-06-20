@@ -18,6 +18,11 @@ export const POST_ROUTES: Routes = [
     path: defaultRoute,
     component: TimelineComponent,
   },
+  // {
+  //   path: 'xxx',
+  //   pathMatch: 'full',
+  //   redirectTo: 'instruments',
+  // },
   {
     path: 'instruments',
     loadChildren: () =>
